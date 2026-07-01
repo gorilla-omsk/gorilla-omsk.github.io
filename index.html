@@ -411,16 +411,47 @@
             renderCatalog();
         }
 
-        function renderCatalog() {
+                function renderCatalog() {
             const grid = document.getElementById('catalogGrid');
             const filtered = activeCategory === 'all'
                 ? products
-                : products.filter(p => p.category === catId);
+                : products.filter(p => p.category === activeCategory);
 
             if (filtered.length === 0) {
                 grid.innerHTML = '<div class="no-products">Товаров пока нет</div>';
                 return;
             }
+
+            grid.innerHTML = filtered.map(p => {
+                const inCart = cart.find(i => i.id === p.id);
+                const soldOut = p.stock === 0;
+                const lowStock = p.stock > 0 && p.stock <= 3;
+
+                let stockText = soldOut ? 'SOLD OUT' : lowStock ? `Осталось: ${p.stock} шт` : `В наличии: ${p.stock} шт`;
+                let stockClass = soldOut ? 'out' : lowStock ? 'low' : '';
+
+                return `
+                    <div class="card${soldOut ? ' sold-out' : ''}">
+                        <div class="card-img">
+                            <span>${p.emoji}</span>
+                            <div class="card-tag${soldOut ? ' sold' : ''}">${soldOut ? 'SOLD OUT' : p.tag || ''}</div>
+                            <span class="stock-badge ${stockClass}">${stockText}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3>${p.name}</h3>
+                            <p class="category">${categories.find(c => c.id === p.category)?.name || ''}</p>
+                            <p class="price">${p.price.toLocaleString()} ₽</p>
+                            ${soldOut
+                                ? '<button class="btn btn-gray" disabled>Нет в наличии</button>'
+                                : `<button class="btn-cart${inCart ? ' in-cart' : ''}" onclick="toggleItem(${p.id})">
+                                    ${inCart ? '✓ В корзине' : 'Добавить в корзину'}
+                                   </button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
             grid.innerHTML = filtered.map(p => {
                 const inCart = cart.find(i => i.id === p.id);
