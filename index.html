@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GORILLA STREETWEAR — Уличная одежда Омск</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #d0d0d0;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        header {
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .logo-block { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { font-size: 26px; }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .logo-text span {
+            color: #777;
+            font-weight: 400;
+            font-size: 10px;
+            display: block;
+            letter-spacing: 5px;
+        }
+
+        nav { display: flex; gap: 20px; align-items: center; }
+
+        nav a {
+            color: #888;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: #fff; }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            color: #fff;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -12px;
+            background: #ff3333;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+        }
+
+        .cart-count.active { display: flex; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 850px; padding: 0 20px; }
+
+        .hero h1 {
+            font-size: clamp(70px, 12vw, 140px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.85;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 .outline {
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 1px #666;
+        }
+
+        .hero .subtitle {
+            font-size: 14px;
+            letter-spacing: 8px;
+            color: #666;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+
+        .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 38px;
+            font-weight: 600;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-radius: 100px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-white { background: #fff; color: #0a0a0a; }
+        .btn-white:hover { background: #ccc; transform: translateY(-2px); }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-outline:hover { border-color: #fff; transform: translateY(-2px); }
+
+        .btn-red { background: #ff3333; color: #fff; }
+        .btn-red:hover { background: #cc0000; transform: translateY(-2px); }
+
+        .marquee {
+            background: #0d0d0d;
+            padding: 14px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .marquee span {
+            display: inline-block;
+            animation: marquee 18s linear infinite;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .section { padding: 120px 50px; position: relative; z-index: 1; }
+
+        .section-label {
+            text-align: center;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            letter-spacing: 3px;
+            margin-bottom: 80px;
+        }
+
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1px;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #141414;
+        }
+
+        .card {
+            background: #0c0c0c;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover { background: #121212; }
+
+        .card-img {
+            height: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #fff;
+            color: #0a0a0a;
+            padding: 5px 12px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .card-tag.test {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        .card-body { padding: 28px; }
+
+        .card-body h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .card-body .category {
+            color: #666;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .card-body .price { font-size: 15px; font-weight: 600; color: #aaa; margin-bottom: 15px; }
+
+        .btn-cart {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cart:hover {
+            background: #fff;
+            color: #0a0a0a;
+            border-color: #fff;
+        }
+
+        .btn-cart.in-cart {
+            background: #ff3333;
+            border-color: #ff3333;
+            color: #fff;
+        }
+
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1px;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #141414;
+        }
+
+        .delivery-card {
+            background: #0c0c0c;
+            padding: 55px 35px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .delivery-card:hover { background: #121212; }
+        .delivery-card .icon { font-size: 34px; margin-bottom: 22px; opacity: 0.5; }
+
+        .delivery-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .delivery-card p { color: #777; font-size: 12px; line-height: 1.8; }
+
+        .contact-block { max-width: 500px; margin: 0 auto; text-align: center; }
+
+        .contact-block h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .contact-block p { font-size: 14px; margin: 10px 0; color: #999; }
+
+        .contact-schedule {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 100px;
+            font-size: 13px;
+            color: #ccc;
+            margin: 20px 0 35px;
+        }
+
+        .contact-address {
+            font-size: 15px;
+            color: #fff;
+            margin: 35px 0;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,0.1);
+            line-height: 1.8;
+        }
+
+        .social-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+        .btn-social {
+            display: inline-block;
+            padding: 14px 35px;
+            font-weight: 600;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-radius: 100px;
+        }
+
+        .btn-vk { background: #0077ff; color: #fff; }
+        .btn-vk:hover { background: #0066dd; transform: translateY(-2px); }
+        .btn-tg { background: #2b9ef1; color: #fff; }
+        .btn-tg:hover { background: #2390dd; transform: translateY(-2px); }
+
+        .cart-panel {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 500px;
+            background: #1a1a1a;
+            border-radius: 20px 20px 0 0;
+            padding: 25px;
+            z-index: 999;
+            transition: bottom 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-bottom: none;
+        }
+
+        .cart-panel.open { bottom: 0; }
+
+        .cart-panel h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cart-items {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 13px;
+        }
+
+        .cart-item .remove {
+            color: #ff3333;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .cart-empty { color: #666; text-align: center; padding: 20px; font-size: 13px; }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 998;
+            display: none;
+        }
+
+        .cart-overlay.open { display: block; }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            color: #0a0a0a;
+            text-align: center;
+            line-height: 45px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 997;
+            text-decoration: none;
+            border-radius: 50%;
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+
+        .scroll-top:hover { opacity: 1; transform: translateY(-3px); }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; gap: 12px; }
+            .logo-text { font-size: 22px; }
+            nav { gap: 15px; }
+            nav a { font-size: 9px; letter-spacing: 1px; }
+            .hero h1 { font-size: 55px; }
+            .section { padding: 80px 20px; }
+            .section-title { font-size: 28px; }
+            .catalog { grid-template-columns: 1fr; }
+            .card-img { height: 330px; }
+            .cart-panel { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-block">
+            <div class="logo-icon">🦍</div>
+            <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
+        </div>
+        <nav>
+            <a href="#catalog">Каталог</a>
+            <a href="#delivery">Доставка</a>
+            <a href="#contacts">Контакты</a>
+            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener">VK</a>
+            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener">TG</a>
+            <a href="#" class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>GOR<span class="outline">ILLA</span></h1>
+            <p class="subtitle">Уличная эстетика • Омск</p>
+            <div class="btn-group">
+                <a href="#catalog" class="btn btn-white">Смотреть дроп</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">Telegram</a>
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">VK</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <span>🦍 GORILLA • OMSK • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍</span>
+    </div>
+
+    <section class="section" id="catalog">
+        <p class="section-label">Drop 001</p>
+        <h2 class="section-title">Каталог</h2>
+        <p class="section-subtitle">Выбери своё</p>
+        <div class="catalog" id="catalogGrid"></div>
+    </section>
+
+    <section class="section" id="delivery">
+        <p class="section-label">Shipping</p>
+        <h2 class="section-title">Доставка</h2>
+        <p class="section-subtitle">Три способа</p>
+        <div class="delivery-grid">
+            <div class="delivery-card"><div class="icon">🏪</div><h3>Самовывоз</h3><p>Забери из магазина. Примерка на месте.</p></div>
+            <div class="delivery-card"><div class="icon">🛵</div><h3>По Омску</h3><p>Курьер — 300₽. В день заказа до 15:00.</p></div>
+            <div class="delivery-card"><div class="icon">📦</div><h3>По России</h3><p>СДЭК / Почта России. Трек-номер сразу.</p></div>
+        </div>
+    </section>
+
+    <section class="section" id="contacts">
+        <p class="section-label">Hit us up</p>
+        <h2 class="section-title">Контакты</h2>
+        <p class="section-subtitle">Будь на связи</p>
+        <div class="contact-block">
+            <h3>GORILLA STREETWEAR</h3>
+            <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
+            <p>📞 +7 (XXX) XXX-XX-XX</p>
+            <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
+            <div class="social-btns">
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-vk">📱 ВКонтакте</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-panel" id="cartPanel">
+        <h3>🛒 Корзина</h3>
+        <div class="cart-items" id="cartItems"><div class="cart-empty">Корзина пуста</div></div>
+        <div class="cart-total" id="cartTotal">Итого: 0 ₽</div>
+        <button class="btn btn-red" style="width:100%;" onclick="checkout()">📱 Заказать через Telegram</button>
+    </div>
+
+    <footer><p>© 2024 GORILLA STREETWEAR • OMSK</p></footer>
+
+    <a href="#" class="scroll-top">↑</a>
+
+    <script>
+        // ТОВАРЫ (добавлен тестовый)
+        const products = [
+            { id: 1, name: 'Худи Original', category: 'Мужская одежда', price: 4990, emoji: '🦍', tag: 'Хит' },
+            { id: 2, name: 'Футболка Bold', category: 'Мужская одежда', price: 2490, emoji: '🦍', tag: 'Новинка' },
+            { id: 3, name: 'Кроссовки Urban', category: 'Обувь', price: 7990, emoji: '👟', tag: 'Хит' },
+            { id: 4, name: 'Штаны Cargo', category: 'Мужская одежда', price: 3990, emoji: '👖', tag: 'Новинка' },
+            { id: 5, name: 'Куртка Bomber', category: 'Верхняя одежда', price: 8990, emoji: '🧥', tag: 'Хит' },
+            { id: 6, name: 'Кепка Snap', category: 'Аксессуары', price: 1990, emoji: '🧢', tag: 'Новинка' },
+            { id: 99, name: '🧪 ТЕСТОВЫЙ ТОВАР (проверка заказа)', category: 'Тест', price: 100, emoji: '🧪', tag: 'Тест', test: true }
+        ];
+
+        let cart = [];
+
+        function renderCatalog() {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = products.map(p => `
+                <div class="card">
+                    <div class="card-img">
+                        <span>${p.emoji}</span>
+                        <div class="card-tag${p.test ? ' test' : ''}">${p.tag}</div>
+                    </div>
+                    <div class="card-body">
+                        <h3>${p.name}</h3>
+                        <p class="category">${p.category}</p>
+                        <p class="price">${p.price.toLocaleString()} ₽</p>
+                        <button class="btn-cart ${cart.find(i => i.id === p.id) ? 'in-cart' : ''}" id="btn-${p.id}" onclick="toggleItem(${p.id})">
+                            ${cart.find(i => i.id === p.id) ? '✓ В корзине' : 'Добавить в корзину'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleItem(id) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                cart = cart.filter(i => i.id !== id);
+            } else {
+                const product = products.find(p => p.id === id);
+                cart.push({ ...product });
+            }
+            updateCart();
+            renderCatalog();
+        }
+
+        function updateCart() {
+            const count = document.getElementById('cartCount');
+            const items = document.getElementById('cartItems');
+            const total = document.getElementById('cartTotal');
+
+            count.textContent = cart.length;
+            cart.length > 0 ? count.classList.add('active') : count.classList.remove('active');
+
+            if (cart.length === 0) {
+                items.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
+                total.textContent = 'Итого: 0 ₽';
+            } else {
+                items.innerHTML = cart.map(i => `
+                    <div class="cart-item">
+                        <span>${i.emoji} ${i.name}</span>
+                        <span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="toggleItem(${i.id})">✕</span></span>
+                    </div>
+                `).join('');
+
+                const sum = cart.reduce((s, i) => s + i.price, 0);
+                total.textContent = `Итого: ${sum.toLocaleString()} ₽`;
+            }
+        }
+
+        function toggleCart() {
+            document.getElementById('cartPanel').classList.toggle('open');
+            document.getElementById('cartOverlay').classList.toggle('open');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Корзина пуста!');
+                return;
+            }
+
+            const items = cart.map(i => `• ${i.name} — ${i.price} ₽`).join('\n');
+            const sum = cart.reduce((s, i) => s + i.price, 0);
+            const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${items}\n\n💰 Итого: ${sum.toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
+
+            // Отправка в группу через direct
+            window.open(`https://t.me/gorillaomsk?direct&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        renderCatalog();
+        updateCart();
+    </script>
+
+</body>
+</html>
