@@ -153,7 +153,7 @@
         <a href="#delivery">Доставка</a>
         <a href="#contacts">Контакты</a>
         <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener">VK</a>
-        <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener">TG</a>
+        <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" rel="noopener">TG</a>
         <a href="#" class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></a>
     </nav>
 </header>
@@ -164,7 +164,7 @@
         <p class="subtitle">Уличная эстетика • Омск</p>
         <div class="btn-group">
             <a href="#catalog" class="btn btn-white">Смотреть дроп</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">Telegram</a>
+            <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" rel="noopener" class="btn btn-outline">Telegram</a>
             <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">VK</a>
         </div>
     </div>
@@ -206,7 +206,7 @@
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
         <div class="social-btns">
             <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-vk">📱 ВКонтакте</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a>
+            <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a>
         </div>
     </div>
 </section>
@@ -335,7 +335,7 @@
     function checkout() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
-        window.open(`https://t.me/gorillaomsk?direct&text=${encodeURIComponent(msg)}`, '_blank');
+        window.open(`https://t.me/gorilla_omsk_shop_bot?direct&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     // Запуск
