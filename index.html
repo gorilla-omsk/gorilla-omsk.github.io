@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GORILLA STREETWEAR — Уличная одежда Омск</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -18,6 +18,13 @@
             line-height: 1.5;
         }
 
+        /* Заголовки, кнопки, логотип — уличный шрифт */
+        h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title, .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3, .delivery-card h3, .categories-menu h4 {
+            font-family: 'Russo One', sans-serif;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
         header {
             background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); padding: 20px 50px;
             display: flex; justify-content: space-between; align-items: center;
@@ -25,22 +32,22 @@
         }
         .logo-block { display: flex; align-items: center; gap: 10px; }
         .logo-icon { font-size: 26px; }
-        .logo-text { font-size: 26px; font-weight: 900; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
-        .logo-text span { color: #777; font-weight: 400; font-size: 10px; display: block; letter-spacing: 5px; }
+        .logo-text { font-size: 26px; font-weight: 400; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+        .logo-text span { color: #777; font-weight: 400; font-size: 10px; display: block; letter-spacing: 5px; font-family: 'Inter', sans-serif; }
         nav { display: flex; gap: 20px; align-items: center; }
-        nav a { color: #888; text-decoration: none; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; transition: color 0.3s; }
+        nav a { color: #888; text-decoration: none; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; transition: color 0.3s; font-family: 'Inter', sans-serif; }
         nav a:hover { color: #fff; }
         .cart-icon { position: relative; cursor: pointer; color: #fff; font-size: 20px; text-decoration: none; }
-        .cart-count { position: absolute; top: -10px; right: -12px; background: #ff3333; color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
+        .cart-count { position: absolute; top: -10px; right: -12px; background: #ff3333; color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .cart-count.active { display: flex; }
 
         .hero { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; }
         .hero-content { max-width: 850px; padding: 0 20px; }
-        .hero h1 { font-size: clamp(60px, 10vw, 120px); font-weight: 900; letter-spacing: -2px; line-height: 0.85; color: #fff; margin-bottom: 20px; text-transform: uppercase; }
+        .hero h1 { font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85; color: #fff; margin-bottom: 20px; text-transform: uppercase; }
         .hero h1 .outline { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px #666; }
-        .hero .subtitle { font-size: 14px; letter-spacing: 8px; color: #666; margin-bottom: 40px; text-transform: uppercase; }
+        .hero .subtitle { font-size: 14px; letter-spacing: 8px; color: #666; margin-bottom: 40px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .btn { display: inline-block; padding: 15px 38px; font-weight: 600; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+        .btn { display: inline-block; padding: 15px 38px; font-weight: 600; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; cursor: pointer; border: none; font-family: 'Russo One', sans-serif; }
         .btn-white { background: #fff; color: #0a0a0a; }
         .btn-white:hover { background: #ccc; transform: translateY(-2px); }
         .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
@@ -57,16 +64,16 @@
 
         .section { padding: 80px 50px; }
         .section-label { text-align: center; font-size: 9px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: #555; margin-bottom: 15px; }
-        .section-title { text-align: center; font-size: clamp(28px, 4vw, 42px); font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; color: #fff; text-transform: uppercase; }
-        .section-subtitle { text-align: center; color: #666; font-size: 13px; letter-spacing: 3px; margin-bottom: 50px; }
+        .section-title { text-align: center; font-size: clamp(28px, 4vw, 42px); font-weight: 400; letter-spacing: -1px; margin-bottom: 12px; color: #fff; text-transform: uppercase; }
+        .section-subtitle { text-align: center; color: #666; font-size: 13px; letter-spacing: 3px; margin-bottom: 50px; font-family: 'Inter', sans-serif; }
 
         .catalog-wrapper { display: flex; gap: 20px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
         .categories-menu { min-width: 220px; position: sticky; top: 100px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
-        .categories-menu h4 { padding: 20px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .category-btn { display: block; width: 100%; padding: 14px 20px; text-align: left; background: none; border: none; color: #777; font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; border-left: 2px solid transparent; }
+        .categories-menu h4 { padding: 20px; font-size: 12px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .category-btn { display: block; width: 100%; padding: 14px 20px; text-align: left; background: none; border: none; color: #777; font-family: 'Russo One', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; border-left: 2px solid transparent; text-transform: uppercase; }
         .category-btn:hover { color: #fff; background: #121212; }
         .category-btn.active { color: #fff; background: #121212; border-left-color: #fff; }
-        .category-btn .count { color: #444; font-size: 10px; float: right; margin-top: 1px; }
+        .category-btn .count { color: #ccc; font-size: 12px; float: right; margin-top: 1px; font-weight: 400; letter-spacing: 0; }  /* стало ярче */
 
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; flex: 1; }
         .card { background: #0c0c0c; transition: all 0.3s; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer; }
@@ -75,37 +82,37 @@
         .card-img { height: 300px; display: flex; align-items: center; justify-content: center; position: relative; background: #080808; overflow: hidden; }
         .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .card-img .img-placeholder { font-size: 60px; }
-        .card-tag { position: absolute; top: 12px; left: 12px; background: #fff; color: #0a0a0a; padding: 4px 10px; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; z-index: 2; }
+        .card-tag { position: absolute; top: 12px; left: 12px; background: #fff; color: #0a0a0a; padding: 4px 10px; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; z-index: 2; font-family: 'Inter', sans-serif; }
         .card-tag.sold { background: #ff3333; color: #fff; }
-        .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #666; font-size: 10px; letter-spacing: 1px; z-index: 2; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; }
+        .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #666; font-size: 10px; letter-spacing: 1px; z-index: 2; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; font-family: 'Inter', sans-serif; }
         .stock-badge.low { color: #ff9933; }
         .stock-badge.out { color: #ff3333; }
         .card-body { padding: 20px; }
-        .card-body h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #fff; }
-        .card-body .category { color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+        .card-body h3 { font-size: 15px; font-weight: 400; margin-bottom: 4px; color: #fff; }
+        .card-body .category { color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
         .card-body .color-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; border: 1px solid rgba(255,255,255,0.3); }
-        .card-body .sizes { font-size: 11px; color: #777; margin-bottom: 10px; }
-        .card-body .price { font-size: 14px; font-weight: 600; color: #aaa; margin-bottom: 12px; }
-        .btn-cart { display: block; width: 100%; padding: 10px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.15); font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+        .card-body .sizes { font-size: 11px; color: #777; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+        .card-body .price { font-size: 14px; font-weight: 600; color: #aaa; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
+        .btn-cart { display: block; width: 100%; padding: 10px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.15); font-family: 'Russo One', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
         .btn-cart:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
         .btn-cart.in-cart { background: #ff3333; border-color: #ff3333; color: #fff; }
-        .no-products { text-align: center; padding: 60px; color: #555; font-size: 14px; letter-spacing: 2px; width: 100%; }
-        .loading-text { text-align: center; padding: 60px; color: #666; }
+        .no-products { text-align: center; padding: 60px; color: #555; font-size: 14px; letter-spacing: 2px; width: 100%; font-family: 'Inter', sans-serif; }
+        .loading-text { text-align: center; padding: 60px; color: #666; font-family: 'Inter', sans-serif; }
 
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; }
         .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; }
         .delivery-card:hover { background: #121212; }
         .delivery-card .icon { font-size: 34px; margin-bottom: 22px; opacity: 0.5; }
-        .delivery-card h3 { font-size: 14px; font-weight: 600; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; color: #fff; }
-        .delivery-card p { color: #777; font-size: 12px; line-height: 1.8; }
+        .delivery-card h3 { font-size: 14px; font-weight: 400; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; color: #fff; }
+        .delivery-card p { color: #777; font-size: 12px; line-height: 1.8; font-family: 'Inter', sans-serif; }
 
         .contact-block { max-width: 500px; margin: 0 auto; text-align: center; }
-        .contact-block h3 { font-size: 22px; font-weight: 700; margin-bottom: 35px; color: #fff; text-transform: uppercase; }
-        .contact-block p { font-size: 14px; margin: 10px 0; color: #999; }
-        .contact-schedule { display: inline-block; padding: 12px 30px; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; font-size: 13px; color: #ccc; margin: 20px 0 35px; }
-        .contact-address { font-size: 15px; color: #fff; margin: 35px 0; padding: 28px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; }
+        .contact-block h3 { font-size: 22px; font-weight: 400; margin-bottom: 35px; color: #fff; text-transform: uppercase; }
+        .contact-block p { font-size: 14px; margin: 10px 0; color: #999; font-family: 'Inter', sans-serif; }
+        .contact-schedule { display: inline-block; padding: 12px 30px; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; font-size: 13px; color: #ccc; margin: 20px 0 35px; font-family: 'Inter', sans-serif; }
+        .contact-address { font-size: 15px; color: #fff; margin: 35px 0; padding: 28px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; font-family: 'Inter', sans-serif; }
         .social-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .btn-social { display: inline-block; padding: 14px 35px; font-weight: 600; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; }
+        .btn-social { display: inline-block; padding: 14px 35px; font-weight: 600; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; font-family: 'Russo One', sans-serif; }
         .btn-vk { background: #0077ff; color: #fff; }
         .btn-vk:hover { background: #0066dd; transform: translateY(-2px); }
         .btn-tg { background: #2b9ef1; color: #fff; }
@@ -113,12 +120,12 @@
 
         .cart-panel { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #1a1a1a; border-radius: 20px 20px 0 0; padding: 25px; z-index: 999; transition: bottom 0.3s; border: 1px solid rgba(255,255,255,0.1); border-bottom: none; }
         .cart-panel.open { bottom: 0; }
-        .cart-panel h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
-        .cart-items { max-height: 200px; overflow-y: auto; margin-bottom: 15px; }
+        .cart-panel h3 { font-size: 16px; font-weight: 400; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .cart-items { max-height: 200px; overflow-y: auto; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
         .cart-item .remove { color: #ff3333; cursor: pointer; font-size: 16px; padding: 5px; }
-        .cart-total { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 15px; text-align: right; }
-        .cart-empty { color: #666; text-align: center; padding: 20px; font-size: 13px; }
+        .cart-total { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 15px; text-align: right; font-family: 'Inter', sans-serif; }
+        .cart-empty { color: #666; text-align: center; padding: 20px; font-size: 13px; font-family: 'Inter', sans-serif; }
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
         .cart-overlay.open { display: block; }
 
@@ -126,20 +133,20 @@
         .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; }
         .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
         .modal-img { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #080808; }
-        .modal-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 5px; }
-        .modal-price { font-size: 18px; color: #aaa; margin-bottom: 15px; }
-        .modal-color { font-size: 14px; color: #999; margin-bottom: 15px; }
+        .modal-title { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 5px; }
+        .modal-price { font-size: 18px; color: #aaa; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
+        .modal-color { font-size: 14px; color: #999; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
         .size-selector { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
         .size-btn { padding: 8px 16px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; transition: all 0.2s; }
         .size-btn:hover, .size-btn.selected { background: #fff; color: #0a0a0a; border-color: #fff; }
-        .modal-description { color: #888; font-size: 13px; line-height: 1.6; margin-bottom: 20px; }
-        .modal-stock { font-size: 12px; color: #666; margin-bottom: 15px; }
-        .modal-add-btn { width: 100%; padding: 12px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; cursor: pointer; border-radius: 100px; transition: all 0.3s; }
+        .modal-description { color: #888; font-size: 13px; line-height: 1.6; margin-bottom: 20px; font-family: 'Inter', sans-serif; }
+        .modal-stock { font-size: 12px; color: #666; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
+        .modal-add-btn { width: 100%; padding: 12px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Russo One', sans-serif; }
         .modal-add-btn:hover { background: #ccc; }
         .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
 
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
-        footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+        footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; }
         .scroll-top:hover { opacity: 1; transform: translateY(-3px); }
 
@@ -327,7 +334,6 @@
             item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()).filter(s => s) : [];
             item.color = item.color || '';
             item.description = item.description || '';
-            // Приводим категорию к нижнему регистру для совпадения с нашими id
             item.category = (item.category || '').toLowerCase();
 
             if (item.id && item.name) result.push(item);
