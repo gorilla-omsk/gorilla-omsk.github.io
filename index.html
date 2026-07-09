@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>GORILLA STREETWEAR — Уличная одежда Омск</title>
     
-    <!-- Иконки для iOS и Android -->
+    <!-- Иконки и PWA -->
     <link rel="apple-touch-icon" href="Gorillaava.png">
     <link rel="icon" type="image/png" href="Gorillaava.png">
-    <link rel="manifest" href="data:application/manifest+json,{ 'name': 'GORILLA STREETWEAR', 'short_name': 'GORILLA', 'icons': [{ 'src': 'Gorillaava.png', 'sizes': '180x180', 'type': 'image/png' }], 'start_url': '/', 'display': 'standalone', 'background_color': '#0a0a0a', 'theme_color': '#0a0a0a' }">
+    <link rel="manifest" href="data:application/manifest+json,{ 'name': 'GORILLA STREETWEAR', 'short_name': 'GORILLA', 'icons': [{ 'src': 'Gorillaava.png', 'sizes': '512x512', 'type': 'image/png' }], 'start_url': '/', 'display': 'standalone', 'background_color': '#0a0a0a', 'theme_color': '#0a0a0a' }">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0a0a">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap');
@@ -185,6 +188,15 @@
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
         .cart-overlay.open { display: block; }
 
+        /* Фикс для кнопки очистки корзины */
+        #clearCartBtn {
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
+            user-select: none;
+            cursor: pointer;
+        }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
@@ -267,7 +279,6 @@
 
 <header id="main-header">
     <div class="logo-block">
-        <!-- Если картинка не загрузится, покажется текст -->
         <img src="Gorillaava.png" alt="GORILLA" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
         <span style="display:none; font-size:26px; color:#fff;">🦍</span>
         <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
@@ -725,7 +736,6 @@
         saveCart(); updateCart();
     }
 
-    // ★ Гарантированная очистка корзины без confirm
     function clearCart() {
         if (cart.length === 0) return;
         cart = [];
