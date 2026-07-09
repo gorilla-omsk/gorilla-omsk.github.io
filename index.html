@@ -67,7 +67,7 @@
         .category-btn .count { color: #444; font-size: 10px; float: right; margin-top: 1px; }
 
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; flex: 1; }
-        .card { background: #0c0c0c; transition: all 0.3s; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; }
+        .card { background: #0c0c0c; transition: all 0.3s; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer; }
         .card:hover { background: #121212; border-color: rgba(255,255,255,0.1); }
         .card.sold-out { opacity: 0.5; pointer-events: none; }
         .card-img { height: 300px; display: flex; align-items: center; justify-content: center; position: relative; background: #080808; overflow: hidden; }
@@ -119,6 +119,22 @@
         .cart-empty { color: #666; text-align: center; padding: 20px; font-size: 13px; }
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
         .cart-overlay.open { display: block; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+        .modal-img { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #080808; }
+        .modal-title { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+        .modal-price { font-size: 18px; color: #aaa; margin-bottom: 15px; }
+        .modal-color { font-size: 14px; color: #999; margin-bottom: 15px; }
+        .size-selector { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .size-btn { padding: 8px 16px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; transition: all 0.2s; }
+        .size-btn:hover, .size-btn.selected { background: #fff; color: #0a0a0a; border-color: #fff; }
+        .modal-description { color: #888; font-size: 13px; line-height: 1.6; margin-bottom: 20px; }
+        .modal-stock { font-size: 12px; color: #666; margin-bottom: 15px; }
+        .modal-add-btn { width: 100%; padding: 12px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; cursor: pointer; border-radius: 100px; transition: all 0.3s; }
+        .modal-add-btn:hover { background: #ccc; }
+        .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
 
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
@@ -231,14 +247,25 @@
 <footer><p>© 2024 GORILLA STREETWEAR • OMSK</p></footer>
 <a href="#" class="scroll-top">↑</a>
 
+<!-- Модальное окно товара -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
+    <div class="modal" id="modalBox" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <img class="modal-img" id="modalImg" src="" alt="">
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <p class="modal-price" id="modalPrice"></p>
+        <p class="modal-color" id="modalColor"></p>
+        <div class="size-selector" id="modalSizes"></div>
+        <p class="modal-description" id="modalDesc"></p>
+        <p class="modal-stock" id="modalStock"></p>
+        <button class="modal-add-btn" id="modalAddBtn" onclick="addFromModal()">Добавить в корзину</button>
+    </div>
+</div>
+
 <script>
-    // ================== КОНФИГУРАЦИЯ ==================
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
     const IMAGES_PATH = 'images/';
-    // Возможные расширения фото (для поиска первого подходящего)
-    const IMG_EXTENSIONS = ['.jpg', '.png', '.webp'];
 
-    // Категории (соответствуют значениям в колонке "category")
     const categories = [
         { id: 'all', name: 'Все товары', emoji: '🦍' },
         { id: 'shorts', name: 'Шорты', emoji: '🩳' },
@@ -254,8 +281,9 @@
     let products = [];
     let cart = JSON.parse(localStorage.getItem('gorillaCart')) || [];
     let activeCategory = 'all';
+    let currentModalProduct = null;
+    let selectedSize = null;
 
-    // ================== ЗАГРУЗКА CSV ==================
     async function loadProducts() {
         const grid = document.getElementById('catalogGrid');
         grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>';
@@ -276,48 +304,50 @@
     function parseCSV(csv) {
         const lines = csv.trim().split('\n');
         if (lines.length < 2) return [];
+        // Заголовки
         const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-        // Ожидаемые колонки: id, name, category, price, sizes, color, stock, photo_id, description
+        // Приводим возможные варианты "color"/"colors" к единому "color"
+        const colorIdx = headers.indexOf('colors') !== -1 ? headers.indexOf('colors') : headers.indexOf('color');
+        if (colorIdx !== -1) headers[colorIdx] = 'color'; // переименуем для единообразия
+
         const result = [];
         for (let i = 1; i < lines.length; i++) {
+            // Используем хитрый сплит, чтобы не разбивать поле sizes (с запятыми) — но мы договорились, что sizes теперь через ;
             const values = lines[i].split(',').map(v => v.trim());
-            if (values.length < headers.length) continue; // пропускаем битые строки
+            if (values.length < headers.length) continue;
+
             const item = {};
             headers.forEach((header, idx) => {
                 item[header] = values[idx] || '';
             });
-            // Приводим типы
+
+            // Корректируем данные
             item.id = item.id || '';
             item.price = parseInt(item.price) || 0;
             item.stock = parseInt(item.stock) || 0;
             item.photo_id = item.photo_id || '';
-            item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()) : [];
+            // Размеры парсим через ';', так как внутри поля нет запятых (по новому соглашению)
+            item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()).filter(s => s) : [];
             item.color = item.color || '';
             item.description = item.description || '';
+
             if (item.id && item.name) result.push(item);
         }
         return result;
     }
 
-    // Получить URL фото по photo_id (проверяет несколько расширений, берёт первое доступное)
     function getPhotoURL(photoId) {
         if (!photoId) return null;
-        // Сначала пытаемся загрузить .jpg, потом .png, потом .webp
-        // Так как мы не можем проверить наличие файла на клиенте без сервера,
-        // используем .jpg по умолчанию. При желании можно добавить onerror и подставлять другое расширение.
         return `${IMAGES_PATH}${photoId}.jpg`;
     }
 
-    // Обработчик ошибки загрузки изображения — подставляет плейсхолдер
     function imgError(img, photoId) {
-        // Пробуем другие расширения (если не .jpg)
         const src = img.src;
         if (src.endsWith('.jpg')) {
             img.src = `${IMAGES_PATH}${photoId}.png`;
         } else if (src.endsWith('.png')) {
             img.src = `${IMAGES_PATH}${photoId}.webp`;
         } else {
-            // Все варианты не сработали — показываем эмодзи
             img.style.display = 'none';
             const placeholder = document.createElement('span');
             placeholder.className = 'img-placeholder';
@@ -343,6 +373,83 @@
         renderCatalog();
     }
 
+    function openModal(product) {
+        currentModalProduct = product;
+        selectedSize = (product.sizes && product.sizes.length === 1) ? product.sizes[0] : null;
+
+        document.getElementById('modalImg').src = getPhotoURL(product.photo_id) || '';
+        document.getElementById('modalImg').onerror = function() { imgError(this, product.photo_id); };
+        document.getElementById('modalTitle').textContent = product.name;
+        document.getElementById('modalPrice').textContent = product.price.toLocaleString() + ' ₽';
+        document.getElementById('modalColor').innerHTML = product.color ? `Цвет: <span class="color-dot" style="background-color:${product.color};"></span> ${product.color}` : '';
+        document.getElementById('modalDesc').textContent = product.description || 'Описание отсутствует';
+        document.getElementById('modalStock').textContent = product.stock > 0 ? `В наличии: ${product.stock} шт` : 'Нет в наличии';
+        
+        const sizeContainer = document.getElementById('modalSizes');
+        sizeContainer.innerHTML = '';
+        if (product.sizes && product.sizes.length > 0) {
+            product.sizes.forEach(size => {
+                const btn = document.createElement('button');
+                btn.className = 'size-btn' + (size === selectedSize ? ' selected' : '');
+                btn.textContent = size;
+                btn.onclick = () => {
+                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedSize = size;
+                };
+                sizeContainer.appendChild(btn);
+            });
+        } else {
+            sizeContainer.innerHTML = '<span style="color:#666;">Без размеров</span>';
+        }
+
+        const addBtn = document.getElementById('modalAddBtn');
+        if (product.stock === 0) {
+            addBtn.disabled = true;
+            addBtn.textContent = 'Нет в наличии';
+        } else {
+            addBtn.disabled = false;
+            const inCart = cart.find(i => i.id === product.id && i.size === selectedSize);
+            addBtn.textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
+        }
+
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function closeModal(event) {
+        if (event && event.target !== document.getElementById('modalOverlay')) return;
+        document.getElementById('modalOverlay').style.display = 'none';
+        currentModalProduct = null;
+    }
+
+    function addFromModal() {
+        if (!currentModalProduct || currentModalProduct.stock === 0) return;
+        if (currentModalProduct.sizes && currentModalProduct.sizes.length > 0 && !selectedSize) {
+            alert('Выберите размер');
+            return;
+        }
+        const size = selectedSize || null;
+        const existing = cart.find(i => i.id === currentModalProduct.id && i.size === size);
+        if (existing) {
+            cart = cart.filter(i => !(i.id === currentModalProduct.id && i.size === size));
+        } else {
+            cart.push({
+                id: currentModalProduct.id,
+                name: currentModalProduct.name,
+                price: currentModalProduct.price,
+                size: size,
+                color: currentModalProduct.color,
+                photo_id: currentModalProduct.photo_id,
+                sizes: currentModalProduct.sizes
+            });
+        }
+        saveCart();
+        updateCart();
+        renderCatalog();
+        const inCart = cart.find(i => i.id === currentModalProduct.id && i.size === size);
+        document.getElementById('modalAddBtn').textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
+    }
+
     function renderCatalog() {
         const grid = document.getElementById('catalogGrid');
         const filtered = activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory);
@@ -351,7 +458,6 @@
             return;
         }
         grid.innerHTML = filtered.map(p => {
-            const inCart = cart.find(i => i.id === p.id);
             const soldOut = p.stock === 0;
             const lowStock = p.stock > 0 && p.stock <= 3;
             const stockText = soldOut ? 'SOLD OUT' : lowStock ? `Осталось: ${p.stock} шт` : `В наличии: ${p.stock} шт`;
@@ -361,7 +467,7 @@
             const colorDot = p.color ? `<span class="color-dot" style="background-color:${p.color};" title="${p.color}"></span>` : '';
             const photoUrl = getPhotoURL(p.photo_id);
 
-            return `<div class="card${soldOut ? ' sold-out' : ''}">
+            return `<div class="card${soldOut ? ' sold-out' : ''}" onclick="openModal(products.find(pr=>pr.id==='${p.id}'))">
                 <div class="card-img">
                     ${photoUrl ? `<img src="${photoUrl}" alt="${p.name}" onerror="imgError(this, '${p.photo_id}')">` : '<span class="img-placeholder">🦍</span>'}
                     <div class="card-tag${soldOut ? ' sold' : ''}">${soldOut ? 'SOLD OUT' : (p.tag || '')}</div>
@@ -372,30 +478,27 @@
                     <p class="category">${catName}</p>
                     ${sizesStr ? `<p class="sizes">Размеры: ${sizesStr}</p>` : ''}
                     <p class="price">${p.price.toLocaleString()} ₽</p>
-                    ${soldOut ? '<button class="btn btn-gray" disabled>Нет в наличии</button>' : `<button class="btn-cart${inCart ? ' in-cart' : ''}" onclick="toggleItem('${p.id}')">${inCart ? '✓ В корзине' : 'Добавить в корзину'}</button>`}
+                    <button class="btn-cart" onclick="event.stopPropagation(); openModal(products.find(pr=>pr.id==='${p.id}'))">Выбрать</button>
                 </div>
             </div>`;
         }).join('');
     }
 
-    // ================== КОРЗИНА ==================
     function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
 
-    function toggleItem(id) {
-        const product = products.find(p => p.id === id);
-        if (!product || product.stock === 0) return;
-        const item = cart.find(i => i.id === id);
-        if (item) {
-            cart = cart.filter(i => i.id !== id);
-        } else {
-            cart.push({ id: product.id, name: product.name, price: product.price, sizes: product.sizes, color: product.color, photo_id: product.photo_id });
-        }
+    function removeFromCart(id, size) {
+        cart = cart.filter(i => !(i.id === id && i.size === size));
         saveCart(); updateCart(); renderCatalog();
     }
 
-    function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); updateCart(); renderCatalog(); }
-
-    function clearCart() { if (cart.length && confirm('Очистить корзину?')) { cart = []; saveCart(); updateCart(); renderCatalog(); } }
+    function clearCart() {
+        if (cart.length && confirm('Очистить корзину?')) {
+            cart = [];
+            saveCart();
+            updateCart();
+            renderCatalog();
+        }
+    }
 
     function updateCart() {
         const count = document.getElementById('cartCount');
@@ -408,9 +511,9 @@
             total.textContent = 'Итого: 0 ₽';
         } else {
             items.innerHTML = cart.map(i => {
-                const sizeInfo = i.sizes && i.sizes.length ? ` (${i.sizes.join(',')})` : '';
+                const sizeInfo = i.size ? ` (${i.size})` : '';
                 const colorInfo = i.color ? ` [${i.color}]` : '';
-                return `<div class="cart-item"><span>${i.name}${colorInfo}${sizeInfo}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}')">✕</span></span></div>`;
+                return `<div class="cart-item"><span>${i.name}${colorInfo}${sizeInfo}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size || ''}')">✕</span></span></div>`;
             }).join('');
             total.textContent = `Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽`;
         }
@@ -423,11 +526,10 @@
 
     function checkout() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
-        const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.sizes ? ' ('+i.sizes.join(',')+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
+        const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
         window.open(`https://t.me/gorillaomsk?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // ================== ЗАПУСК ==================
     loadProducts();
 </script>
 
