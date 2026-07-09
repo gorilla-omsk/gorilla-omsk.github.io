@@ -18,6 +18,29 @@
             line-height: 1.5;
         }
 
+        /* Glitch-эффект для заголовка */
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(0); }
+            20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
+            40% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(2px, -2px); }
+            60% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
+            80% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(2px, -2px); }
+            100% { text-shadow: none; transform: translate(0); }
+        }
+        .glitch-active {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        /* Hero-частицы (canvas) */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
         /* Заголовки, кнопки, логотип — уличный шрифт */
         h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title, .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3, .delivery-card h3, .categories-menu h4 {
             font-family: 'Russo One', sans-serif;
@@ -29,7 +52,10 @@
             background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); padding: 20px 50px;
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.06);
+            transition: background 0.3s;
         }
+        header.scrolled { background: rgba(10,10,10,0.98); }
+
         .logo-block { display: flex; align-items: center; gap: 10px; }
         .logo-icon { font-size: 26px; }
         .logo-text { font-size: 26px; font-weight: 400; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
@@ -39,24 +65,38 @@
         nav a:hover { color: #fff; }
         .cart-icon { position: relative; cursor: pointer; color: #fff; font-size: 20px; text-decoration: none; }
         .cart-count { position: absolute; top: -10px; right: -12px; background: #ff3333; color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
-        .cart-count.active { display: flex; }
+        .cart-count.active { display: flex; animation: pop 0.3s ease; }
+        @keyframes pop { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        .hero { min-height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .hero-content { max-width: 850px; padding: 0 20px; }
-        .hero h1 { font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85; color: #fff; margin-bottom: 20px; text-transform: uppercase; }
+        .hero {
+            min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            position: relative; overflow: hidden;
+            background: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a);
+        }
+        .hero-content { max-width: 850px; padding: 0 20px; position: relative; z-index: 2; }
+        .hero h1 {
+            font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85;
+            color: #fff; margin-bottom: 20px; text-transform: uppercase;
+            cursor: pointer; user-select: none;
+        }
         .hero h1 .outline { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px #666; }
         .hero .subtitle { font-size: 14px; letter-spacing: 8px; color: #666; margin-bottom: 40px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .btn { display: inline-block; padding: 15px 38px; font-weight: 600; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; cursor: pointer; border: none; font-family: 'Russo One', sans-serif; }
+        .btn {
+            display: inline-block; padding: 15px 38px; font-weight: 600; font-size: 10px; letter-spacing: 3px;
+            text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px;
+            cursor: pointer; border: none; font-family: 'Russo One', sans-serif;
+            position: relative; overflow: hidden;
+        }
         .btn-white { background: #fff; color: #0a0a0a; }
-        .btn-white:hover { background: #ccc; transform: translateY(-2px); }
+        .btn-white:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,255,255,0.5); }
         .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
-        .btn-outline:hover { border-color: #fff; transform: translateY(-2px); }
+        .btn-outline:hover { border-color: #fff; transform: translateY(-2px); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
         .btn-red { background: #ff3333; color: #fff; }
-        .btn-red:hover { background: #cc0000; transform: translateY(-2px); }
+        .btn-red:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 0 15px rgba(255,51,51,0.6); }
         .btn-gray { background: #222; color: #555; cursor: not-allowed; }
         .btn-vk { background: #0077ff; color: #fff; }
-        .btn-vk:hover { background: #0066dd; transform: translateY(-2px); }
+        .btn-vk:hover { background: #0066dd; transform: translateY(-2px); box-shadow: 0 0 15px rgba(0,119,255,0.6); }
 
         .marquee { background: #0d0d0d; padding: 14px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .marquee span { display: inline-block; animation: marquee 18s linear infinite; font-size: 10px; letter-spacing: 4px; color: #666; text-transform: uppercase; }
@@ -73,14 +113,20 @@
         .category-btn { display: block; width: 100%; padding: 14px 20px; text-align: left; background: none; border: none; color: #777; font-family: 'Russo One', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; border-left: 2px solid transparent; text-transform: uppercase; }
         .category-btn:hover { color: #fff; background: #121212; }
         .category-btn.active { color: #fff; background: #121212; border-left-color: #fff; }
-        .category-btn .count { color: #ccc; font-size: 12px; float: right; margin-top: 1px; font-weight: 400; letter-spacing: 0; }  /* стало ярче */
+        .category-btn .count { color: #ccc; font-size: 12px; float: right; margin-top: 1px; font-weight: 400; letter-spacing: 0; }
 
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; flex: 1; }
-        .card { background: #0c0c0c; transition: all 0.3s; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer; }
-        .card:hover { background: #121212; border-color: rgba(255,255,255,0.1); }
+        .card {
+            background: #0c0c0c; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); position: relative; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer;
+            opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .card.revealed { opacity: 1; transform: translateY(0); }
+        .card:hover { background: #121212; border-color: rgba(255,255,255,0.1); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .card.sold-out { opacity: 0.5; pointer-events: none; }
         .card-img { height: 300px; display: flex; align-items: center; justify-content: center; position: relative; background: #080808; overflow: hidden; }
-        .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
+        .card:hover .card-img img { transform: scale(1.05); }
         .card-img .img-placeholder { font-size: 60px; }
         .card-tag { position: absolute; top: 12px; left: 12px; background: #fff; color: #0a0a0a; padding: 4px 10px; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; z-index: 2; font-family: 'Inter', sans-serif; }
         .card-tag.sold { background: #ff3333; color: #fff; }
@@ -94,14 +140,14 @@
         .card-body .sizes { font-size: 11px; color: #777; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
         .card-body .price { font-size: 14px; font-weight: 600; color: #aaa; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
         .btn-cart { display: block; width: 100%; padding: 10px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.15); font-family: 'Russo One', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-        .btn-cart:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
+        .btn-cart:hover { background: #fff; color: #0a0a0a; border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         .btn-cart.in-cart { background: #ff3333; border-color: #ff3333; color: #fff; }
         .no-products { text-align: center; padding: 60px; color: #555; font-size: 14px; letter-spacing: 2px; width: 100%; font-family: 'Inter', sans-serif; }
         .loading-text { text-align: center; padding: 60px; color: #666; font-family: 'Inter', sans-serif; }
 
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; }
         .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; }
-        .delivery-card:hover { background: #121212; }
+        .delivery-card:hover { background: #121212; transform: translateY(-3px); }
         .delivery-card .icon { font-size: 34px; margin-bottom: 22px; opacity: 0.5; }
         .delivery-card h3 { font-size: 14px; font-weight: 400; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; color: #fff; }
         .delivery-card p { color: #777; font-size: 12px; line-height: 1.8; font-family: 'Inter', sans-serif; }
@@ -114,23 +160,27 @@
         .social-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .btn-social { display: inline-block; padding: 14px 35px; font-weight: 600; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; font-family: 'Russo One', sans-serif; }
         .btn-vk { background: #0077ff; color: #fff; }
-        .btn-vk:hover { background: #0066dd; transform: translateY(-2px); }
+        .btn-vk:hover { background: #0066dd; transform: translateY(-2px); box-shadow: 0 0 15px rgba(0,119,255,0.6); }
         .btn-tg { background: #2b9ef1; color: #fff; }
-        .btn-tg:hover { background: #2390dd; transform: translateY(-2px); }
+        .btn-tg:hover { background: #2390dd; transform: translateY(-2px); box-shadow: 0 0 15px rgba(43,158,241,0.6); }
 
-        .cart-panel { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #1a1a1a; border-radius: 20px 20px 0 0; padding: 25px; z-index: 999; transition: bottom 0.3s; border: 1px solid rgba(255,255,255,0.1); border-bottom: none; }
+        .cart-panel { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #1a1a1a; border-radius: 20px 20px 0 0; padding: 25px; z-index: 999; transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2); border: 1px solid rgba(255,255,255,0.1); border-bottom: none; }
         .cart-panel.open { bottom: 0; }
         .cart-panel h3 { font-size: 16px; font-weight: 400; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
         .cart-items { max-height: 200px; overflow-y: auto; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
-        .cart-item .remove { color: #ff3333; cursor: pointer; font-size: 16px; padding: 5px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; transition: background 0.2s; }
+        .cart-item:hover { background: rgba(255,255,255,0.02); }
+        .cart-item .remove { color: #ff3333; cursor: pointer; font-size: 16px; padding: 5px; transition: transform 0.2s; }
+        .cart-item .remove:hover { transform: scale(1.3); }
         .cart-total { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 15px; text-align: right; font-family: 'Inter', sans-serif; }
         .cart-empty { color: #666; text-align: center; padding: 20px; font-size: 13px; font-family: 'Inter', sans-serif; }
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
         .cart-overlay.open { display: block; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
+        .modal-overlay.active .modal { transform: scale(1); }
         .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
         .modal-img { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #080808; }
         .modal-title { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 5px; }
@@ -142,13 +192,13 @@
         .modal-description { color: #888; font-size: 13px; line-height: 1.6; margin-bottom: 20px; font-family: 'Inter', sans-serif; }
         .modal-stock { font-size: 12px; color: #666; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
         .modal-add-btn { width: 100%; padding: 12px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Russo One', sans-serif; }
-        .modal-add-btn:hover { background: #ccc; }
+        .modal-add-btn:hover { background: #ccc; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
 
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; }
-        .scroll-top:hover { opacity: 1; transform: translateY(-3px); }
+        .scroll-top:hover { opacity: 1; transform: translateY(-3px); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 12px; }
@@ -174,7 +224,7 @@
 </head>
 <body>
 
-<header>
+<header id="main-header">
     <div class="logo-block">
         <div class="logo-icon">🦍</div>
         <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
@@ -189,9 +239,10 @@
     </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="hero">
+    <canvas id="particles-canvas"></canvas>
     <div class="hero-content">
-        <h1>GOR<span class="outline">ILLA</span></h1>
+        <h1 id="glitch-title">GOR<span class="outline">ILLA</span></h1>
         <p class="subtitle">Уличная эстетика • Омск</p>
         <div class="btn-group">
             <a href="#catalog" class="btn btn-white">Смотреть дроп</a>
@@ -257,7 +308,7 @@
 <footer><p>© 2024 GORILLA STREETWEAR • OMSK</p></footer>
 <a href="#" class="scroll-top">↑</a>
 
-<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
     <div class="modal" id="modalBox" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeModal()">✕</button>
         <img class="modal-img" id="modalImg" src="" alt="">
@@ -293,6 +344,90 @@
     let currentModalProduct = null;
     let selectedSize = null;
 
+    // Glitch-эффект по клику/интервалу
+    const glitchTitle = document.getElementById('glitch-title');
+    if (glitchTitle) {
+        setInterval(() => {
+            glitchTitle.classList.add('glitch-active');
+            setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300);
+        }, 4000); // раз в 4 секунды
+        glitchTitle.addEventListener('click', () => {
+            glitchTitle.classList.add('glitch-active');
+            setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300);
+        });
+    }
+
+    // Частицы на фоне hero
+    (function() {
+        const canvas = document.getElementById('particles-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const maxParticles = 60;
+
+        function resize() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = Math.random() * 0.5 + 0.2;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < -10) {
+                    this.y = canvas.height + 10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        while (particles.length < maxParticles) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('main-header');
+        if (header) header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Intersection Observer для анимации карточек
+    function observeCards() {
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        cards.forEach(card => observer.observe(card));
+    }
+
     async function loadProducts() {
         const grid = document.getElementById('catalogGrid');
         grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>';
@@ -304,6 +439,8 @@
             renderCategories();
             renderCatalog();
             updateCart();
+            // после рендера запускаем наблюдение
+            setTimeout(observeCards, 100);
         } catch (error) {
             console.error('Ошибка загрузки CSV:', error);
             grid.innerHTML = '<div class="no-products">⚠️ Не удалось загрузить товары. Проверьте подключение или таблицу.</div>';
@@ -375,6 +512,7 @@
         activeCategory = catId;
         renderCategories();
         renderCatalog();
+        setTimeout(observeCards, 100);
     }
 
     function openModal(product) {
@@ -417,12 +555,12 @@
             addBtn.textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
         }
 
-        document.getElementById('modalOverlay').style.display = 'flex';
+        document.getElementById('modalOverlay').classList.add('active');
     }
 
     function closeModal(event) {
         if (event && event.target !== document.getElementById('modalOverlay')) return;
-        document.getElementById('modalOverlay').style.display = 'none';
+        document.getElementById('modalOverlay').classList.remove('active');
         currentModalProduct = null;
     }
 
@@ -450,6 +588,7 @@
         saveCart();
         updateCart();
         renderCatalog();
+        setTimeout(observeCards, 100);
         const inCart = cart.find(i => i.id === currentModalProduct.id && i.size === size);
         document.getElementById('modalAddBtn').textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
     }
