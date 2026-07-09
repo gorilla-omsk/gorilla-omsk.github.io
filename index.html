@@ -18,6 +18,7 @@
             line-height: 1.5;
         }
 
+        /* Glitch-анимация для заголовка */
         @keyframes glitch {
             0% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(0); }
             20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
@@ -26,21 +27,17 @@
             80% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(2px, -2px); }
             100% { text-shadow: none; transform: translate(0); }
         }
-        .glitch-active {
-            animation: glitch 0.3s ease-in-out;
-        }
+        .glitch-active { animation: glitch 0.3s ease-in-out; }
 
         #particles-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 3;
         }
 
-        h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title, .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3, .delivery-card h3, .categories-menu h4 {
+        /* Основные шрифты */
+        h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title,
+        .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3,
+        .delivery-card h3, .categories-menu h4 {
             font-family: 'Russo One', sans-serif;
             font-weight: 400;
             letter-spacing: 1px;
@@ -56,7 +53,7 @@
 
         .logo-block { display: flex; align-items: center; gap: 10px; }
         .logo-icon { font-size: 26px; }
-        .logo-text { font-size: 26px; font-weight: 400; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+        .logo-text { font-size: 26px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
         .logo-text span { color: #777; font-weight: 400; font-size: 10px; display: block; letter-spacing: 5px; font-family: 'Inter', sans-serif; }
         nav { display: flex; gap: 20px; align-items: center; }
         nav a { color: #888; text-decoration: none; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; transition: color 0.3s; font-family: 'Inter', sans-serif; }
@@ -68,32 +65,15 @@
 
         /* Hero с параллаксом */
         .hero {
-            position: relative;
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-            background: #0a0a0a; /* фолбэк */
+            position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden; background: #0a0a0a;
         }
         .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120%; /* немного выходит за пределы для параллакса */
-            background-image: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a);
-            will-change: transform;
-            z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 120%;
+            background: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a);
+            will-change: transform; z-index: 1;
         }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 850px;
-            padding: 0 20px;
-            will-change: transform;
-        }
+        .hero-content { position: relative; z-index: 2; max-width: 850px; padding: 0 20px; will-change: transform; }
         .hero h1 { font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85; color: #fff; margin-bottom: 20px; text-transform: uppercase; cursor: pointer; user-select: none; }
         .hero h1 .outline { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px #666; }
         .hero .subtitle { font-size: 14px; letter-spacing: 8px; color: #666; margin-bottom: 40px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
@@ -274,7 +254,7 @@
 </section>
 
 <div class="marquee">
-    <span id="marquee-text">🦍 GORILLA • OMSK • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍</span>
+    <span id="marquee-text">🦍 GORILLA • OMSK • 🌡️ Загрузка погоды... • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍</span>
 </div>
 
 <section class="section" id="catalog">
@@ -346,6 +326,7 @@
 <div class="toast" id="toast">Текст заказа скопирован! Вставьте в чат ВК</div>
 
 <script>
+    // ---------- КОНФИГУРАЦИЯ ----------
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
     const IMAGES_PATH = 'images/';
 
@@ -367,40 +348,31 @@
     let currentModalProduct = null;
     let selectedSize = null;
 
+    // ---------- ПОГОДА (wttr.in) ----------
+    async function fetchWeather() {
+        const marqueeSpan = document.getElementById('marquee-text');
+        marqueeSpan.textContent = '🦍 GORILLA • OMSK • 🌡️ Загрузка погоды... • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍';
+        try {
+            const response = await fetch('https://wttr.in/Omsk?format=%t+%C');
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const weatherText = (await response.text()).trim();
+            marqueeSpan.textContent = `🦍 GORILLA • OMSK • ${weatherText} • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍`;
+        } catch (e) {
+            console.warn('Погода не получена:', e.message);
+            marqueeSpan.textContent = '🦍 GORILLA • OMSK • 🌡️ Погода недоступна • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍';
+            setTimeout(fetchWeather, 5000); // повторная попытка
+        }
+    }
+    window.addEventListener('DOMContentLoaded', fetchWeather);
+
     // ---------- ПАРАЛЛАКС ----------
     const heroBg = document.getElementById('hero-bg');
     const heroContent = document.getElementById('hero-content');
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-        // Фон двигается медленнее
         if (heroBg) heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
-        // Контент двигается чуть быстрее
         if (heroContent) heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
     });
-
-   // ---------- ПОГОДА (через wttr.in) ----------
-async function fetchWeather() {
-    const marqueeSpan = document.getElementById('marquee-text');
-    // Показываем, что идёт загрузка
-    marqueeSpan.textContent = '🦍 GORILLA • OMSK • 🌡️ Загрузка погоды... • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍';
-
-    try {
-        // wttr.in возвращает строку вида "+22°C ☀️" для Омска
-        const response = await fetch('https://wttr.in/Omsk?format=%t+%C');
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        const weatherText = (await response.text()).trim();
-        // Вставляем погоду в бегущую строку
-        marqueeSpan.textContent = `🦍 GORILLA • OMSK • ${weatherText} • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍`;
-    } catch (e) {
-        console.warn('⚠️ Погода не получена:', e.message);
-        marqueeSpan.textContent = '🦍 GORILLA • OMSK • 🌡️ Погода недоступна • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍';
-        // Повторная попытка через 5 секунд
-        setTimeout(fetchWeather, 5000);
-    }
-}
-
-// Запускаем погоду после загрузки DOM
-window.addEventListener('DOMContentLoaded', fetchWeather);
 
     // ---------- GLITCH ----------
     const glitchTitle = document.getElementById('glitch-title');
@@ -415,7 +387,7 @@ window.addEventListener('DOMContentLoaded', fetchWeather);
         });
     }
 
-    // ---------- PARTICLES ----------
+    // ---------- ЧАСТИЦЫ ----------
     (function() {
         const canvas = document.getElementById('particles-canvas');
         if (!canvas) return;
@@ -460,13 +432,13 @@ window.addEventListener('DOMContentLoaded', fetchWeather);
         animate();
     })();
 
-    // ---------- HEADER SCROLL EFFECT ----------
+    // ---------- HEADER SCROLL ----------
     window.addEventListener('scroll', () => {
         const header = document.getElementById('main-header');
         if (header) header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // ---------- OBSERVER для карточек ----------
+    // ---------- OBSERVER ДЛЯ КАРТОЧЕК ----------
     function observeCards() {
         const cards = document.querySelectorAll('.card');
         const observer = new IntersectionObserver((entries) => {
@@ -512,9 +484,7 @@ window.addEventListener('DOMContentLoaded', fetchWeather);
             if (values.length < headers.length) continue;
 
             const item = {};
-            headers.forEach((header, idx) => {
-                item[header] = values[idx] || '';
-            });
+            headers.forEach((header, idx) => { item[header] = values[idx] || ''; });
 
             item.id = item.id || '';
             item.price = parseInt(item.price) || 0;
@@ -578,7 +548,7 @@ window.addEventListener('DOMContentLoaded', fetchWeather);
         document.getElementById('modalColor').innerHTML = product.color ? `Цвет: <span class="color-dot" style="background-color:${product.color};"></span> ${product.color}` : '';
         document.getElementById('modalDesc').textContent = product.description || 'Описание отсутствует';
         document.getElementById('modalStock').textContent = product.stock > 0 ? `В наличии: ${product.stock} шт` : 'Нет в наличии';
-        
+
         const sizeContainer = document.getElementById('modalSizes');
         sizeContainer.innerHTML = '';
         if (product.sizes && product.sizes.length > 0) {
@@ -679,6 +649,7 @@ window.addEventListener('DOMContentLoaded', fetchWeather);
         }).join('');
     }
 
+    // ---------- КОРЗИНА ----------
     function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
 
     function removeFromCart(id, size) {
@@ -752,7 +723,7 @@ window.addEventListener('DOMContentLoaded', fetchWeather);
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
         copyToClipboard(msg).then(() => {
-            showToast('Текст заказа скопирован! Вставьте его в чат ВК');
+            showToast('Текст заказа скопирован! Вставьте в чат ВК');
             window.open('https://vk.me/gorillaomsk', '_blank');
         }).catch(() => {
             showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную');
@@ -760,6 +731,7 @@ window.addEventListener('DOMContentLoaded', fetchWeather);
         });
     }
 
+    // ---------- ЗАПУСК ----------
     loadProducts();
 </script>
 
