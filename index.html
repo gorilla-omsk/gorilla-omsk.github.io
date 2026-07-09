@@ -16,7 +16,7 @@
             color: #d0d0d0;
             overflow-x: hidden;
             line-height: 1.5;
-            -webkit-tap-highlight-color: transparent; /* убираем синюю подсветку при тапе */
+            -webkit-tap-highlight-color: transparent;
         }
 
         @keyframes glitch {
@@ -127,7 +127,7 @@
             width: 32px; height: 32px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.2s;
-            touch-action: manipulation; /* ускорение тапа */
+            touch-action: manipulation;
         }
         .favorite-btn:active { transform: scale(1.3); }
         .favorite-btn:hover { transform: scale(1.2); }
@@ -199,7 +199,6 @@
         .modal-add-btn:hover { background: #ccc; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
         
-        /* Самая важная кнопка — теперь точно кликабельная вся */
         .modal-cart-btn {
             width: 100%;
             padding: 16px;
@@ -215,9 +214,9 @@
             font-family: 'Russo One', sans-serif;
             transition: all 0.3s;
             position: relative;
-            z-index: 10;            /* гарантированно поверх всего в модалке */
+            z-index: 10;
             touch-action: manipulation;
-            -webkit-appearance: none; /* убираем стандартные стили iOS */
+            -webkit-appearance: none;
         }
         .modal-cart-btn:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
         .modal-cart-btn:active { background: #ccc; transform: scale(0.96); }
@@ -427,7 +426,6 @@
         }
     }
 
-    // ---------- ПАРАЛЛАКС / GLITCH / ЧАСТИЦЫ ----------
     const heroBg = document.getElementById('hero-bg');
     const heroContent = document.getElementById('hero-content');
     window.addEventListener('scroll', () => {
@@ -507,7 +505,6 @@
         cards.forEach(card => observer.observe(card));
     }
 
-    // ---------- ЗАГРУЗКА ТОВАРОВ ----------
     async function loadProducts() {
         const grid = document.getElementById('catalogGrid');
         grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>';
@@ -665,20 +662,11 @@
         document.getElementById('modalAddBtn').textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
     }
 
-    // ✅ Полностью переписанная функция перехода в корзину
     function goToCartFromModal() {
-        // Сначала гарантированно закрываем модальное окно
         document.getElementById('modalOverlay').classList.remove('active');
         currentModalProduct = null;
-        
-        // Даём телефону завершить анимацию закрытия, затем открываем корзину
         setTimeout(() => {
             toggleCart();
-            if (cart.length > 0) {
-                showToast('🛒 Корзина открыта');
-            } else {
-                showToast('Корзина пуста');
-            }
         }, 100);
     }
 
