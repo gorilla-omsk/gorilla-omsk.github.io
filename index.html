@@ -57,6 +57,7 @@
         header.scrolled { background: rgba(10,10,10,0.98); }
 
         .logo-block { display: flex; align-items: center; gap: 10px; }
+        .logo-img { height: 40px; vertical-align: middle; }
         .logo-text { font-size: 26px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
         .logo-text span { color: #777; font-weight: 400; font-size: 10px; display: block; letter-spacing: 5px; font-family: 'Inter', sans-serif; }
         nav { display: flex; gap: 20px; align-items: center; }
@@ -266,7 +267,9 @@
 
 <header id="main-header">
     <div class="logo-block">
-        <img src="Gorillaava.png" alt="GORILLA" style="height: 40px; vertical-align: middle;">
+        <!-- Если картинка не загрузится, покажется текст -->
+        <img src="Gorillaava.png" alt="GORILLA" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+        <span style="display:none; font-size:26px; color:#fff;">🦍</span>
         <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
     </div>
     <nav>
@@ -722,6 +725,7 @@
         saveCart(); updateCart();
     }
 
+    // ★ Гарантированная очистка корзины без confirm
     function clearCart() {
         if (cart.length === 0) return;
         cart = [];
