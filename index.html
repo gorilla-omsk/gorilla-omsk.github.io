@@ -70,20 +70,25 @@
         .card { background: #0c0c0c; transition: all 0.3s; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; }
         .card:hover { background: #121212; border-color: rgba(255,255,255,0.1); }
         .card.sold-out { opacity: 0.5; pointer-events: none; }
-        .card-img { height: 300px; display: flex; align-items: center; justify-content: center; font-size: 60px; position: relative; background: #080808; }
+        .card-img { height: 300px; display: flex; align-items: center; justify-content: center; position: relative; background: #080808; overflow: hidden; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .card-img .img-placeholder { font-size: 60px; }
         .card-tag { position: absolute; top: 12px; left: 12px; background: #fff; color: #0a0a0a; padding: 4px 10px; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; z-index: 2; }
         .card-tag.sold { background: #ff3333; color: #fff; }
-        .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #666; font-size: 10px; letter-spacing: 1px; z-index: 2; }
+        .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #666; font-size: 10px; letter-spacing: 1px; z-index: 2; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; }
         .stock-badge.low { color: #ff9933; }
         .stock-badge.out { color: #ff3333; }
         .card-body { padding: 20px; }
         .card-body h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #fff; }
-        .card-body .category { color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        .card-body .category { color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+        .card-body .color-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: middle; border: 1px solid rgba(255,255,255,0.3); }
+        .card-body .sizes { font-size: 11px; color: #777; margin-bottom: 10px; }
         .card-body .price { font-size: 14px; font-weight: 600; color: #aaa; margin-bottom: 12px; }
         .btn-cart { display: block; width: 100%; padding: 10px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.15); font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
         .btn-cart:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
         .btn-cart.in-cart { background: #ff3333; border-color: #ff3333; color: #fff; }
         .no-products { text-align: center; padding: 60px; color: #555; font-size: 14px; letter-spacing: 2px; width: 100%; }
+        .loading-text { text-align: center; padding: 60px; color: #666; }
 
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; }
         .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; }
@@ -134,7 +139,8 @@
             .category-btn.active { border-left: none; border-bottom-color: #fff; }
             .category-btn .count { display: none; }
             .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
-            .card-img { height: 200px; font-size: 40px; }
+            .card-img { height: 200px; }
+            .card-img .img-placeholder { font-size: 40px; }
             .card-body { padding: 12px; }
             .card-body h3 { font-size: 13px; }
             .cart-panel { max-width: 100%; }
@@ -153,7 +159,7 @@
         <a href="#delivery">Доставка</a>
         <a href="#contacts">Контакты</a>
         <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener">VK</a>
-        <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" rel="noopener">TG</a>
+        <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener">TG</a>
         <a href="#" class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></a>
     </nav>
 </header>
@@ -164,7 +170,7 @@
         <p class="subtitle">Уличная эстетика • Омск</p>
         <div class="btn-group">
             <a href="#catalog" class="btn btn-white">Смотреть дроп</a>
-            <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" rel="noopener" class="btn btn-outline">Telegram</a>
+            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">Telegram</a>
             <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">VK</a>
         </div>
     </div>
@@ -180,7 +186,9 @@
     <p class="section-subtitle">Выбери категорию</p>
     <div class="catalog-wrapper">
         <div class="categories-menu" id="categoriesMenu"></div>
-        <div class="catalog-grid" id="catalogGrid"></div>
+        <div class="catalog-grid" id="catalogGrid">
+            <div class="loading-text">Загрузка товаров...</div>
+        </div>
     </div>
 </section>
 
@@ -206,7 +214,7 @@
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
         <div class="social-btns">
             <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-vk">📱 ВКонтакте</a>
-            <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a>
+            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a>
         </div>
     </div>
 </section>
@@ -224,7 +232,13 @@
 <a href="#" class="scroll-top">↑</a>
 
 <script>
-    // Категории
+    // ================== КОНФИГУРАЦИЯ ==================
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
+    const IMAGES_PATH = 'images/';
+    // Возможные расширения фото (для поиска первого подходящего)
+    const IMG_EXTENSIONS = ['.jpg', '.png', '.webp'];
+
+    // Категории (соответствуют значениям в колонке "category")
     const categories = [
         { id: 'all', name: 'Все товары', emoji: '🦍' },
         { id: 'shorts', name: 'Шорты', emoji: '🩳' },
@@ -237,36 +251,82 @@
         { id: 'pants', name: 'Штаны / Брюки / Джинсы', emoji: '👖' }
     ];
 
-    // Товары
-    const products = [
-        { id: 1,  name: 'Шорты уличные',       category: 'shorts',       price: 2490,  emoji: '🩳', tag: 'Новинка', stock: 8 },
-        { id: 2,  name: 'Шорты спортивные',    category: 'shorts',       price: 1990,  emoji: '🩳', tag: 'Хит',     stock: 5 },
-        { id: 3,  name: 'Костюм спортивный',   category: 'suits',        price: 5990,  emoji: '🏃', tag: 'Хит',     stock: 4 },
-        { id: 4,  name: 'Костюм оверсайз',     category: 'suits',        price: 6990,  emoji: '🏃', tag: 'Новинка', stock: 3 },
-        { id: 5,  name: 'Кроссовки Urban',     category: 'shoes',        price: 7990,  emoji: '👟', tag: 'Хит',     stock: 6 },
-        { id: 6,  name: 'Кроссовки белые',     category: 'shoes',        price: 6990,  emoji: '👟', tag: 'Новинка', stock: 4 },
-        { id: 7,  name: 'Кепка Snap',          category: 'accessories',  price: 1990,  emoji: '🧢', tag: 'Новинка', stock: 10 },
-        { id: 8,  name: 'Рюкзак уличный',      category: 'accessories',  price: 3490,  emoji: '🎒', tag: 'Хит',     stock: 3 },
-        { id: 9,  name: 'Носки (3 пары)',      category: 'accessories',  price: 890,   emoji: '🧦', tag: '',        stock: 20 },
-        { id: 10, name: 'Футболка Bold',       category: 'tshirts',      price: 2490,  emoji: '👕', tag: 'Хит',     stock: 12 },
-        { id: 11, name: 'Рубашка оверсайз',    category: 'tshirts',      price: 3490,  emoji: '👔', tag: 'Новинка', stock: 5 },
-        { id: 12, name: 'Футболка Print',      category: 'tshirts',      price: 1990,  emoji: '👕', tag: '',        stock: 0 },
-        { id: 13, name: 'Куртка Bomber',       category: 'jackets',      price: 8990,  emoji: '🧥', tag: 'Хит',     stock: 3 },
-        { id: 14, name: 'Ветровка лёгкая',     category: 'jackets',      price: 5490,  emoji: '🧥', tag: 'Новинка', stock: 6 },
-        { id: 15, name: 'Худи Original',       category: 'hoodies',      price: 4990,  emoji: '🦍', tag: 'Хит',     stock: 5 },
-        { id: 16, name: 'Свитшот уличный',     category: 'hoodies',      price: 3490,  emoji: '🦍', tag: 'Новинка', stock: 7 },
-        { id: 17, name: 'Худи оверсайз',       category: 'hoodies',      price: 5490,  emoji: '🦍', tag: '',        stock: 4 },
-        { id: 18, name: 'Штаны Cargo',         category: 'pants',        price: 3990,  emoji: '👖', tag: 'Хит',     stock: 6 },
-        { id: 19, name: 'Джинсы мом',          category: 'pants',        price: 4490,  emoji: '👖', tag: 'Новинка', stock: 0 },
-        { id: 20, name: 'Брюки широкие',       category: 'pants',        price: 3490,  emoji: '👖', tag: '',        stock: 8 },
-        { id: 99, name: '🧪 ТЕСТОВЫЙ ТОВАР',   category: 'accessories',  price: 100,   emoji: '🧪', tag: 'Тест',    stock: 999 }
-    ];
-
+    let products = [];
     let cart = JSON.parse(localStorage.getItem('gorillaCart')) || [];
     let activeCategory = 'all';
 
-    function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
+    // ================== ЗАГРУЗКА CSV ==================
+    async function loadProducts() {
+        const grid = document.getElementById('catalogGrid');
+        grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>';
+        try {
+            const response = await fetch(CSV_URL);
+            if (!response.ok) throw new Error(`Ошибка HTTP: ${response.status}`);
+            const csvText = await response.text();
+            products = parseCSV(csvText);
+            renderCategories();
+            renderCatalog();
+            updateCart();
+        } catch (error) {
+            console.error('Ошибка загрузки CSV:', error);
+            grid.innerHTML = '<div class="no-products">⚠️ Не удалось загрузить товары. Проверьте подключение или таблицу.</div>';
+        }
+    }
 
+    function parseCSV(csv) {
+        const lines = csv.trim().split('\n');
+        if (lines.length < 2) return [];
+        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+        // Ожидаемые колонки: id, name, category, price, sizes, color, stock, photo_id, description
+        const result = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',').map(v => v.trim());
+            if (values.length < headers.length) continue; // пропускаем битые строки
+            const item = {};
+            headers.forEach((header, idx) => {
+                item[header] = values[idx] || '';
+            });
+            // Приводим типы
+            item.id = item.id || '';
+            item.price = parseInt(item.price) || 0;
+            item.stock = parseInt(item.stock) || 0;
+            item.photo_id = item.photo_id || '';
+            item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()) : [];
+            item.color = item.color || '';
+            item.description = item.description || '';
+            if (item.id && item.name) result.push(item);
+        }
+        return result;
+    }
+
+    // Получить URL фото по photo_id (проверяет несколько расширений, берёт первое доступное)
+    function getPhotoURL(photoId) {
+        if (!photoId) return null;
+        // Сначала пытаемся загрузить .jpg, потом .png, потом .webp
+        // Так как мы не можем проверить наличие файла на клиенте без сервера,
+        // используем .jpg по умолчанию. При желании можно добавить onerror и подставлять другое расширение.
+        return `${IMAGES_PATH}${photoId}.jpg`;
+    }
+
+    // Обработчик ошибки загрузки изображения — подставляет плейсхолдер
+    function imgError(img, photoId) {
+        // Пробуем другие расширения (если не .jpg)
+        const src = img.src;
+        if (src.endsWith('.jpg')) {
+            img.src = `${IMAGES_PATH}${photoId}.png`;
+        } else if (src.endsWith('.png')) {
+            img.src = `${IMAGES_PATH}${photoId}.webp`;
+        } else {
+            // Все варианты не сработали — показываем эмодзи
+            img.style.display = 'none';
+            const placeholder = document.createElement('span');
+            placeholder.className = 'img-placeholder';
+            placeholder.textContent = '🦍';
+            img.parentNode.appendChild(placeholder);
+        }
+    }
+
+    // ================== ОТРИСОВКА ==================
     function renderCategories() {
         const menu = document.getElementById('categoriesMenu');
         let html = '<h4>Категории</h4>';
@@ -296,20 +356,40 @@
             const lowStock = p.stock > 0 && p.stock <= 3;
             const stockText = soldOut ? 'SOLD OUT' : lowStock ? `Осталось: ${p.stock} шт` : `В наличии: ${p.stock} шт`;
             const stockClass = soldOut ? 'out' : lowStock ? 'low' : '';
-            const catName = categories.find(c => c.id === p.category)?.name || '';
+            const catName = categories.find(c => c.id === p.category)?.name || p.category || '';
+            const sizesStr = p.sizes && p.sizes.length ? p.sizes.join(', ') : '';
+            const colorDot = p.color ? `<span class="color-dot" style="background-color:${p.color};" title="${p.color}"></span>` : '';
+            const photoUrl = getPhotoURL(p.photo_id);
+
             return `<div class="card${soldOut ? ' sold-out' : ''}">
-                <div class="card-img"><span>${p.emoji}</span><div class="card-tag${soldOut ? ' sold' : ''}">${soldOut ? 'SOLD OUT' : p.tag || ''}</div><span class="stock-badge ${stockClass}">${stockText}</span></div>
-                <div class="card-body"><h3>${p.name}</h3><p class="category">${catName}</p><p class="price">${p.price.toLocaleString()} ₽</p>${soldOut ? '<button class="btn btn-gray" disabled>Нет в наличии</button>' : `<button class="btn-cart${inCart ? ' in-cart' : ''}" onclick="toggleItem(${p.id})">${inCart ? '✓ В корзине' : 'Добавить в корзину'}</button>`}</div>
+                <div class="card-img">
+                    ${photoUrl ? `<img src="${photoUrl}" alt="${p.name}" onerror="imgError(this, '${p.photo_id}')">` : '<span class="img-placeholder">🦍</span>'}
+                    <div class="card-tag${soldOut ? ' sold' : ''}">${soldOut ? 'SOLD OUT' : (p.tag || '')}</div>
+                    <span class="stock-badge ${stockClass}">${stockText}</span>
+                </div>
+                <div class="card-body">
+                    <h3>${p.name} ${colorDot}</h3>
+                    <p class="category">${catName}</p>
+                    ${sizesStr ? `<p class="sizes">Размеры: ${sizesStr}</p>` : ''}
+                    <p class="price">${p.price.toLocaleString()} ₽</p>
+                    ${soldOut ? '<button class="btn btn-gray" disabled>Нет в наличии</button>' : `<button class="btn-cart${inCart ? ' in-cart' : ''}" onclick="toggleItem('${p.id}')">${inCart ? '✓ В корзине' : 'Добавить в корзину'}</button>`}
+                </div>
             </div>`;
         }).join('');
     }
+
+    // ================== КОРЗИНА ==================
+    function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
 
     function toggleItem(id) {
         const product = products.find(p => p.id === id);
         if (!product || product.stock === 0) return;
         const item = cart.find(i => i.id === id);
-        if (item) { cart = cart.filter(i => i.id !== id); }
-        else { cart.push({ id: product.id, name: product.name, price: product.price, emoji: product.emoji }); }
+        if (item) {
+            cart = cart.filter(i => i.id !== id);
+        } else {
+            cart.push({ id: product.id, name: product.name, price: product.price, sizes: product.sizes, color: product.color, photo_id: product.photo_id });
+        }
         saveCart(); updateCart(); renderCatalog();
     }
 
@@ -323,25 +403,32 @@
         const total = document.getElementById('cartTotal');
         count.textContent = cart.length;
         cart.length > 0 ? count.classList.add('active') : count.classList.remove('active');
-        if (cart.length === 0) { items.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; total.textContent = 'Итого: 0 ₽'; }
-        else {
-            items.innerHTML = cart.map(i => `<div class="cart-item"><span>${i.emoji} ${i.name}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart(${i.id})">✕</span></span></div>`).join('');
+        if (cart.length === 0) {
+            items.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
+            total.textContent = 'Итого: 0 ₽';
+        } else {
+            items.innerHTML = cart.map(i => {
+                const sizeInfo = i.sizes && i.sizes.length ? ` (${i.sizes.join(',')})` : '';
+                const colorInfo = i.color ? ` [${i.color}]` : '';
+                return `<div class="cart-item"><span>${i.name}${colorInfo}${sizeInfo}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}')">✕</span></span></div>`;
+            }).join('');
             total.textContent = `Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽`;
         }
     }
 
-    function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); document.getElementById('cartOverlay').classList.toggle('open'); }
+    function toggleCart() {
+        document.getElementById('cartPanel').classList.toggle('open');
+        document.getElementById('cartOverlay').classList.toggle('open');
+    }
 
     function checkout() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
-        const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
-        window.open(`https://t.me/gorilla_omsk_shop_bot?direct&text=${encodeURIComponent(msg)}`, '_blank');
+        const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.sizes ? ' ('+i.sizes.join(',')+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
+        window.open(`https://t.me/gorillaomsk?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // Запуск
-    renderCategories();
-    renderCatalog();
-    updateCart();
+    // ================== ЗАПУСК ==================
+    loadProducts();
 </script>
 
 </body>
