@@ -18,7 +18,6 @@
             line-height: 1.5;
         }
 
-        /* Glitch-эффект для заголовка */
         @keyframes glitch {
             0% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(0); }
             20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
@@ -31,7 +30,6 @@
             animation: glitch 0.3s ease-in-out;
         }
 
-        /* Hero-частицы (canvas) */
         #particles-canvas {
             position: absolute;
             top: 0;
@@ -41,7 +39,6 @@
             pointer-events: none;
         }
 
-        /* Заголовки, кнопки, логотип — уличный шрифт */
         h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title, .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3, .delivery-card h3, .categories-menu h4 {
             font-family: 'Russo One', sans-serif;
             font-weight: 400;
@@ -74,20 +71,11 @@
             background: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a);
         }
         .hero-content { max-width: 850px; padding: 0 20px; position: relative; z-index: 2; }
-        .hero h1 {
-            font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85;
-            color: #fff; margin-bottom: 20px; text-transform: uppercase;
-            cursor: pointer; user-select: none;
-        }
+        .hero h1 { font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85; color: #fff; margin-bottom: 20px; text-transform: uppercase; cursor: pointer; user-select: none; }
         .hero h1 .outline { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px #666; }
         .hero .subtitle { font-size: 14px; letter-spacing: 8px; color: #666; margin-bottom: 40px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            display: inline-block; padding: 15px 38px; font-weight: 600; font-size: 10px; letter-spacing: 3px;
-            text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px;
-            cursor: pointer; border: none; font-family: 'Russo One', sans-serif;
-            position: relative; overflow: hidden;
-        }
+        .btn { display: inline-block; padding: 15px 38px; font-weight: 600; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; cursor: pointer; border: none; font-family: 'Russo One', sans-serif; position: relative; overflow: hidden; }
         .btn-white { background: #fff; color: #0a0a0a; }
         .btn-white:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,255,255,0.5); }
         .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
@@ -199,6 +187,16 @@
         footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; }
         .scroll-top:hover { opacity: 1; transform: translateY(-3px); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+
+        /* Уведомление */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #fff; color: #0a0a0a; padding: 12px 28px; border-radius: 100px;
+            font-size: 13px; font-weight: 600; letter-spacing: 1px; z-index: 3000;
+            opacity: 0; transition: opacity 0.3s, bottom 0.3s;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .toast.show { opacity: 1; bottom: 40px; }
 
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 12px; }
@@ -322,6 +320,8 @@
     </div>
 </div>
 
+<div class="toast" id="toast">Текст заказа скопирован! Вставьте в чат ВК</div>
+
 <script>
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
     const IMAGES_PATH = 'images/';
@@ -344,20 +344,18 @@
     let currentModalProduct = null;
     let selectedSize = null;
 
-    // Glitch-эффект по клику/интервалу
     const glitchTitle = document.getElementById('glitch-title');
     if (glitchTitle) {
         setInterval(() => {
             glitchTitle.classList.add('glitch-active');
             setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300);
-        }, 4000); // раз в 4 секунды
+        }, 4000);
         glitchTitle.addEventListener('click', () => {
             glitchTitle.classList.add('glitch-active');
             setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300);
         });
     }
 
-    // Частицы на фоне hero
     (function() {
         const canvas = document.getElementById('particles-canvas');
         if (!canvas) return;
@@ -408,13 +406,11 @@
         animate();
     })();
 
-    // Header scroll effect
     window.addEventListener('scroll', () => {
         const header = document.getElementById('main-header');
         if (header) header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Intersection Observer для анимации карточек
     function observeCards() {
         const cards = document.querySelectorAll('.card');
         const observer = new IntersectionObserver((entries) => {
@@ -439,7 +435,6 @@
             renderCategories();
             renderCatalog();
             updateCart();
-            // после рендера запускаем наблюдение
             setTimeout(observeCards, 100);
         } catch (error) {
             console.error('Ошибка загрузки CSV:', error);
@@ -667,6 +662,31 @@
         document.getElementById('cartOverlay').classList.toggle('open');
     }
 
+    // 📋 Вспомогательная функция копирования в буфер обмена
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            return navigator.clipboard.writeText(text);
+        } else {
+            // фолбэк для старых браузеров
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            return Promise.resolve();
+        }
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
     function checkoutTG() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
@@ -676,7 +696,13 @@
     function checkoutVK() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
-        window.open(`https://vk.me/gorillaomsk?text=${encodeURIComponent(msg)}`, '_blank');
+        copyToClipboard(msg).then(() => {
+            showToast('Текст заказа скопирован! Вставьте его в чат ВК');
+            window.open('https://vk.me/gorillaomsk', '_blank');
+        }).catch(() => {
+            showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную');
+            window.open('https://vk.me/gorillaomsk', '_blank');
+        });
     }
 
     loadProducts();
