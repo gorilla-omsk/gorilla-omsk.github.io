@@ -193,12 +193,12 @@
         .modal-stock { font-size: 12px; color: #666; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
         .modal-favorite { font-size: 20px; cursor: pointer; text-align: right; margin-bottom: 10px; color: #666; transition: color 0.2s; }
         .modal-favorite.active { color: #ff3333; }
-        .modal-add-btn { width: 100%; padding: 12px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Russo One', sans-serif; margin-bottom: 8px; }
+        .modal-add-btn { width: 100%; padding: 14px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Russo One', sans-serif; margin-bottom: 12px; }
         .modal-add-btn:hover { background: #ccc; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
-        .modal-cart-btn { width: 100%; padding: 12px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; cursor: pointer; border-radius: 100px; font-family: 'Russo One', sans-serif; transition: all 0.3s; }
-        .modal-cart-btn:hover { background: #fff; color: #0a0a0a; }
-        .modal-cart-btn:active { transform: scale(0.95); }
+        .modal-cart-btn { width: 100%; padding: 14px; background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; font-family: 'Russo One', sans-serif; transition: all 0.3s; background: rgba(255,255,255,0.05); }
+        .modal-cart-btn:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
+        .modal-cart-btn:active { background: #ccc; transform: scale(0.96); }
 
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
@@ -643,15 +643,18 @@
         document.getElementById('modalAddBtn').textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
     }
 
-    // Новая функция для кнопки "Перейти в корзину" из модалки
+    // Исправленная кнопка "Перейти в корзину"
     function goToCartFromModal() {
         closeModal();
-        toggleCart();
-        if (cart.length > 0) {
-            showToast('🛒 Корзина открыта внизу экрана');
-        } else {
-            showToast('Корзина пуста');
-        }
+        // Небольшая задержка, чтобы модалка точно закрылась перед открытием корзины
+        setTimeout(() => {
+            toggleCart();
+            if (cart.length > 0) {
+                showToast('🛒 Корзина открыта');
+            } else {
+                showToast('Корзина пуста');
+            }
+        }, 50);
     }
 
     function renderCatalog() {
@@ -701,6 +704,7 @@
         saveCart(); updateCart();
     }
 
+    // Исправленная очистка корзины
     function clearCart() {
         if (cart.length === 0) return;
         cart = [];
@@ -753,7 +757,7 @@
         const toast = document.getElementById('toast');
         toast.textContent = message;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 4000);
+        setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     function checkoutTG() {
@@ -766,7 +770,7 @@
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
         copyToClipboard(msg).then(() => {
-            showToast('✅ Текст заказа скопирован! Вставьте его в чат ВК');
+            showToast('✅ Текст заказа скопирован! Вставьте в чат ВК');
             window.open('https://vk.me/gorillaomsk', '_blank');
         }).catch(() => {
             showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную');
