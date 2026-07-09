@@ -48,6 +48,8 @@
         .btn-red { background: #ff3333; color: #fff; }
         .btn-red:hover { background: #cc0000; transform: translateY(-2px); }
         .btn-gray { background: #222; color: #555; cursor: not-allowed; }
+        .btn-vk { background: #0077ff; color: #fff; }
+        .btn-vk:hover { background: #0066dd; transform: translateY(-2px); }
 
         .marquee { background: #0d0d0d; padding: 14px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .marquee span { display: inline-block; animation: marquee 18s linear infinite; font-size: 10px; letter-spacing: 4px; color: #666; text-transform: uppercase; }
@@ -240,14 +242,14 @@
     <h3>🛒 Корзина</h3>
     <div class="cart-items" id="cartItems"><div class="cart-empty">Корзина пуста</div></div>
     <div class="cart-total" id="cartTotal">Итого: 0 ₽</div>
-    <button class="btn btn-red" style="width:100%;" onclick="checkout()">📱 Заказать через Telegram</button>
+    <button class="btn btn-red" style="width:100%;" onclick="checkoutTG()">📱 Заказать через Telegram</button>
+    <button class="btn btn-vk" style="width:100%; margin-top:8px;" onclick="checkoutVK()">📱 Заказать через ВКонтакте</button>
     <button class="btn btn-outline" style="width:100%;margin-top:8px;" onclick="clearCart()">🗑 Очистить корзину</button>
 </div>
 
 <footer><p>© 2024 GORILLA STREETWEAR • OMSK</p></footer>
 <a href="#" class="scroll-top">↑</a>
 
-<!-- Модальное окно товара -->
 <div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
     <div class="modal" id="modalBox" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeModal()">✕</button>
@@ -304,15 +306,12 @@
     function parseCSV(csv) {
         const lines = csv.trim().split('\n');
         if (lines.length < 2) return [];
-        // Заголовки
         const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-        // Приводим возможные варианты "color"/"colors" к единому "color"
         const colorIdx = headers.indexOf('colors') !== -1 ? headers.indexOf('colors') : headers.indexOf('color');
-        if (colorIdx !== -1) headers[colorIdx] = 'color'; // переименуем для единообразия
+        if (colorIdx !== -1) headers[colorIdx] = 'color';
 
         const result = [];
         for (let i = 1; i < lines.length; i++) {
-            // Используем хитрый сплит, чтобы не разбивать поле sizes (с запятыми) — но мы договорились, что sizes теперь через ;
             const values = lines[i].split(',').map(v => v.trim());
             if (values.length < headers.length) continue;
 
@@ -321,15 +320,15 @@
                 item[header] = values[idx] || '';
             });
 
-            // Корректируем данные
             item.id = item.id || '';
             item.price = parseInt(item.price) || 0;
             item.stock = parseInt(item.stock) || 0;
             item.photo_id = item.photo_id || '';
-            // Размеры парсим через ';', так как внутри поля нет запятых (по новому соглашению)
             item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()).filter(s => s) : [];
             item.color = item.color || '';
             item.description = item.description || '';
+            // Приводим категорию к нижнему регистру для совпадения с нашими id
+            item.category = (item.category || '').toLowerCase();
 
             if (item.id && item.name) result.push(item);
         }
@@ -356,7 +355,6 @@
         }
     }
 
-    // ================== ОТРИСОВКА ==================
     function renderCategories() {
         const menu = document.getElementById('categoriesMenu');
         let html = '<h4>Категории</h4>';
@@ -524,10 +522,16 @@
         document.getElementById('cartOverlay').classList.toggle('open');
     }
 
-    function checkout() {
+    function checkoutTG() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
-        window.open(`https://t.me/gorillaomsk?text=${encodeURIComponent(msg)}`, '_blank');
+        window.open(`https://t.me/Yupi13?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function checkoutVK() {
+        if (cart.length === 0) { alert('Корзина пуста!'); return; }
+        const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
+        window.open(`https://vk.me/gorillaomsk?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     loadProducts();
