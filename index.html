@@ -76,6 +76,7 @@
         .hero .subtitle { font-size: 14px; letter-spacing: 8px; color: #666; margin-bottom: 40px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .btn { display: inline-block; padding: 15px 38px; font-weight: 600; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; cursor: pointer; border: none; font-family: 'Russo One', sans-serif; position: relative; overflow: hidden; }
+        .btn:active { transform: scale(0.95); }
         .btn-white { background: #fff; color: #0a0a0a; }
         .btn-white:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,255,255,0.5); }
         .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
@@ -126,6 +127,7 @@
             display: flex; align-items: center; justify-content: center;
             transition: all 0.2s;
         }
+        .favorite-btn:active { transform: scale(1.3); }
         .favorite-btn:hover { transform: scale(1.2); }
         .favorite-btn.active { color: #ff3333; }
         .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #666; font-size: 10px; letter-spacing: 1px; z-index: 2; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; font-family: 'Inter', sans-serif; }
@@ -196,6 +198,7 @@
         .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
         .modal-cart-btn { width: 100%; padding: 12px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; cursor: pointer; border-radius: 100px; font-family: 'Russo One', sans-serif; transition: all 0.3s; }
         .modal-cart-btn:hover { background: #fff; color: #0a0a0a; }
+        .modal-cart-btn:active { transform: scale(0.95); }
 
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
@@ -314,7 +317,7 @@
     <div class="cart-total" id="cartTotal">Итого: 0 ₽</div>
     <button class="btn btn-red" style="width:100%;" onclick="checkoutTG()">📱 Заказать через Telegram</button>
     <button class="btn btn-vk" style="width:100%; margin-top:8px;" onclick="checkoutVK()">📱 Заказать через ВКонтакте</button>
-    <button class="btn btn-outline" style="width:100%;margin-top:8px;" onclick="clearCart()">🗑 Очистить корзину</button>
+    <button class="btn btn-outline" style="width:100%;margin-top:8px;" onclick="clearCart()" id="clearCartBtn">🗑 Очистить корзину</button>
 </div>
 
 <footer><p>© 2024 GORILLA STREETWEAR • OMSK</p></footer>
@@ -332,7 +335,7 @@
         <p class="modal-description" id="modalDesc"></p>
         <p class="modal-stock" id="modalStock"></p>
         <button class="modal-add-btn" id="modalAddBtn" onclick="addFromModal()">Добавить в корзину</button>
-        <button class="modal-cart-btn" onclick="closeModal(); toggleCart();">🛒 Перейти в корзину</button>
+        <button class="modal-cart-btn" onclick="goToCartFromModal()">🛒 Перейти в корзину</button>
     </div>
 </div>
 
@@ -371,7 +374,6 @@
             favorites.push(id);
         }
         saveFavorites();
-        // Обновляем только иконки, без перерисовки всего каталога
         document.querySelectorAll(`.favorite-btn`).forEach(btn => {
             if (btn.getAttribute('data-id') === id) {
                 const isFav = favorites.includes(id);
@@ -383,7 +385,6 @@
         if (currentModalProduct && currentModalProduct.id === id) {
             updateModalFavorite();
         }
-        // Обновляем счётчики в категориях
         renderCategories();
     }
 
@@ -642,6 +643,17 @@
         document.getElementById('modalAddBtn').textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
     }
 
+    // Новая функция для кнопки "Перейти в корзину" из модалки
+    function goToCartFromModal() {
+        closeModal();
+        toggleCart();
+        if (cart.length > 0) {
+            showToast('🛒 Корзина открыта внизу экрана');
+        } else {
+            showToast('Корзина пуста');
+        }
+    }
+
     function renderCatalog() {
         const grid = document.getElementById('catalogGrid');
         const filtered = activeCategory === 'favorites' 
@@ -694,6 +706,7 @@
         cart = [];
         saveCart();
         updateCart();
+        showToast('🗑 Корзина очищена');
     }
 
     function updateCart() {
