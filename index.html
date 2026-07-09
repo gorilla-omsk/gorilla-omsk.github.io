@@ -37,6 +37,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 3;
         }
 
         h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title, .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3, .delivery-card h3, .categories-menu h4 {
@@ -65,12 +66,34 @@
         .cart-count.active { display: flex; animation: pop 0.3s ease; }
         @keyframes pop { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
+        /* Hero с параллаксом */
         .hero {
-            min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center;
-            position: relative; overflow: hidden;
-            background: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a);
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: #0a0a0a; /* фолбэк */
         }
-        .hero-content { max-width: 850px; padding: 0 20px; position: relative; z-index: 2; }
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%; /* немного выходит за пределы для параллакса */
+            background-image: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a);
+            will-change: transform;
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            padding: 0 20px;
+            will-change: transform;
+        }
         .hero h1 { font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85; color: #fff; margin-bottom: 20px; text-transform: uppercase; cursor: pointer; user-select: none; }
         .hero h1 .outline { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px #666; }
         .hero .subtitle { font-size: 14px; letter-spacing: 8px; color: #666; margin-bottom: 40px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
@@ -237,8 +260,9 @@
 </header>
 
 <section class="hero" id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
     <canvas id="particles-canvas"></canvas>
-    <div class="hero-content">
+    <div class="hero-content" id="hero-content">
         <h1 id="glitch-title">GOR<span class="outline">ILLA</span></h1>
         <p class="subtitle">Уличная эстетика • Омск</p>
         <div class="btn-group">
@@ -250,7 +274,6 @@
 </section>
 
 <div class="marquee">
-    <!-- В span теперь динамически подставится погода -->
     <span id="marquee-text">🦍 GORILLA • OMSK • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍</span>
 </div>
 
@@ -344,6 +367,17 @@
     let currentModalProduct = null;
     let selectedSize = null;
 
+    // ---------- ПАРАЛЛАКС ----------
+    const heroBg = document.getElementById('hero-bg');
+    const heroContent = document.getElementById('hero-content');
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+        // Фон двигается медленнее
+        if (heroBg) heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
+        // Контент двигается чуть быстрее
+        if (heroContent) heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
+    });
+
     // ---------- ПОГОДА ----------
     async function fetchWeather() {
         const marqueeSpan = document.getElementById('marquee-text');
@@ -354,17 +388,13 @@
             const temp = Math.round(data.current_weather.temperature);
             const code = data.current_weather.weathercode;
             const icon = getWeatherEmoji(code);
-            // Вставляем погоду в бегущую строку
             marqueeSpan.textContent = `🦍 GORILLA • OMSK • ${icon} ${temp}°C • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍`;
         } catch (e) {
-            console.warn('Не удалось получить погоду, оставляем стандартный текст');
-            // Ничего не меняем, остаётся стандартный текст из HTML
+            console.warn('Не удалось получить погоду');
         }
     }
 
     function getWeatherEmoji(code) {
-        // Коды Open-Meteo: 0-чистое небо, 1-малооблачно, 2-переменная облачность, 3-пасмурно, 
-        // 45/48-туман, 51-55-морось, 61-65-дождь, 71-77-снег, 80-82-ливни, 95-99-гроза
         if (code <= 1) return '☀️';
         if (code <= 3) return '⛅';
         if (code === 45 || code === 48) return '🌫️';
@@ -375,11 +405,9 @@
         if (code >= 95 && code <= 99) return '⛈️';
         return '🌡️';
     }
-
-    // Вызываем погоду при старте
     fetchWeather();
 
-    // ---------- ОСТАЛЬНОЙ КОД (как в предыдущей версии) ----------
+    // ---------- GLITCH ----------
     const glitchTitle = document.getElementById('glitch-title');
     if (glitchTitle) {
         setInterval(() => {
@@ -392,6 +420,7 @@
         });
     }
 
+    // ---------- PARTICLES ----------
     (function() {
         const canvas = document.getElementById('particles-canvas');
         if (!canvas) return;
@@ -407,9 +436,7 @@
         resize();
 
         class Particle {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
@@ -419,10 +446,7 @@
             }
             update() {
                 this.y -= this.speedY;
-                if (this.y < -10) {
-                    this.y = canvas.height + 10;
-                    this.x = Math.random() * canvas.width;
-                }
+                if (this.y < -10) { this.y = canvas.height + 10; this.x = Math.random() * canvas.width; }
             }
             draw() {
                 ctx.beginPath();
@@ -433,7 +457,6 @@
         }
 
         while (particles.length < maxParticles) particles.push(new Particle());
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
@@ -442,11 +465,13 @@
         animate();
     })();
 
+    // ---------- HEADER SCROLL EFFECT ----------
     window.addEventListener('scroll', () => {
         const header = document.getElementById('main-header');
         if (header) header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
+    // ---------- OBSERVER для карточек ----------
     function observeCards() {
         const cards = document.querySelectorAll('.card');
         const observer = new IntersectionObserver((entries) => {
@@ -460,6 +485,7 @@
         cards.forEach(card => observer.observe(card));
     }
 
+    // ---------- ЗАГРУЗКА ТОВАРОВ ----------
     async function loadProducts() {
         const grid = document.getElementById('catalogGrid');
         grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>';
