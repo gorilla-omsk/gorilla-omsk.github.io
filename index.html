@@ -60,7 +60,7 @@
         header.scrolled { background: rgba(10,10,10,0.98); }
 
         .logo-block { display: flex; align-items: center; gap: 10px; }
-        .logo-img { height: 40px; vertical-align: middle; border-radius: 50%; } /* круглый логотип */
+        .logo-img { height: 40px; vertical-align: middle; border-radius: 50%; }
         .logo-text { font-size: 26px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
         .logo-text span { color: #777; font-weight: 400; font-size: 10px; display: block; letter-spacing: 5px; font-family: 'Inter', sans-serif; }
         nav { display: flex; gap: 20px; align-items: center; }
@@ -188,7 +188,7 @@
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
         .cart-overlay.open { display: block; }
 
-        /* 🔥 Кнопка очистки корзины – теперь кликается ВСЯ */
+        /* Кнопка очистки корзины – гарантированно кликабельная */
         #clearCartBtn {
             display: flex !important;
             align-items: center !important;
@@ -205,7 +205,7 @@
             text-transform: uppercase !important;
             cursor: pointer !important;
             position: relative !important;
-            z-index: 30 !important;          /* выше всех */
+            z-index: 30 !important;
             pointer-events: auto !important;
             user-select: none !important;
             border-radius: 100px !important;
@@ -302,7 +302,6 @@
 
 <header id="main-header">
     <div class="logo-block">
-        <!-- Логотип GGVP.jpg -->
         <img src="GGVP.jpg" alt="GORILLA" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
         <span style="display:none; font-size:26px; color:#fff;">🦍</span>
         <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
@@ -367,7 +366,35 @@
         <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
         <p>📞 +7 (XXX) XXX-XX-XX</p>
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
-        <div class="social-btns">
+        
+        <!-- 👇 Блок "Установи как приложение" -->
+        <div style="margin-top: 40px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            <h3 style="font-family: 'Russo One', sans-serif; color: #fff; font-size: 18px; letter-spacing: 2px; margin-bottom: 15px;">📲 УСТАНОВИ КАК ПРИЛОЖЕНИЕ</h3>
+            <p style="color: #888; font-size: 13px; margin-bottom: 20px; font-family: 'Inter', sans-serif;">Добавь наш сайт на главный экран телефона и получай доступ в один клик.</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 180px; text-align: left;">
+                    <p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🍎 iPhone / iPad</p>
+                    <ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; font-family: 'Inter', sans-serif; line-height: 1.6;">
+                        <li>Открой сайт в <strong>Safari</strong></li>
+                        <li>Нажми кнопку <strong>«Поделиться»</strong></li>
+                        <li>Выбери <strong>«На экран Домой»</strong></li>
+                        <li>Готово – иконка на рабочем столе</li>
+                    </ol>
+                </div>
+                <div style="flex: 1; min-width: 180px; text-align: left;">
+                    <p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🤖 Android</p>
+                    <ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; font-family: 'Inter', sans-serif; line-height: 1.6;">
+                        <li>Открой сайт в <strong>Chrome</strong></li>
+                        <li>Нажми <strong>⋮</strong> (меню)</li>
+                        <li>Выбери <strong>«Добавить на главный экран»</strong></li>
+                        <li>Готово – как настоящее приложение</li>
+                    </ol>
+                </div>
+            </div>
+            <p style="color: #666; font-size: 11px; margin-top: 20px; font-family: 'Inter', sans-serif; text-align: center;">После установки сайт будет открываться в отдельном окне, без адресной строки.</p>
+        </div>
+
+        <div class="social-btns" style="margin-top: 30px;">
             <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-vk">📱 ВКонтакте</a>
             <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a>
         </div>
