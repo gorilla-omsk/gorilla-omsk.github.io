@@ -107,12 +107,21 @@
         .section-subtitle { text-align: center; color: #666; font-size: 13px; letter-spacing: 3px; margin-bottom: 50px; font-family: 'Inter', sans-serif; }
 
         .catalog-wrapper { display: flex; gap: 20px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
-        .categories-menu { min-width: 220px; position: sticky; top: 100px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
+        .sidebar { min-width: 220px; position: sticky; top: 100px; display: flex; flex-direction: column; gap: 15px; }
+        .categories-menu { background: #0c0c0c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
         .categories-menu h4 { padding: 20px; font-size: 12px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.06); }
         .category-btn { display: block; width: 100%; padding: 14px 20px; text-align: left; background: none; border: none; color: #777; font-family: 'Russo One', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.3s; letter-spacing: 1px; border-left: 2px solid transparent; text-transform: uppercase; }
         .category-btn:hover { color: #fff; background: #121212; }
         .category-btn.active { color: #fff; background: #121212; border-left-color: #fff; }
         .category-btn .count { color: #ccc; font-size: 12px; float: right; margin-top: 1px; font-weight: 400; letter-spacing: 0; }
+        .size-filter { background: #0c0c0c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 15px; }
+        .size-filter h4 { font-size: 12px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 12px; }
+        .size-filter-group { margin-bottom: 12px; }
+        .size-filter-label { color: #888; font-size: 10px; letter-spacing: 1px; margin-bottom: 6px; display: block; }
+        .size-filter-buttons { display: flex; flex-wrap: wrap; gap: 5px; }
+        .size-filter-btn { padding: 5px 9px; background: transparent; color: #ccc; border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 11px; transition: all 0.2s; }
+        .size-filter-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; }
+        .size-filter-reset { width: 100%; margin-top: 8px; padding: 8px; background: transparent; color: #ff3333; border: 1px solid rgba(255,51,51,0.3); border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 11px; transition: all 0.3s; }
 
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; flex: 1; }
         .card {
@@ -284,7 +293,8 @@
             .hero h1 { font-size: 45px; }
             .section { padding: 60px 15px; }
             .catalog-wrapper { flex-direction: column; }
-            .categories-menu { position: static; display: flex; flex-wrap: wrap; gap: 4px; min-width: auto; padding: 8px; }
+            .sidebar { position: static; min-width: auto; }
+            .categories-menu { border-radius: 8px; }
             .categories-menu h4 { display: none; }
             .category-btn { padding: 8px 12px; font-size: 10px; border-left: none; border-bottom: 2px solid transparent; border-radius: 6px; }
             .category-btn.active { border-left: none; border-bottom-color: #fff; }
@@ -339,7 +349,16 @@
     <h2 class="section-title">Каталог</h2>
     <p class="section-subtitle">Выбери категорию</p>
     <div class="catalog-wrapper">
-        <div class="categories-menu" id="categoriesMenu"></div>
+        <div class="sidebar">
+            <div class="categories-menu" id="categoriesMenu"></div>
+            <div class="size-filter" id="sizeFilter">
+                <h4>📏 Размер</h4>
+                <div id="sizeFilterContent">
+                    <span style="color: #666; font-size: 12px; font-family: 'Inter', sans-serif;">Выбери категорию</span>
+                </div>
+                <button class="size-filter-reset" onclick="clearSizeFilter()">✕ Сбросить размер</button>
+            </div>
+        </div>
         <div class="catalog-grid" id="catalogGrid">
             <div class="loading-text">Загрузка товаров...</div>
         </div>
@@ -453,8 +472,12 @@
     let cart = JSON.parse(localStorage.getItem('gorillaCart')) || [];
     let favorites = JSON.parse(localStorage.getItem('gorillaFavorites')) || [];
     let activeCategory = 'all';
+    let activeSize = null;
     let currentModalProduct = null;
     let selectedSize = null;
+
+    // Порядок буквенных размеров
+    const LETTER_SIZES_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '2XL', '3XL', '4XL', '5XL'];
 
     function saveFavorites() { localStorage.setItem('gorillaFavorites', JSON.stringify(favorites)); }
 
@@ -496,6 +519,7 @@
         }
     }
 
+    // ---------- ПАРАЛЛАКС / GLITCH / ЧАСТИЦЫ ----------
     const heroBg = document.getElementById('hero-bg');
     const heroContent = document.getElementById('hero-content');
     window.addEventListener('scroll', () => {
@@ -575,6 +599,7 @@
         cards.forEach(card => observer.observe(card));
     }
 
+    // ---------- ЗАГРУЗКА ТОВАРОВ ----------
     async function loadProducts() {
         const grid = document.getElementById('catalogGrid');
         grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>';
@@ -584,6 +609,7 @@
             const csvText = await response.text();
             products = parseCSV(csvText);
             renderCategories();
+            renderSizeFilter();
             renderCatalog();
             updateCart();
             setTimeout(observeCards, 100);
@@ -638,6 +664,112 @@
         }
     }
 
+    // ---------- ФИЛЬТР РАЗМЕРОВ ----------
+    function getSizesForCategory(categoryId) {
+        const filtered = categoryId === 'all' 
+            ? products 
+            : products.filter(p => p.category === categoryId);
+        const sizeSet = new Set();
+        filtered.forEach(p => {
+            if (p.sizes && p.sizes.length) {
+                p.sizes.forEach(s => sizeSet.add(s.trim()));
+            }
+        });
+        return [...sizeSet];
+    }
+
+    function classifySizes(sizes) {
+        const groups = { shoe: [], waist: [], letter: [], other: [] };
+        sizes.forEach(size => {
+            const upper = size.toUpperCase();
+            if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) {
+                groups.letter.push(size);
+            } else if (/^\d+$/.test(size)) {
+                const num = parseInt(size);
+                if (num >= 26 && num <= 38) groups.waist.push(size);
+                else if (num >= 36 && num <= 52) groups.shoe.push(size);
+                else groups.other.push(size);
+            } else {
+                groups.other.push(size);
+            }
+        });
+        groups.shoe.sort((a, b) => parseInt(a) - parseInt(b));
+        groups.waist.sort((a, b) => parseInt(a) - parseInt(b));
+        groups.letter.sort((a, b) => {
+            const idxA = LETTER_SIZES_ORDER.indexOf(a.toUpperCase());
+            const idxB = LETTER_SIZES_ORDER.indexOf(b.toUpperCase());
+            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+            if (idxA !== -1) return -1;
+            if (idxB !== -1) return 1;
+            return a.localeCompare(b);
+        });
+        groups.other.sort();
+        return groups;
+    }
+
+    function renderSizeFilter() {
+        const container = document.getElementById('sizeFilterContent');
+        const sizes = getSizesForCategory(activeCategory);
+        if (sizes.length === 0) {
+            container.innerHTML = '<span style="color: #666; font-size: 12px; font-family: \'Inter\', sans-serif;">Нет размеров</span>';
+            return;
+        }
+        const groups = classifySizes(sizes);
+        let html = '';
+        if (groups.shoe.length > 0) {
+            html += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">';
+            groups.shoe.forEach(size => {
+                const isActive = activeSize === size;
+                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
+            });
+            html += '</div></div>';
+        }
+        if (groups.waist.length > 0) {
+            html += '<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">';
+            groups.waist.forEach(size => {
+                const isActive = activeSize === size;
+                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
+            });
+            html += '</div></div>';
+        }
+        if (groups.letter.length > 0) {
+            html += '<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">';
+            groups.letter.forEach(size => {
+                const isActive = activeSize === size;
+                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
+            });
+            html += '</div></div>';
+        }
+        if (groups.other.length > 0) {
+            html += '<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">';
+            groups.other.forEach(size => {
+                const isActive = activeSize === size;
+                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
+            });
+            html += '</div></div>';
+        }
+        container.innerHTML = html;
+    }
+
+    function setSizeFilter(size) {
+        if (activeSize === size) {
+            activeSize = null;
+        } else {
+            activeSize = size;
+        }
+        renderSizeFilter();
+        renderCatalog();
+        setTimeout(observeCards, 100);
+    }
+
+    function clearSizeFilter() {
+        activeSize = null;
+        renderSizeFilter();
+        renderCatalog();
+        setTimeout(observeCards, 100);
+    }
+
+    // ---------- КАТАЛОГ ----------
     function renderCategories() {
         const menu = document.getElementById('categoriesMenu');
         let html = '<h4>Категории</h4>';
@@ -651,6 +783,7 @@
     function setCategory(catId) {
         activeCategory = catId;
         renderCategories();
+        renderSizeFilter();
         renderCatalog();
         setTimeout(observeCards, 100);
     }
@@ -735,18 +868,19 @@
     function goToCartFromModal() {
         document.getElementById('modalOverlay').classList.remove('active');
         currentModalProduct = null;
-        setTimeout(() => {
-            toggleCart();
-        }, 100);
+        setTimeout(() => { toggleCart(); }, 100);
     }
 
     function renderCatalog() {
         const grid = document.getElementById('catalogGrid');
-        const filtered = activeCategory === 'favorites' 
+        let filtered = activeCategory === 'favorites' 
             ? products.filter(p => favorites.includes(p.id))
             : activeCategory === 'all' 
                 ? products 
                 : products.filter(p => p.category === activeCategory);
+        if (activeSize) {
+            filtered = filtered.filter(p => p.sizes && p.sizes.includes(activeSize));
+        }
         if (filtered.length === 0) {
             grid.innerHTML = '<div class="no-products">Товаров пока нет</div>';
             return;
@@ -781,20 +915,8 @@
     }
 
     function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
-
-    function removeFromCart(id, size) {
-        cart = cart.filter(i => !(i.id === id && i.size === size));
-        saveCart(); updateCart();
-    }
-
-    function clearCart() {
-        if (cart.length === 0) return;
-        cart = [];
-        saveCart();
-        updateCart();
-        showToast('🗑 Корзина очищена');
-    }
-
+    function removeFromCart(id, size) { cart = cart.filter(i => !(i.id === id && i.size === size)); saveCart(); updateCart(); }
+    function clearCart() { if (cart.length === 0) return; cart = []; saveCart(); updateCart(); showToast('🗑 Корзина очищена'); }
     function updateCart() {
         const count = document.getElementById('cartCount');
         const items = document.getElementById('cartItems');
@@ -813,51 +935,22 @@
             total.textContent = `Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽`;
         }
     }
-
-    function toggleCart() {
-        document.getElementById('cartPanel').classList.toggle('open');
-        document.getElementById('cartOverlay').classList.toggle('open');
-    }
-
+    function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); document.getElementById('cartOverlay').classList.toggle('open'); }
     function copyToClipboard(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            return navigator.clipboard.writeText(text);
-        } else {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            return Promise.resolve();
-        }
+        if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+        const textarea = document.createElement('textarea'); textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
+        document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea); return Promise.resolve();
     }
-
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
-    }
-
+    function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); }
     function checkoutTG() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
         window.open(`https://t.me/Yupi13?text=${encodeURIComponent(msg)}`, '_blank');
     }
-
     function checkoutVK() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
-        copyToClipboard(msg).then(() => {
-            showToast('✅ Текст заказа скопирован! Вставьте в чат ВК');
-            window.open('https://vk.me/gorillaomsk', '_blank');
-        }).catch(() => {
-            showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную');
-            window.open('https://vk.me/gorillaomsk', '_blank');
-        });
+        copyToClipboard(msg).then(() => { showToast('✅ Текст заказа скопирован! Вставьте в чат ВК'); window.open('https://vk.me/gorillaomsk', '_blank'); }).catch(() => { showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную'); window.open('https://vk.me/gorillaomsk', '_blank'); });
     }
 
     loadProducts();
