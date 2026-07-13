@@ -468,26 +468,24 @@
 <div class="toast" id="toast">Текст заказа скопирован! Вставьте в чат ВК</div>
 
 <script>
-    // ---------- ЖИВЫЕ ЧАСЫ ----------
- function updateClocks() {
+   // ---------- ЖИВЫЕ ЧАСЫ ----------
+function updateClocks() {
     const now = new Date();
-    
+
     // Московское время (UTC+3)
-    const mskUTC = 3;
-    const mskOffset = mskUTC * 60; // в минутах
-    const localOffset = now.getTimezoneOffset(); // локальное смещение в минутах
-    const mskTime = new Date(now.getTime() + (localOffset + mskOffset) * 60 * 1000);
-    
-    // Омское время (UTC+6) = Москва + 3 часа
-    const omskTime = new Date(mskTime.getTime() + 3 * 60 * 60 * 1000);
-    
-    // Выводим
-    document.getElementById('mskTime').textContent = mskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
-    document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
+    const mskTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
+    const mskHours = mskTime.getHours().toString().padStart(2, '0');
+    const mskMinutes = mskTime.getMinutes().toString().padStart(2, '0');
+    document.getElementById('mskTime').textContent = `${mskHours}:${mskMinutes}`;
+
+    // Омское время (UTC+6)
+    const omskTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Omsk" }));
+    const omskHours = omskTime.getHours().toString().padStart(2, '0');
+    const omskMinutes = omskTime.getMinutes().toString().padStart(2, '0');
+    document.getElementById('omskTime').textContent = `${omskHours}:${omskMinutes}`;
 }
 updateClocks();
 setInterval(updateClocks, 1000);
-
     // ---------- ИКОНКИ SVG ----------
     const icons = {
         all: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>',
