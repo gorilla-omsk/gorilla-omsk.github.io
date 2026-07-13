@@ -469,16 +469,19 @@
 
 <script>
     // ---------- ЖИВЫЕ ЧАСЫ ----------
-   function updateClocks() {
+  function updateClocks() {
     const now = new Date();
     
-    // Московское время (UTC+3) — принудительно
-    const mskTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Moscow' }));
-    document.getElementById('mskTime').textContent = mskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Moscow' });
+    // Московское время (UTC+3)
+    const mskUTC = 3;
+    const mskOffset = mskUTC * 60; // в минутах
+    const localOffset = now.getTimezoneOffset(); // локальное смещение в минутах
+    const mskTime = new Date(now.getTime() + (localOffset + mskOffset) * 60 * 1000);
+    document.getElementById('mskTime').textContent = mskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
     
-    // Омское время (UTC+6) — принудительно
-    const omskTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Omsk' }));
-    document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Omsk' });
+    // Омское время (UTC+6) = Москва + 3 часа
+    const omskTime = new Date(mskTime.getTime() + 3 * 60 * 60 * 1000);
+    document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
 }
 updateClocks();
 setInterval(updateClocks, 1000);
