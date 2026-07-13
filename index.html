@@ -696,33 +696,46 @@
 }
 
     function renderSizeFilter() {
-        const container = document.getElementById('sizeFilterContent');
-        const sizes = getSizesForCategory(activeCategory);
-        if (sizes.length === 0) { container.innerHTML = '<span style="color:#666;font-size:12px;">Нет размеров</span>'; return; }
-        const groups = classifySizes(sizes);
-        let html = '';
-        if (groups.shoe.length) {
-            html += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">';
-            groups.shoe.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
-            html += '</div></div>';
-        }
-        if (groups.waist.length) {
-            html += '<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">';
-            groups.waist.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
-            html += '</div></div>';
-        }
-        if (groups.letter.length) {
-            html += '<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">';
-            groups.letter.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
-            html += '</div></div>';
-        }
-        if (groups.other.length) {
-            html += '<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">';
-            groups.other.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
-            html += '</div></div>';
-        }
-        container.innerHTML = html;
+    const container = document.getElementById('sizeFilterContent');
+    
+    // Скрываем фильтр на главной и в избранном
+    if (activeCategory === 'all' || activeCategory === 'favorites') {
+        container.innerHTML = '<span style="color: #666; font-size: 12px; font-family: \'Inter\', sans-serif;">Выберите категорию</span>';
+        return;
     }
+    
+    const sizes = getSizesForCategory(activeCategory);
+    if (sizes.length === 0) {
+        container.innerHTML = '<span style="color: #666; font-size: 12px;">Нет размеров</span>';
+        return;
+    }
+    
+    const groups = classifySizes(sizes);
+    let html = '';
+    
+    if (groups.shoe.length) {
+        html += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">';
+        groups.shoe.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
+        html += '</div></div>';
+    }
+    if (groups.waist.length) {
+        html += '<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">';
+        groups.waist.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
+        html += '</div></div>';
+    }
+    if (groups.letter.length) {
+        html += '<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">';
+        groups.letter.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
+        html += '</div></div>';
+    }
+    if (groups.other.length) {
+        html += '<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">';
+        groups.other.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
+        html += '</div></div>';
+    }
+    
+    container.innerHTML = html;
+}
 
     function setSizeFilter(size) { activeSize = activeSize === size ? null : size; renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
     function clearSizeFilter() { activeSize = null; renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
