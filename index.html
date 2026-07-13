@@ -28,6 +28,10 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* SVG-иконки вместо эмодзи */
+        .icon-svg { width: 18px; height: 18px; vertical-align: middle; margin-right: 6px; display: inline-block; }
+        .icon-svg.large { width: 24px; height: 24px; }
+
         @keyframes glitch {
             0% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(0); }
             20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
@@ -197,37 +201,18 @@
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
         .cart-overlay.open { display: block; }
 
-        /* Кнопка очистки корзины – гарантированно кликабельная */
         #clearCartBtn {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 100% !important;
-            padding: 14px 0 !important;
-            margin-top: 8px !important;
-            background: transparent !important;
-            color: #fff !important;
-            border: 1px solid rgba(255,255,255,0.3) !important;
-            font-family: 'Russo One', sans-serif !important;
-            font-size: 12px !important;
-            letter-spacing: 2px !important;
-            text-transform: uppercase !important;
-            cursor: pointer !important;
-            position: relative !important;
-            z-index: 30 !important;
-            pointer-events: auto !important;
-            user-select: none !important;
-            border-radius: 100px !important;
-            transition: all 0.3s !important;
-            min-height: 50px !important;
+            display: flex !important; align-items: center !important; justify-content: center !important;
+            width: 100% !important; padding: 14px 0 !important; margin-top: 8px !important;
+            background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.3) !important;
+            font-family: 'Russo One', sans-serif !important; font-size: 12px !important;
+            letter-spacing: 2px !important; text-transform: uppercase !important;
+            cursor: pointer !important; position: relative !important; z-index: 30 !important;
+            pointer-events: auto !important; user-select: none !important;
+            border-radius: 100px !important; transition: all 0.3s !important; min-height: 50px !important;
         }
-        #clearCartBtn:hover {
-            background: rgba(255,255,255,0.1) !important;
-            border-color: #fff !important;
-        }
-        #clearCartBtn:active {
-            transform: scale(0.96) !important;
-        }
+        #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; }
+        #clearCartBtn:active { transform: scale(0.96) !important; }
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -248,25 +233,12 @@
         .modal-add-btn { width: 100%; padding: 16px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Russo One', sans-serif; margin-bottom: 12px; touch-action: manipulation; }
         .modal-add-btn:hover { background: #ccc; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
-        
         .modal-cart-btn {
-            width: 100%;
-            padding: 16px;
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-            border: 2px solid rgba(255,255,255,0.4);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 100px;
-            font-family: 'Russo One', sans-serif;
-            transition: all 0.3s;
-            position: relative;
-            z-index: 10;
-            touch-action: manipulation;
-            -webkit-appearance: none;
+            width: 100%; padding: 16px; background: rgba(255,255,255,0.05); color: #fff;
+            border: 2px solid rgba(255,255,255,0.4); font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px;
+            font-family: 'Russo One', sans-serif; transition: all 0.3s; position: relative; z-index: 10;
+            touch-action: manipulation; -webkit-appearance: none;
         }
         .modal-cart-btn:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
         .modal-cart-btn:active { background: #ccc; transform: scale(0.96); }
@@ -322,7 +294,10 @@
         <a href="#contacts">Контакты</a>
         <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener">VK</a>
         <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener">TG</a>
-        <a href="#" class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></a>
+        <a href="#" class="cart-icon" onclick="toggleCart()">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            <span class="cart-count" id="cartCount">0</span>
+        </a>
     </nav>
 </header>
 
@@ -341,7 +316,7 @@
 </section>
 
 <div class="marquee">
-    <span>🦍 GORILLA • OMSK • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП 🦍</span>
+    <span>GORILLA • OMSK • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП</span>
 </div>
 
 <section class="section" id="catalog">
@@ -370,9 +345,15 @@
     <h2 class="section-title">Доставка</h2>
     <p class="section-subtitle">Три способа</p>
     <div class="delivery-grid">
-        <div class="delivery-card"><div class="icon">🏪</div><h3>Самовывоз</h3><p>Забери из магазина. Примерка на месте.</p></div>
-        <div class="delivery-card"><div class="icon">🛵</div><h3>По Омску</h3><p>Курьер — 300₽. В день заказа до 15:00.</p></div>
-        <div class="delivery-card"><div class="icon">📦</div><h3>По России</h3><p>СДЭК / Почта России. Трек-номер сразу.</p></div>
+        <div class="delivery-card"><div class="icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div><h3>Самовывоз</h3><p>Забери из магазина. Примерка на месте.</p></div>
+        <div class="delivery-card"><div class="icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div><h3>По Омску</h3><p>Курьер — 300₽. В день заказа до 15:00.</p></div>
+        <div class="delivery-card"><div class="icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </div><h3>По России</h3><p>СДЭК / Почта России. Трек-номер сразу.</p></div>
     </div>
 </section>
 
@@ -386,7 +367,6 @@
         <p>📞 +7 (XXX) XXX-XX-XX</p>
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
         
-        <!-- 👇 Блок "Установи как приложение" -->
         <div style="margin-top: 40px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
             <h3 style="font-family: 'Russo One', sans-serif; color: #fff; font-size: 18px; letter-spacing: 2px; margin-bottom: 15px;">📲 УСТАНОВИ КАК ПРИЛОЖЕНИЕ</h3>
             <p style="color: #888; font-size: 13px; margin-bottom: 20px; font-family: 'Inter', sans-serif;">Добавь наш сайт на главный экран телефона и получай доступ в один клик.</p>
@@ -437,7 +417,9 @@
     <div class="modal" id="modalBox" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeModal()">✕</button>
         <img class="modal-img" id="modalImg" src="" alt="">
-        <div class="modal-favorite" id="modalFavorite" onclick="toggleFavoriteFromModal()">🤍</div>
+        <div class="modal-favorite" id="modalFavorite" onclick="toggleFavoriteFromModal()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
         <h2 class="modal-title" id="modalTitle"></h2>
         <p class="modal-price" id="modalPrice"></p>
         <p class="modal-color" id="modalColor"></p>
@@ -452,20 +434,34 @@
 <div class="toast" id="toast">Текст заказа скопирован! Вставьте в чат ВК</div>
 
 <script>
+    // ---------- ИКОНКИ SVG ----------
+    const icons = {
+        all: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>',
+        favorites: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+        shorts: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="4" rx="1"/><path d="M6 8v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8M4 12h16"/></svg>',
+        suits: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v1H5a2 2 0 0 0-2 2v3h18V8a2 2 0 0 0-2-2h-4V5a3 3 0 0 0-3-3zM5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>',
+        shoes: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 15h2v4h16v-4h2v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zM4 15s2-6 8-6 8 6 8 6"/><path d="M12 9V3l4 2"/></svg>',
+        accessories: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7.5A2.5 2.5 0 0 1 17.5 5H6.5A2.5 2.5 0 0 1 4 7.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.5zM4 10h16"/></svg>',
+        tshirts: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-2.5 1.5L17 6l-5 8-5-8-2.5 4.5L2 9l4-6z"/><path d="M12 14v7"/></svg>',
+        jackets: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 6-3-6-2 3-3-2 2-4zM12 15v6"/><path d="M8 21h8"/></svg>',
+        hoodies: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 8-3-8-2 3-3-2 2-4zM12 13v8M8 21h8"/><circle cx="12" cy="13" r="2"/></svg>',
+        pants: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2h16v4l-3 5v11h-4v-9H9v9H5V11L2 6V2z"/></svg>',
+    };
+
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
     const IMAGES_PATH = 'images/';
 
     const categories = [
-        { id: 'all', name: 'Все товары', emoji: '🦍' },
-        { id: 'favorites', name: 'Избранное', emoji: '⭐' },
-        { id: 'shorts', name: 'Шорты', emoji: '🩳' },
-        { id: 'suits', name: 'Спорт. костюмы', emoji: '🏃' },
-        { id: 'shoes', name: 'Кроссовки', emoji: '👟' },
-        { id: 'accessories', name: 'Аксессуары', emoji: '🧢' },
-        { id: 'tshirts', name: 'Футболки / Рубашки', emoji: '👕' },
-        { id: 'jackets', name: 'Куртки / Ветровки', emoji: '🧥' },
-        { id: 'hoodies', name: 'Худи / Свитшоты', emoji: '🦍' },
-        { id: 'pants', name: 'Штаны / Брюки / Джинсы', emoji: '👖' }
+        { id: 'all', name: 'Все товары', icon: 'all' },
+        { id: 'favorites', name: 'Избранное', icon: 'favorites' },
+        { id: 'shorts', name: 'Шорты', icon: 'shorts' },
+        { id: 'suits', name: 'Спорт. костюмы', icon: 'suits' },
+        { id: 'shoes', name: 'Кроссовки', icon: 'shoes' },
+        { id: 'accessories', name: 'Аксессуары', icon: 'accessories' },
+        { id: 'tshirts', name: 'Футболки / Рубашки', icon: 'tshirts' },
+        { id: 'jackets', name: 'Куртки / Ветровки', icon: 'jackets' },
+        { id: 'hoodies', name: 'Худи / Свитшоты', icon: 'hoodies' },
+        { id: 'pants', name: 'Штаны / Брюки / Джинсы', icon: 'pants' }
     ];
 
     let products = [];
@@ -476,50 +472,38 @@
     let currentModalProduct = null;
     let selectedSize = null;
 
-    // Порядок буквенных размеров
     const LETTER_SIZES_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '2XL', '3XL', '4XL', '5XL'];
 
     function saveFavorites() { localStorage.setItem('gorillaFavorites', JSON.stringify(favorites)); }
 
     function toggleFavorite(id) {
-        if (favorites.includes(id)) {
-            favorites = favorites.filter(f => f !== id);
-        } else {
-            favorites.push(id);
-        }
+        if (favorites.includes(id)) { favorites = favorites.filter(f => f !== id); }
+        else { favorites.push(id); }
         saveFavorites();
-        document.querySelectorAll(`.favorite-btn`).forEach(btn => {
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
             if (btn.getAttribute('data-id') === id) {
                 const isFav = favorites.includes(id);
-                btn.textContent = isFav ? '❤️' : '🤍';
-                if (isFav) btn.classList.add('active');
-                else btn.classList.remove('active');
+                btn.innerHTML = isFav ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="#ff3333" stroke="#ff3333" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' 
+                    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+                if (isFav) btn.classList.add('active'); else btn.classList.remove('active');
             }
         });
-        if (currentModalProduct && currentModalProduct.id === id) {
-            updateModalFavorite();
-        }
+        if (currentModalProduct && currentModalProduct.id === id) updateModalFavorite();
         renderCategories();
     }
 
-    function toggleFavoriteFromModal() {
-        if (currentModalProduct) {
-            toggleFavorite(currentModalProduct.id);
-        }
-    }
+    function toggleFavoriteFromModal() { if (currentModalProduct) toggleFavorite(currentModalProduct.id); }
 
     function updateModalFavorite() {
         const favBtn = document.getElementById('modalFavorite');
-        if (currentModalProduct && favorites.includes(currentModalProduct.id)) {
-            favBtn.textContent = '❤️';
-            favBtn.classList.add('active');
-        } else {
-            favBtn.textContent = '🤍';
-            favBtn.classList.remove('active');
-        }
+        if (!currentModalProduct) return;
+        const isFav = favorites.includes(currentModalProduct.id);
+        favBtn.innerHTML = isFav
+            ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="#ff3333" stroke="#ff3333" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'
+            : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+        if (isFav) favBtn.classList.add('active'); else favBtn.classList.remove('active');
     }
 
-    // ---------- ПАРАЛЛАКС / GLITCH / ЧАСТИЦЫ ----------
     const heroBg = document.getElementById('hero-bg');
     const heroContent = document.getElementById('hero-content');
     window.addEventListener('scroll', () => {
@@ -530,179 +514,96 @@
 
     const glitchTitle = document.getElementById('glitch-title');
     if (glitchTitle) {
-        setInterval(() => {
-            glitchTitle.classList.add('glitch-active');
-            setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300);
-        }, 4000);
-        glitchTitle.addEventListener('click', () => {
-            glitchTitle.classList.add('glitch-active');
-            setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300);
-        });
+        setInterval(() => { glitchTitle.classList.add('glitch-active'); setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300); }, 4000);
+        glitchTitle.addEventListener('click', () => { glitchTitle.classList.add('glitch-active'); setTimeout(() => glitchTitle.classList.remove('glitch-active'), 300); });
     }
 
     (function() {
         const canvas = document.getElementById('particles-canvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        const maxParticles = 60;
-        function resize() {
-            canvas.width = canvas.parentElement.offsetWidth;
-            canvas.height = canvas.parentElement.offsetHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+        let particles = [], maxParticles = 60;
+        function resize() { canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; }
+        window.addEventListener('resize', resize); resize();
         class Particle {
             constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedY = Math.random() * 0.5 + 0.2;
-                this.opacity = Math.random() * 0.5 + 0.2;
-            }
-            update() {
-                this.y -= this.speedY;
-                if (this.y < -10) { this.y = canvas.height + 10; this.x = Math.random() * canvas.width; }
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.fill();
-            }
+            reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*2+0.5; this.speedY = Math.random()*0.5+0.2; this.opacity = Math.random()*0.5+0.2; }
+            update() { this.y -= this.speedY; if (this.y < -10) { this.y = canvas.height+10; this.x = Math.random()*canvas.width; } }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${this.opacity})`; ctx.fill(); }
         }
         while (particles.length < maxParticles) particles.push(new Particle());
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
+        function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
         animate();
     })();
 
-    window.addEventListener('scroll', () => {
-        const header = document.getElementById('main-header');
-        if (header) header.classList.toggle('scrolled', window.scrollY > 50);
-    });
+    window.addEventListener('scroll', () => { const h = document.getElementById('main-header'); if (h) h.classList.toggle('scrolled', window.scrollY > 50); });
 
     function observeCards() {
-        const cards = document.querySelectorAll('.card');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        cards.forEach(card => observer.observe(card));
+        document.querySelectorAll('.card').forEach(card => {
+            const observer = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { entries[0].target.classList.add('revealed'); observer.unobserve(entries[0].target); } }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            observer.observe(card);
+        });
     }
 
-    // ---------- ЗАГРУЗКА ТОВАРОВ ----------
     async function loadProducts() {
         const grid = document.getElementById('catalogGrid');
         grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>';
         try {
-            const response = await fetch(CSV_URL);
-            if (!response.ok) throw new Error(`Ошибка HTTP: ${response.status}`);
-            const csvText = await response.text();
-            products = parseCSV(csvText);
-            renderCategories();
-            renderSizeFilter();
-            renderCatalog();
-            updateCart();
-            setTimeout(observeCards, 100);
-        } catch (error) {
-            console.error('Ошибка загрузки CSV:', error);
-            grid.innerHTML = '<div class="no-products">⚠️ Не удалось загрузить товары.</div>';
-        }
+            const r = await fetch(CSV_URL); if (!r.ok) throw new Error('HTTP '+r.status);
+            const csv = await r.text(); products = parseCSV(csv);
+            renderCategories(); renderSizeFilter(); renderCatalog(); updateCart(); setTimeout(observeCards, 100);
+        } catch (e) { console.error(e); grid.innerHTML = '<div class="no-products">⚠️ Не удалось загрузить товары.</div>'; }
     }
 
     function parseCSV(csv) {
-        const lines = csv.trim().split('\n');
-        if (lines.length < 2) return [];
+        const lines = csv.trim().split('\n'); if (lines.length < 2) return [];
         const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-        const colorIdx = headers.indexOf('colors') !== -1 ? headers.indexOf('colors') : headers.indexOf('color');
+        const colorIdx = headers.indexOf('colors')!==-1 ? headers.indexOf('colors') : headers.indexOf('color');
         if (colorIdx !== -1) headers[colorIdx] = 'color';
         const result = [];
         for (let i = 1; i < lines.length; i++) {
-            const values = lines[i].split(',').map(v => v.trim());
-            if (values.length < headers.length) continue;
-            const item = {};
-            headers.forEach((header, idx) => { item[header] = values[idx] || ''; });
-            item.id = item.id || '';
-            item.price = parseInt(item.price) || 0;
-            item.stock = parseInt(item.stock) || 0;
-            item.photo_id = item.photo_id || '';
-            item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()).filter(s => s) : [];
-            item.color = item.color || '';
-            item.description = item.description || '';
+            const values = lines[i].split(',').map(v => v.trim()); if (values.length < headers.length) continue;
+            const item = {}; headers.forEach((h, idx) => { item[h] = values[idx] || ''; });
+            item.id = item.id || ''; item.price = parseInt(item.price)||0; item.stock = parseInt(item.stock)||0;
+            item.photo_id = item.photo_id || ''; item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()).filter(s => s) : [];
+            item.color = item.color || ''; item.description = item.description || '';
             item.category = (item.category || '').toLowerCase();
             if (item.id && item.name) result.push(item);
         }
         return result;
     }
 
-    function getPhotoURL(photoId) {
-        if (!photoId) return null;
-        return `${IMAGES_PATH}${photoId}.jpg`;
-    }
-
-    function imgError(img, photoId) {
+    function getPhotoURL(pid) { return pid ? `${IMAGES_PATH}${pid}.jpg` : null; }
+    function imgError(img, pid) {
         const src = img.src;
-        if (src.endsWith('.jpg')) {
-            img.src = `${IMAGES_PATH}${photoId}.png`;
-        } else if (src.endsWith('.png')) {
-            img.src = `${IMAGES_PATH}${photoId}.webp`;
-        } else {
-            img.style.display = 'none';
-            const placeholder = document.createElement('span');
-            placeholder.className = 'img-placeholder';
-            placeholder.textContent = '🦍';
-            img.parentNode.appendChild(placeholder);
-        }
+        if (src.endsWith('.jpg')) img.src = `${IMAGES_PATH}${pid}.png`;
+        else if (src.endsWith('.png')) img.src = `${IMAGES_PATH}${pid}.webp`;
+        else { img.style.display='none'; const p = document.createElement('span'); p.className='img-placeholder'; p.textContent='🦍'; img.parentNode.appendChild(p); }
     }
 
-    // ---------- ФИЛЬТР РАЗМЕРОВ ----------
-    function getSizesForCategory(categoryId) {
-        const filtered = categoryId === 'all' 
-            ? products 
-            : products.filter(p => p.category === categoryId);
-        const sizeSet = new Set();
-        filtered.forEach(p => {
-            if (p.sizes && p.sizes.length) {
-                p.sizes.forEach(s => sizeSet.add(s.trim()));
-            }
-        });
-        return [...sizeSet];
+    // ---------- ФИЛЬТР РАЗМЕРОВ (исправленные диапазоны) ----------
+    function getSizesForCategory(catId) {
+        const filtered = catId === 'all' ? products : products.filter(p => p.category === catId);
+        const set = new Set();
+        filtered.forEach(p => { if (p.sizes && p.sizes.length) p.sizes.forEach(s => set.add(s.trim())); });
+        return [...set];
     }
 
     function classifySizes(sizes) {
         const groups = { shoe: [], waist: [], letter: [], other: [] };
         sizes.forEach(size => {
             const upper = size.toUpperCase();
-            if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) {
-                groups.letter.push(size);
-            } else if (/^\d+$/.test(size)) {
+            if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) groups.letter.push(size);
+            else if (/^\d+$/.test(size)) {
                 const num = parseInt(size);
-                if (num >= 26 && num <= 38) groups.waist.push(size);
-                else if (num >= 36 && num <= 52) groups.shoe.push(size);
+                if (num >= 26 && num <= 34) groups.waist.push(size);      // поясные
+                else if (num >= 35 && num <= 52) groups.shoe.push(size);  // обувь 35-52
                 else groups.other.push(size);
-            } else {
-                groups.other.push(size);
-            }
+            } else groups.other.push(size);
         });
-        groups.shoe.sort((a, b) => parseInt(a) - parseInt(b));
-        groups.waist.sort((a, b) => parseInt(a) - parseInt(b));
-        groups.letter.sort((a, b) => {
-            const idxA = LETTER_SIZES_ORDER.indexOf(a.toUpperCase());
-            const idxB = LETTER_SIZES_ORDER.indexOf(b.toUpperCase());
-            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-            if (idxA !== -1) return -1;
-            if (idxB !== -1) return 1;
-            return a.localeCompare(b);
-        });
+        groups.shoe.sort((a,b) => parseInt(a)-parseInt(b));
+        groups.waist.sort((a,b) => parseInt(a)-parseInt(b));
+        groups.letter.sort((a,b) => { const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()), ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase()); if (ia!==-1 && ib!==-1) return ia-ib; if (ia!==-1) return -1; if (ib!==-1) return 1; return a.localeCompare(b); });
         groups.other.sort();
         return groups;
     }
@@ -710,88 +611,50 @@
     function renderSizeFilter() {
         const container = document.getElementById('sizeFilterContent');
         const sizes = getSizesForCategory(activeCategory);
-        if (sizes.length === 0) {
-            container.innerHTML = '<span style="color: #666; font-size: 12px; font-family: \'Inter\', sans-serif;">Нет размеров</span>';
-            return;
-        }
+        if (sizes.length === 0) { container.innerHTML = '<span style="color:#666;font-size:12px;">Нет размеров</span>'; return; }
         const groups = classifySizes(sizes);
         let html = '';
-        if (groups.shoe.length > 0) {
+        if (groups.shoe.length) {
             html += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">';
-            groups.shoe.forEach(size => {
-                const isActive = activeSize === size;
-                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
-            });
+            groups.shoe.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
             html += '</div></div>';
         }
-        if (groups.waist.length > 0) {
+        if (groups.waist.length) {
             html += '<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">';
-            groups.waist.forEach(size => {
-                const isActive = activeSize === size;
-                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
-            });
+            groups.waist.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
             html += '</div></div>';
         }
-        if (groups.letter.length > 0) {
+        if (groups.letter.length) {
             html += '<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">';
-            groups.letter.forEach(size => {
-                const isActive = activeSize === size;
-                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
-            });
+            groups.letter.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
             html += '</div></div>';
         }
-        if (groups.other.length > 0) {
+        if (groups.other.length) {
             html += '<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">';
-            groups.other.forEach(size => {
-                const isActive = activeSize === size;
-                html += `<button class="size-filter-btn${isActive ? ' active' : ''}" onclick="setSizeFilter('${size}')">${size}</button>`;
-            });
+            groups.other.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; });
             html += '</div></div>';
         }
         container.innerHTML = html;
     }
 
-    function setSizeFilter(size) {
-        if (activeSize === size) {
-            activeSize = null;
-        } else {
-            activeSize = size;
-        }
-        renderSizeFilter();
-        renderCatalog();
-        setTimeout(observeCards, 100);
-    }
+    function setSizeFilter(size) { activeSize = activeSize === size ? null : size; renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
+    function clearSizeFilter() { activeSize = null; renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
 
-    function clearSizeFilter() {
-        activeSize = null;
-        renderSizeFilter();
-        renderCatalog();
-        setTimeout(observeCards, 100);
-    }
-
-    // ---------- КАТАЛОГ ----------
     function renderCategories() {
         const menu = document.getElementById('categoriesMenu');
         let html = '<h4>Категории</h4>';
         categories.forEach(cat => {
             const count = cat.id === 'all' ? products.length : cat.id === 'favorites' ? favorites.length : products.filter(p => p.category === cat.id).length;
-            html += `<button class="category-btn${activeCategory === cat.id ? ' active' : ''}" onclick="setCategory('${cat.id}')">${cat.emoji} ${cat.name} <span class="count">${count}</span></button>`;
+            html += `<button class="category-btn${activeCategory===cat.id?' active':''}" onclick="setCategory('${cat.id}')">${icons[cat.icon] || ''} ${cat.name} <span class="count">${count}</span></button>`;
         });
         menu.innerHTML = html;
     }
 
-    function setCategory(catId) {
-        activeCategory = catId;
-        renderCategories();
-        renderSizeFilter();
-        renderCatalog();
-        setTimeout(observeCards, 100);
-    }
+    function setCategory(catId) { activeCategory = catId; renderCategories(); renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
 
     function openModal(product) {
         currentModalProduct = product;
         selectedSize = (product.sizes && product.sizes.length === 1) ? product.sizes[0] : null;
-
         document.getElementById('modalImg').src = getPhotoURL(product.photo_id) || '';
         document.getElementById('modalImg').onerror = function() { imgError(this, product.photo_id); };
         document.getElementById('modalTitle').textContent = product.name;
@@ -800,94 +663,42 @@
         document.getElementById('modalDesc').textContent = product.description || 'Описание отсутствует';
         document.getElementById('modalStock').textContent = product.stock > 0 ? `В наличии: ${product.stock} шт` : 'Нет в наличии';
         updateModalFavorite();
-
-        const sizeContainer = document.getElementById('modalSizes');
-        sizeContainer.innerHTML = '';
-        if (product.sizes && product.sizes.length > 0) {
+        const sc = document.getElementById('modalSizes'); sc.innerHTML = '';
+        if (product.sizes && product.sizes.length) {
             product.sizes.forEach(size => {
-                const btn = document.createElement('button');
-                btn.className = 'size-btn' + (size === selectedSize ? ' selected' : '');
-                btn.textContent = size;
-                btn.onclick = () => {
-                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    selectedSize = size;
-                };
-                sizeContainer.appendChild(btn);
+                const btn = document.createElement('button'); btn.className = 'size-btn' + (size === selectedSize ? ' selected' : '');
+                btn.textContent = size; btn.onclick = () => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); selectedSize = size; };
+                sc.appendChild(btn);
             });
-        } else {
-            sizeContainer.innerHTML = '<span style="color:#666;">Без размеров</span>';
-        }
-
+        } else sc.innerHTML = '<span style="color:#666;">Без размеров</span>';
         const addBtn = document.getElementById('modalAddBtn');
-        if (product.stock === 0) {
-            addBtn.disabled = true;
-            addBtn.textContent = 'Нет в наличии';
-        } else {
-            addBtn.disabled = false;
-            const inCart = cart.find(i => i.id === product.id && i.size === selectedSize);
-            addBtn.textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
-        }
-
+        if (product.stock === 0) { addBtn.disabled = true; addBtn.textContent = 'Нет в наличии'; }
+        else { addBtn.disabled = false; const inCart = cart.find(i => i.id === product.id && i.size === selectedSize); addBtn.textContent = inCart ? '✓ В корзине' : 'Добавить в корзину'; }
         document.getElementById('modalOverlay').classList.add('active');
     }
 
-    function closeModal(event) {
-        if (event && event.target !== document.getElementById('modalOverlay')) return;
-        document.getElementById('modalOverlay').classList.remove('active');
-        currentModalProduct = null;
-    }
+    function closeModal(event) { if (event && event.target !== document.getElementById('modalOverlay')) return; document.getElementById('modalOverlay').classList.remove('active'); currentModalProduct = null; }
 
     function addFromModal() {
         if (!currentModalProduct || currentModalProduct.stock === 0) return;
-        if (currentModalProduct.sizes && currentModalProduct.sizes.length > 0 && !selectedSize) {
-            alert('Выберите размер');
-            return;
-        }
+        if (currentModalProduct.sizes && currentModalProduct.sizes.length > 0 && !selectedSize) { alert('Выберите размер'); return; }
         const size = selectedSize || null;
         const existing = cart.find(i => i.id === currentModalProduct.id && i.size === size);
-        if (existing) {
-            cart = cart.filter(i => !(i.id === currentModalProduct.id && i.size === size));
-        } else {
-            cart.push({
-                id: currentModalProduct.id,
-                name: currentModalProduct.name,
-                price: currentModalProduct.price,
-                size: size,
-                color: currentModalProduct.color,
-                photo_id: currentModalProduct.photo_id,
-                sizes: currentModalProduct.sizes
-            });
-        }
-        saveCart();
-        updateCart();
-        const inCart = cart.find(i => i.id === currentModalProduct.id && i.size === size);
-        document.getElementById('modalAddBtn').textContent = inCart ? '✓ В корзине' : 'Добавить в корзину';
+        if (existing) cart = cart.filter(i => !(i.id === currentModalProduct.id && i.size === size));
+        else cart.push({ id: currentModalProduct.id, name: currentModalProduct.name, price: currentModalProduct.price, size: size, color: currentModalProduct.color, photo_id: currentModalProduct.photo_id, sizes: currentModalProduct.sizes });
+        saveCart(); updateCart();
+        document.getElementById('modalAddBtn').textContent = cart.find(i => i.id === currentModalProduct.id && i.size === size) ? '✓ В корзине' : 'Добавить в корзину';
     }
 
-    function goToCartFromModal() {
-        document.getElementById('modalOverlay').classList.remove('active');
-        currentModalProduct = null;
-        setTimeout(() => { toggleCart(); }, 100);
-    }
+    function goToCartFromModal() { document.getElementById('modalOverlay').classList.remove('active'); currentModalProduct = null; setTimeout(() => toggleCart(), 100); }
 
     function renderCatalog() {
         const grid = document.getElementById('catalogGrid');
-        let filtered = activeCategory === 'favorites' 
-            ? products.filter(p => favorites.includes(p.id))
-            : activeCategory === 'all' 
-                ? products 
-                : products.filter(p => p.category === activeCategory);
-        if (activeSize) {
-            filtered = filtered.filter(p => p.sizes && p.sizes.includes(activeSize));
-        }
-        if (filtered.length === 0) {
-            grid.innerHTML = '<div class="no-products">Товаров пока нет</div>';
-            return;
-        }
+        let filtered = activeCategory === 'favorites' ? products.filter(p => favorites.includes(p.id)) : activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory);
+        if (activeSize) filtered = filtered.filter(p => p.sizes && p.sizes.includes(activeSize));
+        if (filtered.length === 0) { grid.innerHTML = '<div class="no-products">Товаров пока нет</div>'; return; }
         grid.innerHTML = filtered.map(p => {
-            const soldOut = p.stock === 0;
-            const lowStock = p.stock > 0 && p.stock <= 3;
+            const soldOut = p.stock === 0, lowStock = p.stock > 0 && p.stock <= 3;
             const stockText = soldOut ? 'SOLD OUT' : lowStock ? `Осталось: ${p.stock} шт` : `В наличии: ${p.stock} шт`;
             const stockClass = soldOut ? 'out' : lowStock ? 'low' : '';
             const catName = categories.find(c => c.id === p.category)?.name || p.category || '';
@@ -895,12 +706,11 @@
             const colorDot = p.color ? `<span class="color-dot" style="background-color:${p.color};" title="${p.color}"></span>` : '';
             const photoUrl = getPhotoURL(p.photo_id);
             const isFav = favorites.includes(p.id);
-
-            return `<div class="card${soldOut ? ' sold-out' : ''}" onclick="openModal(products.find(pr=>pr.id==='${p.id}'))">
+            return `<div class="card${soldOut?' sold-out':''}" onclick="openModal(products.find(pr=>pr.id==='${p.id}'))">
                 <div class="card-img">
                     ${photoUrl ? `<img src="${photoUrl}" alt="${p.name}" onerror="imgError(this, '${p.photo_id}')">` : '<span class="img-placeholder">🦍</span>'}
-                    <div class="card-tag${soldOut ? ' sold' : ''}">${soldOut ? 'SOLD OUT' : (p.tag || '')}</div>
-                    <button class="favorite-btn${isFav ? ' active' : ''}" data-id="${p.id}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">${isFav ? '❤️' : '🤍'}</button>
+                    <div class="card-tag${soldOut?' sold':''}">${soldOut?'SOLD OUT':(p.tag||'')}</div>
+                    <button class="favorite-btn${isFav?' active':''}" data-id="${p.id}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">${isFav ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="#ff3333" stroke="#ff3333" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'}</button>
                     <span class="stock-badge ${stockClass}">${stockText}</span>
                 </div>
                 <div class="card-body">
@@ -918,40 +728,19 @@
     function removeFromCart(id, size) { cart = cart.filter(i => !(i.id === id && i.size === size)); saveCart(); updateCart(); }
     function clearCart() { if (cart.length === 0) return; cart = []; saveCart(); updateCart(); showToast('🗑 Корзина очищена'); }
     function updateCart() {
-        const count = document.getElementById('cartCount');
-        const items = document.getElementById('cartItems');
-        const total = document.getElementById('cartTotal');
-        count.textContent = cart.length;
-        cart.length > 0 ? count.classList.add('active') : count.classList.remove('active');
-        if (cart.length === 0) {
-            items.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
-            total.textContent = 'Итого: 0 ₽';
-        } else {
-            items.innerHTML = cart.map(i => {
-                const sizeInfo = i.size ? ` (${i.size})` : '';
-                const colorInfo = i.color ? ` [${i.color}]` : '';
-                return `<div class="cart-item"><span>${i.name}${colorInfo}${sizeInfo}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size || ''}')">✕</span></span></div>`;
-            }).join('');
-            total.textContent = `Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽`;
+        const count = document.getElementById('cartCount'), items = document.getElementById('cartItems'), total = document.getElementById('cartTotal');
+        count.textContent = cart.length; cart.length > 0 ? count.classList.add('active') : count.classList.remove('active');
+        if (cart.length === 0) { items.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; total.textContent = 'Итого: 0 ₽'; }
+        else {
+            items.innerHTML = cart.map(i => { const si = i.size ? ` (${i.size})` : '', ci = i.color ? ` [${i.color}]` : ''; return `<div class="cart-item"><span>${i.name}${ci}${si}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size||''}')">✕</span></span></div>`; }).join('');
+            total.textContent = `Итого: ${cart.reduce((s,i) => s + i.price, 0).toLocaleString()} ₽`;
         }
     }
     function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); document.getElementById('cartOverlay').classList.toggle('open'); }
-    function copyToClipboard(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
-        const textarea = document.createElement('textarea'); textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
-        document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea); return Promise.resolve();
-    }
-    function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); }
-    function checkoutTG() {
-        if (cart.length === 0) { alert('Корзина пуста!'); return; }
-        const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
-        window.open(`https://t.me/Yupi13?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-    function checkoutVK() {
-        if (cart.length === 0) { alert('Корзина пуста!'); return; }
-        const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s, i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`;
-        copyToClipboard(msg).then(() => { showToast('✅ Текст заказа скопирован! Вставьте в чат ВК'); window.open('https://vk.me/gorillaomsk', '_blank'); }).catch(() => { showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную'); window.open('https://vk.me/gorillaomsk', '_blank'); });
-    }
+    function copyToClipboard(text) { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text); const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(); }
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+    function checkoutTG() { if (cart.length === 0) { alert('Корзина пуста!'); return; } const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color?' ['+i.color+']':''}${i.size?' ('+i.size+')':''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s,i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`; window.open(`https://t.me/Yupi13?text=${encodeURIComponent(msg)}`, '_blank'); }
+    function checkoutVK() { if (cart.length === 0) { alert('Корзина пуста!'); return; } const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color?' ['+i.color+']':''}${i.size?' ('+i.size+')':''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s,i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`; copyToClipboard(msg).then(() => { showToast('✅ Текст заказа скопирован! Вставьте в чат ВК'); window.open('https://vk.me/gorillaomsk', '_blank'); }).catch(() => { showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную'); window.open('https://vk.me/gorillaomsk', '_blank'); }); }
 
     loadProducts();
 </script>
