@@ -430,18 +430,18 @@
 <div class="toast" id="toast">Текст заказа скопирован! Вставьте в чат ВК</div>
 
 <script>
-    // ---------- ИКОНКИ SVG ----------
+    // ---------- ИКОНКИ SVG (компактные) ----------
     const icons = {
-        all: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>',
-        favorites: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
-        shorts: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="4" rx="1"/><path d="M6 8v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8M4 12h16"/></svg>',
-        suits: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v1H5a2 2 0 0 0-2 2v3h18V8a2 2 0 0 0-2-2h-4V5a3 3 0 0 0-3-3zM5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>',
-        shoes: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 15h2v4h16v-4h2v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zM4 15s2-6 8-6 8 6 8 6"/><path d="M12 9V3l4 2"/></svg>',
-        accessories: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7.5A2.5 2.5 0 0 1 17.5 5H6.5A2.5 2.5 0 0 1 4 7.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.5zM4 10h16"/></svg>',
-        tshirts: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-2.5 1.5L17 6l-5 8-5-8-2.5 4.5L2 9l4-6z"/><path d="M12 14v7"/></svg>',
-        jackets: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 6-3-6-2 3-3-2 2-4zM12 15v6"/><path d="M8 21h8"/></svg>',
-        hoodies: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 8-3-8-2 3-3-2 2-4zM12 13v8M8 21h8"/><circle cx="12" cy="13" r="2"/></svg>',
-        pants: '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2h16v4l-3 5v11h-4v-9H9v9H5V11L2 6V2z"/></svg>',
+        all: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>',
+        favorites: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+        shorts: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="4" rx="1"/><path d="M6 8v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8M4 12h16"/></svg>',
+        suits: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v1H5a2 2 0 0 0-2 2v3h18V8a2 2 0 0 0-2-2h-4V5a3 3 0 0 0-3-3zM5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>',
+        shoes: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 15h2v4h16v-4h2v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zM4 15s2-6 8-6 8 6 8 6"/><path d="M12 9V3l4 2"/></svg>',
+        accessories: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7.5A2.5 2.5 0 0 1 17.5 5H6.5A2.5 2.5 0 0 1 4 7.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.5zM4 10h16"/></svg>',
+        tshirts: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-2.5 1.5L17 6l-5 8-5-8-2.5 4.5L2 9l4-6z"/><path d="M12 14v7"/></svg>',
+        jackets: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 6-3-6-2 3-3-2 2-4zM12 15v6"/><path d="M8 21h8"/></svg>',
+        hoodies: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 8-3-8-2 3-3-2 2-4zM12 13v8M8 21h8"/><circle cx="12" cy="13" r="2"/></svg>',
+        pants: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2h16v4l-3 5v11h-4v-9H9v9H5V11L2 6V2z"/></svg>',
     };
 
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
