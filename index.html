@@ -469,16 +469,18 @@
 
 <script>
     // ---------- ЖИВЫЕ ЧАСЫ ----------
-    function updateClocks() {
-        const now = new Date();
-        // Московское время (UTC+3) — локальное время браузера
-        document.getElementById('mskTime').textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-        // Омское время (UTC+6) — на 3 часа больше московского
-        const omskTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
-        document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-    }
-    updateClocks();
-    setInterval(updateClocks, 1000);
+   function updateClocks() {
+    const now = new Date();
+    
+    // Омское время (UTC+6) — локальное время браузера +3 часа от Москвы
+    const omskTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+    document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    
+    // Московское время (UTC+3) — локальное время браузера
+    document.getElementById('mskTime').textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+}
+updateClocks();
+setInterval(updateClocks, 1000);
 
     // ---------- ИКОНКИ SVG ----------
     const icons = {
