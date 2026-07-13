@@ -619,23 +619,45 @@
     }
 
     function classifySizes(sizes) {
-        const groups = { shoe: [], waist: [], letter: [], other: [] };
-        sizes.forEach(size => {
-            const upper = size.toUpperCase();
-            if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) groups.letter.push(size);
-            else if (/^\d+$/.test(size)) {
-                const num = parseInt(size);
-                if (num >= 26 && num <= 34) groups.waist.push(size);
-                else if (num >= 35 && num <= 52) groups.shoe.push(size);
-                else groups.other.push(size);
-            } else groups.other.push(size);
-        });
-        groups.shoe.sort((a,b) => parseInt(a)-parseInt(b));
-        groups.waist.sort((a,b) => parseInt(a)-parseInt(b));
-        groups.letter.sort((a,b) => { const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()), ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase()); if (ia!==-1 && ib!==-1) return ia-ib; if (ia!==-1) return -1; if (ib!==-1) return 1; return a.localeCompare(b); });
-        groups.other.sort();
-        return groups;
-    }
+    const groups = { shoe: [], waist: [], letter: [], other: [] };
+    sizes.forEach(size => {
+        const upper = size.toUpperCase();
+        // Буквенные размеры
+        if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) {
+            groups.letter.push(size);
+        }
+        // Числовые размеры
+        else if (/^\d+$/.test(size)) {
+            const num = parseInt(size);
+            // Если выбрана категория обуви — отправляем в shoe
+            if (activeCategory === 'shoes' && num >= 35 && num <= 52) {
+                groups.shoe.push(size);
+            }
+            // Если поясные размеры (джинсы)
+            else if (activeCategory === 'pants' && num >= 26 && num <= 38) {
+                groups.waist.push(size);
+            }
+            // Всё остальное — в одежду
+            else {
+                groups.letter.push(size);
+            }
+        } else {
+            groups.other.push(size);
+        }
+    });
+    groups.shoe.sort((a,b) => parseInt(a)-parseInt(b));
+    groups.waist.sort((a,b) => parseInt(a)-parseInt(b));
+    groups.letter.sort((a,b) => {
+        const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()),
+              ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase());
+        if (ia!==-1 && ib!==-1) return ia-ib;
+        if (ia!==-1) return -1;
+        if (ib!==-1) return 1;
+        return a.localeCompare(b);
+    });
+    groups.other.sort();
+    return groups;
+}
 
     function renderSizeFilter() {
         const container = document.getElementById('sizeFilterContent');
