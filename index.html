@@ -527,16 +527,15 @@
 <script>
     // ---------- ЖИВЫЕ ЧАСЫ ----------
     function updateClocks() {
-        const now = new Date();
-        // Омское время (UTC+6)
-        const omskTime = new Date(now.getTime() + (6 * 60 * 60 * 1000));
-        document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-        // Московское время (UTC+3)
-        const mskTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
-        document.getElementById('mskTime').textContent = mskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-    }
-    updateClocks();
-    setInterval(updateClocks, 1000);
+    const now = new Date();
+    // Омское время (UTC+6) — разница с Москвой +3 часа
+    const omskTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+    document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    // Московское время (UTC+3)
+    document.getElementById('mskTime').textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+}
+updateClocks();
+setInterval(updateClocks, 1000);
 
     // ---------- ИКОНКИ SVG ----------
     const icons = {
