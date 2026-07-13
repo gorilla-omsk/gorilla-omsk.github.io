@@ -471,18 +471,18 @@
    // ---------- ЖИВЫЕ ЧАСЫ ----------
 function updateClocks() {
     const now = new Date();
-
+    
     // Московское время (UTC+3)
-    const mskTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-    const mskHours = mskTime.getHours().toString().padStart(2, '0');
-    const mskMinutes = mskTime.getMinutes().toString().padStart(2, '0');
-    document.getElementById('mskTime').textContent = `${mskHours}:${mskMinutes}`;
-
-    // Омское время (UTC+6)
-    const omskTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Omsk" }));
-    const omskHours = omskTime.getHours().toString().padStart(2, '0');
-    const omskMinutes = omskTime.getMinutes().toString().padStart(2, '0');
-    document.getElementById('omskTime').textContent = `${omskHours}:${omskMinutes}`;
+    const mskTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+    document.getElementById('mskTime').textContent = 
+        mskTime.getUTCHours().toString().padStart(2, '0') + ':' + 
+        mskTime.getUTCMinutes().toString().padStart(2, '0');
+    
+    // Омское время (UTC+6) = Москва + 3 часа
+    const omskTime = new Date(now.getTime() + (6 * 60 * 60 * 1000));
+    document.getElementById('omskTime').textContent = 
+        omskTime.getUTCHours().toString().padStart(2, '0') + ':' + 
+        omskTime.getUTCMinutes().toString().padStart(2, '0');
 }
 updateClocks();
 setInterval(updateClocks, 1000);
