@@ -472,12 +472,13 @@
    function updateClocks() {
     const now = new Date();
     
-    // Омское время (UTC+6) — локальное время браузера +3 часа от Москвы
-    const omskTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
-    document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    // Московское время (UTC+3) — принудительно
+    const mskTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Moscow' }));
+    document.getElementById('mskTime').textContent = mskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Moscow' });
     
-    // Московское время (UTC+3) — локальное время браузера
-    document.getElementById('mskTime').textContent = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    // Омское время (UTC+6) — принудительно
+    const omskTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Omsk' }));
+    document.getElementById('omskTime').textContent = omskTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Omsk' });
 }
 updateClocks();
 setInterval(updateClocks, 1000);
