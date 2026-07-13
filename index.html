@@ -177,6 +177,7 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: contain; object-position: center; background: #080808;
             opacity: 0; transition: opacity 0.3s; pointer-events: none;
+            cursor: zoom-in;
         }
         .modal-gallery-img.active { opacity: 1; pointer-events: auto; }
         .modal-gallery-prev, .modal-gallery-next {
@@ -198,6 +199,27 @@
             background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s;
         }
         .modal-dot.active { background: #fff; }
+
+        /* Лайтбокс для зума */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img {
+            max-width: 95%; max-height: 95%; object-fit: contain;
+            cursor: zoom-out; transition: transform 0.3s;
+        }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 25px;
+            background: rgba(255,255,255,0.1); color: #fff; border: none;
+            font-size: 30px; width: 45px; height: 45px; border-radius: 50%;
+            cursor: pointer; z-index: 10000; display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.3); }
 
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; }
         .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; }
@@ -249,6 +271,7 @@
         .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
         .modal-overlay.active .modal { transform: scale(1); }
         .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; z-index: 5; }
+        .modal-img { cursor: zoom-in; }
         .modal-title { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 5px; }
         .modal-price { font-size: 18px; color: #aaa; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
         .modal-color { font-size: 14px; color: #999; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
@@ -310,6 +333,12 @@
     </style>
 </head>
 <body>
+
+<!-- Лайтбокс для зума фото -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img src="" alt="zoom" id="lightboxImg" onclick="event.stopPropagation()">
+</div>
 
 <header id="main-header">
     <div class="logo-block">
@@ -619,45 +648,37 @@
     }
 
     function classifySizes(sizes) {
-    const groups = { shoe: [], waist: [], letter: [], other: [] };
-    sizes.forEach(size => {
-        const upper = size.toUpperCase();
-        // Буквенные размеры
-        if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) {
-            groups.letter.push(size);
-        }
-        // Числовые размеры
-        else if (/^\d+$/.test(size)) {
-            const num = parseInt(size);
-            // Если выбрана категория обуви — отправляем в shoe
-            if (activeCategory === 'shoes' && num >= 35 && num <= 52) {
-                groups.shoe.push(size);
-            }
-            // Если поясные размеры (джинсы)
-            else if (activeCategory === 'pants' && num >= 26 && num <= 38) {
-                groups.waist.push(size);
-            }
-            // Всё остальное — в одежду
-            else {
+        const groups = { shoe: [], waist: [], letter: [], other: [] };
+        sizes.forEach(size => {
+            const upper = size.toUpperCase();
+            if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) {
                 groups.letter.push(size);
+            } else if (/^\d+$/.test(size)) {
+                const num = parseInt(size);
+                if (activeCategory === 'shoes' && num >= 35 && num <= 52) {
+                    groups.shoe.push(size);
+                } else if (activeCategory === 'pants' && num >= 26 && num <= 38) {
+                    groups.waist.push(size);
+                } else {
+                    groups.letter.push(size);
+                }
+            } else {
+                groups.other.push(size);
             }
-        } else {
-            groups.other.push(size);
-        }
-    });
-    groups.shoe.sort((a,b) => parseInt(a)-parseInt(b));
-    groups.waist.sort((a,b) => parseInt(a)-parseInt(b));
-    groups.letter.sort((a,b) => {
-        const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()),
-              ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase());
-        if (ia!==-1 && ib!==-1) return ia-ib;
-        if (ia!==-1) return -1;
-        if (ib!==-1) return 1;
-        return a.localeCompare(b);
-    });
-    groups.other.sort();
-    return groups;
-}
+        });
+        groups.shoe.sort((a,b) => parseInt(a)-parseInt(b));
+        groups.waist.sort((a,b) => parseInt(a)-parseInt(b));
+        groups.letter.sort((a,b) => {
+            const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()),
+                  ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase());
+            if (ia!==-1 && ib!==-1) return ia-ib;
+            if (ia!==-1) return -1;
+            if (ib!==-1) return 1;
+            return a.localeCompare(b);
+        });
+        groups.other.sort();
+        return groups;
+    }
 
     function renderSizeFilter() {
         const container = document.getElementById('sizeFilterContent');
@@ -703,7 +724,7 @@
 
     function setCategory(catId) { activeCategory = catId; renderCategories(); renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
 
-    // Галерея
+    // ---------- ГАЛЕРЕЯ И ЗУМ ----------
     function nextSlide() {
         const slides = document.querySelectorAll('.modal-gallery-img');
         if (slides.length === 0) return;
@@ -732,6 +753,24 @@
         });
     }
 
+    function openLightbox(src) {
+        const lb = document.getElementById('lightbox');
+        const img = document.getElementById('lightboxImg');
+        img.src = src;
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        const lb = document.getElementById('lightbox');
+        lb.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
     function openModal(product) {
         currentModalProduct = product;
         selectedSize = (product.sizes && product.sizes.length === 1) ? product.sizes[0] : null;
@@ -747,23 +786,24 @@
                     <div class="modal-gallery-slides">
                         ${currentPhotos.map((url, i) => `
                             <img src="${url}" alt="${product.name}" class="modal-gallery-img${i === 0 ? ' active' : ''}" 
-                                 onerror="this.style.display='none';">
+                                 onerror="this.style.display='none';" onclick="openLightbox('${url}')">
                         `).join('')}
                     </div>
                     <div class="modal-gallery-dots">
                         ${currentPhotos.map((_, i) => `
-                            <span class="modal-dot${i === 0 ? ' active' : ''}" onclick="goToSlide(${i})"></span>
+                            <span class="modal-dot${i === 0 ? ' active' : ''}" onclick="event.stopPropagation(); goToSlide(${i})"></span>
                         `).join('')}
                     </div>
-                    <button class="modal-gallery-prev" onclick="prevSlide()">‹</button>
-                    <button class="modal-gallery-next" onclick="nextSlide()">›</button>
+                    <button class="modal-gallery-prev" onclick="event.stopPropagation(); prevSlide()">‹</button>
+                    <button class="modal-gallery-next" onclick="event.stopPropagation(); nextSlide()">›</button>
                 </div>
             `;
         } else if (currentPhotos.length === 1) {
             galleryContainer.innerHTML = `
                 <img class="modal-img" src="${currentPhotos[0]}" alt="${product.name}" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" 
-                     style="width:100%; height:300px; object-fit:contain; object-position:center; border-radius:8px; margin-bottom:15px; background:#080808;">
+                     style="width:100%; height:300px; object-fit:contain; object-position:center; border-radius:8px; margin-bottom:15px; background:#080808; cursor:zoom-in;"
+                     onclick="openLightbox('${currentPhotos[0]}')">
                 <span class="img-placeholder" style="display:none; width:100%; height:300px; align-items:center; justify-content:center; font-size:60px;">🦍</span>
             `;
         } else {
