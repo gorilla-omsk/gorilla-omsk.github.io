@@ -28,10 +28,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* SVG-иконки вместо эмодзи */
-        .icon-svg { width: 18px; height: 18px; vertical-align: middle; margin-right: 6px; display: inline-block; }
-        .icon-svg.large { width: 24px; height: 24px; }
-
         @keyframes glitch {
             0% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(0); }
             20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
@@ -127,7 +123,7 @@
         .size-filter-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; }
         .size-filter-reset { width: 100%; margin-top: 8px; padding: 8px; background: transparent; color: #ff3333; border: 1px solid rgba(255,51,51,0.3); border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 11px; transition: all 0.3s; }
 
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; flex: 1; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; flex: 1; }
         .card {
             background: #0c0c0c; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); position: relative; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer;
@@ -316,7 +312,7 @@
 </section>
 
 <div class="marquee">
-    <span>GORILLA • OMSK • БЕСПЛАТНАЯ ДОСТАВКА ОТ 5000₽ • TELEGRAM • НОВЫЙ ДРОП</span>
+    <span>GORILLA • OMSK • 🔥 ТВОЙ СТИЛЬ — ТВОИ ПРАВИЛА • TELEGRAM • НОВЫЙ ДРОП</span>
 </div>
 
 <section class="section" id="catalog">
@@ -581,7 +577,6 @@
         else { img.style.display='none'; const p = document.createElement('span'); p.className='img-placeholder'; p.textContent='🦍'; img.parentNode.appendChild(p); }
     }
 
-    // ---------- ФИЛЬТР РАЗМЕРОВ (исправленные диапазоны) ----------
     function getSizesForCategory(catId) {
         const filtered = catId === 'all' ? products : products.filter(p => p.category === catId);
         const set = new Set();
@@ -596,8 +591,8 @@
             if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) groups.letter.push(size);
             else if (/^\d+$/.test(size)) {
                 const num = parseInt(size);
-                if (num >= 26 && num <= 34) groups.waist.push(size);      // поясные
-                else if (num >= 35 && num <= 52) groups.shoe.push(size);  // обувь 35-52
+                if (num >= 26 && num <= 34) groups.waist.push(size);
+                else if (num >= 35 && num <= 52) groups.shoe.push(size);
                 else groups.other.push(size);
             } else groups.other.push(size);
         });
