@@ -377,6 +377,15 @@
                 <button class="size-filter-reset" onclick="clearSizeFilter()">✕ Сбросить размер</button>
             </div>
         </div>
+        <div class="sort-bar" style="display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; width: 100%;">
+    <select id="sortSelect" onchange="sortCatalog()" style="background: #0c0c0c; color: #ccc; border: 1px solid rgba(255,255,255,0.15); padding: 8px 14px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer;">
+        <option value="default">По умолчанию</option>
+        <option value="price-asc">Сначала дешёвые</option>
+        <option value="price-desc">Сначала дорогие</option>
+        <option value="name-asc">По названию (А-Я)</option>
+        <option value="name-desc">По названию (Я-А)</option>
+    </select>
+</div>
         <div class="catalog-grid" id="catalogGrid">
             <div class="loading-text">Загрузка товаров...</div>
         </div>
