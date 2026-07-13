@@ -768,6 +768,21 @@ function sortCatalog() {
         const grid = document.getElementById('catalogGrid');
         let filtered = activeCategory === 'favorites' ? products.filter(p => favorites.includes(p.id)) : activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory);
         if (activeSize) filtered = filtered.filter(p => p.sizes && p.sizes.includes(activeSize));
+        // Применяем сортировку
+switch (currentSort) {
+    case 'price-asc':
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+    case 'price-desc':
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+    case 'name-asc':
+        filtered.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+        break;
+    case 'name-desc':
+        filtered.sort((a, b) => b.name.localeCompare(a.name, 'ru'));
+        break;
+}
         if (filtered.length === 0) { grid.innerHTML = '<div class="no-products">Товаров пока нет</div>'; return; }
         grid.innerHTML = filtered.map(p => {
             const soldOut = p.stock === 0, lowStock = p.stock > 0 && p.stock <= 3;
