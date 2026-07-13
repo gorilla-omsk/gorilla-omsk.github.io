@@ -757,6 +757,13 @@ setInterval(updateClocks, 1000);
         document.getElementById('modalAddBtn').textContent = cart.find(i => i.id === currentModalProduct.id && i.size === size) ? '✓ В корзине' : 'Добавить в корзину';
     }
     function goToCartFromModal() { document.getElementById('modalOverlay').classList.remove('active'); currentModalProduct = null; setTimeout(() => toggleCart(), 100); }
+    let currentSort = 'default';
+
+function sortCatalog() {
+    currentSort = document.getElementById('sortSelect').value;
+    renderCatalog();
+    setTimeout(observeCards, 100);
+}
     function renderCatalog() {
         const grid = document.getElementById('catalogGrid');
         let filtered = activeCategory === 'favorites' ? products.filter(p => favorites.includes(p.id)) : activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory);
