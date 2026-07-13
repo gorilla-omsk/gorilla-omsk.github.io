@@ -647,38 +647,53 @@
         return [...set];
     }
 
-    function classifySizes(sizes) {
-        const groups = { shoe: [], waist: [], letter: [], other: [] };
-        sizes.forEach(size => {
-            const upper = size.toUpperCase();
-            if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) {
-                groups.letter.push(size);
-            } else if (/^\d+$/.test(size)) {
-                const num = parseInt(size);
-                if (activeCategory === 'shoes' && num >= 35 && num <= 52) {
-                    groups.shoe.push(size);
-                } else if (activeCategory === 'pants' && num >= 26 && num <= 38) {
-                    groups.waist.push(size);
-                } else {
-                    groups.letter.push(size);
-                }
-            } else {
-                groups.other.push(size);
+   function classifySizes(sizes) {
+    const groups = { shoe: [], waist: [], letter: [], other: [] };
+    
+    const isShoes = activeCategory === 'shoes';
+    const isPants = activeCategory === 'pants';
+    const isClothing = ['tshirts', 'hoodies', 'jackets', 'shorts', 'suits'].includes(activeCategory);
+    
+    sizes.forEach(size => {
+        const upper = size.toUpperCase();
+        
+        // Буквенные размеры — всегда в одежду
+        if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) {
+            groups.letter.push(size);
+        }
+        // Числовые размеры
+        else if (/^\d+$/.test(size)) {
+            const num = parseInt(size);
+            
+            if (isShoes && num >= 35 && num <= 52) {
+                groups.shoe.push(size);
+            } else if (isPants && num >= 26 && num <= 38) {
+                groups.waist.push(size);
+            } else if (!isClothing && num >= 35 && num <= 52) {
+                groups.shoe.push(size);
+            } else if (!isClothing && num >= 26 && num <= 38) {
+                groups.waist.push(size);
             }
-        });
-        groups.shoe.sort((a,b) => parseInt(a)-parseInt(b));
-        groups.waist.sort((a,b) => parseInt(a)-parseInt(b));
-        groups.letter.sort((a,b) => {
-            const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()),
-                  ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase());
-            if (ia!==-1 && ib!==-1) return ia-ib;
-            if (ia!==-1) return -1;
-            if (ib!==-1) return 1;
-            return a.localeCompare(b);
-        });
-        groups.other.sort();
-        return groups;
-    }
+            // Для одежды (isClothing) числовые размеры не добавляем в фильтр
+        } else {
+            groups.other.push(size);
+        }
+    });
+    
+    groups.shoe.sort((a,b) => parseInt(a)-parseInt(b));
+    groups.waist.sort((a,b) => parseInt(a)-parseInt(b));
+    groups.letter.sort((a,b) => {
+        const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()),
+              ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase());
+        if (ia!==-1 && ib!==-1) return ia-ib;
+        if (ia!==-1) return -1;
+        if (ib!==-1) return 1;
+        return a.localeCompare(b);
+    });
+    groups.other.sort();
+    
+    return groups;
+}
 
     function renderSizeFilter() {
         const container = document.getElementById('sizeFilterContent');
