@@ -94,12 +94,9 @@
         .card-tag { position: absolute; top: 12px; left: 12px; background: #fff; color: #0a0a0a; padding: 4px 10px; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; z-index: 2; font-family: 'Inter', sans-serif; }
         .card-tag.sold { background: #ff3333; color: #fff; }
         .favorite-btn { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); color: #fff; border: none; font-size: 18px; cursor: pointer; z-index: 3; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; touch-action: manipulation; }
-        .favorite-btn:active { transform: scale(1.3); }
-        .favorite-btn:hover { transform: scale(1.2); }
-        .favorite-btn.active { color: #ff3333; }
+        .favorite-btn:active { transform: scale(1.3); } .favorite-btn:hover { transform: scale(1.2); } .favorite-btn.active { color: #ff3333; }
         .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #666; font-size: 10px; letter-spacing: 1px; z-index: 2; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; font-family: 'Inter', sans-serif; }
-        .stock-badge.low { color: #ff9933; }
-        .stock-badge.out { color: #ff3333; }
+        .stock-badge.low { color: #ff9933; } .stock-badge.out { color: #ff3333; }
         .card-body { padding: 20px; }
         .card-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #fff; letter-spacing: 0.5px; }
         .card-body .category { color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
@@ -107,8 +104,7 @@
         .card-body .sizes { font-size: 12px; color: #999; margin-bottom: 10px; font-family: 'Inter', sans-serif; font-weight: 500; }
         .card-body .price { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
         .btn-cart { display: block; width: 100%; padding: 10px; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.15); font-family: 'Russo One', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; touch-action: manipulation; }
-        .btn-cart:hover { background: #fff; color: #0a0a0a; border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
-        .btn-cart.in-cart { background: #ff3333; border-color: #ff3333; color: #fff; }
+        .btn-cart:hover { background: #fff; color: #0a0a0a; border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.4); } .btn-cart.in-cart { background: #ff3333; border-color: #ff3333; color: #fff; }
         .no-products { text-align: center; padding: 60px; color: #555; font-size: 14px; letter-spacing: 2px; width: 100%; font-family: 'Inter', sans-serif; }
         .loading-text { text-align: center; padding: 60px; color: #666; font-family: 'Inter', sans-serif; }
         .modal-gallery { position: relative; width: 100%; height: 300px; border-radius: 8px; overflow: hidden; background: #080808; margin-bottom: 15px; }
@@ -119,12 +115,10 @@
         .modal-gallery-prev { left: 8px; } .modal-gallery-next { right: 8px; }
         .modal-gallery-prev:hover, .modal-gallery-next:hover { background: rgba(0,0,0,0.9); }
         .modal-gallery-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
-        .modal-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s; }
-        .modal-dot.active { background: #fff; }
+        .modal-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s; } .modal-dot.active { background: #fff; }
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
-        .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img { max-width: 95%; max-height: 95%; object-fit: contain; cursor: zoom-out; transition: transform 0.3s; }
-        .lightbox-close { position: absolute; top: 20px; right: 25px; background: rgba(255,255,255,0.1); color: #fff; border: none; font-size: 30px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .lightbox.active { opacity: 1; visibility: visible; } .lightbox img { max-width: 95%; max-height: 95%; object-fit: contain; cursor: zoom-out; }
+        .lightbox-close { position: absolute; top: 20px; right: 25px; background: rgba(255,255,255,0.1); color: #fff; border: none; font-size: 30px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .lightbox-close:hover { background: rgba(255,255,255,0.3); }
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; }
         .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; }
@@ -146,21 +140,18 @@
         .cart-panel.open { bottom: 0; }
         .cart-panel h3 { font-size: 16px; font-weight: 400; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
         .cart-items { max-height: 200px; overflow-y: auto; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; transition: background 0.2s; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
         .cart-item:hover { background: rgba(255,255,255,0.02); }
-        .cart-item .remove { color: #ff3333; cursor: pointer; font-size: 16px; padding: 5px; transition: transform 0.2s; }
-        .cart-item .remove:hover { transform: scale(1.3); }
+        .cart-item .remove { color: #ff3333; cursor: pointer; font-size: 16px; padding: 5px; transition: transform 0.2s; } .cart-item .remove:hover { transform: scale(1.3); }
         .cart-total { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 15px; text-align: right; font-family: 'Inter', sans-serif; }
         .cart-empty { color: #666; text-align: center; padding: 20px; font-size: 13px; font-family: 'Inter', sans-serif; }
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
-        .cart-overlay.open { display: block; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; } .cart-overlay.open { display: block; }
         .delivery-form input { width: 100%; padding: 10px; margin-bottom: 8px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; }
         .delivery-form input::placeholder { color: #555; }
         .delivery-selector label { display: block; padding: 8px; margin-bottom: 5px; cursor: pointer; color: #ccc; font-size: 13px; }
         .delivery-selector input { margin-right: 8px; }
         #clearCartBtn { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; padding: 14px 0 !important; margin-top: 8px !important; background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.3) !important; font-family: 'Russo One', sans-serif !important; font-size: 12px !important; letter-spacing: 2px !important; text-transform: uppercase !important; cursor: pointer !important; position: relative !important; z-index: 30 !important; pointer-events: auto !important; user-select: none !important; border-radius: 100px !important; transition: all 0.3s !important; min-height: 50px !important; }
-        #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; }
-        #clearCartBtn:active { transform: scale(0.96) !important; }
+        #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; } #clearCartBtn:active { transform: scale(0.96) !important; }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
@@ -175,14 +166,11 @@
         .size-btn:hover, .size-btn.selected { background: #fff; color: #0a0a0a; border-color: #fff; }
         .modal-description { color: #888; font-size: 13px; line-height: 1.6; margin-bottom: 20px; font-family: 'Inter', sans-serif; }
         .modal-stock { font-size: 12px; color: #666; margin-bottom: 15px; font-family: 'Inter', sans-serif; }
-        .modal-favorite { font-size: 20px; cursor: pointer; text-align: right; margin-bottom: 10px; color: #666; transition: color 0.2s; }
-        .modal-favorite.active { color: #ff3333; }
+        .modal-favorite { font-size: 20px; cursor: pointer; text-align: right; margin-bottom: 10px; color: #666; } .modal-favorite.active { color: #ff3333; }
         .modal-add-btn { width: 100%; padding: 16px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Russo One', sans-serif; margin-bottom: 12px; touch-action: manipulation; }
-        .modal-add-btn:hover { background: #ccc; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
-        .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
+        .modal-add-btn:hover { background: #ccc; box-shadow: 0 0 15px rgba(255,255,255,0.4); } .modal-add-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
         .modal-cart-btn { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); color: #fff; border: 2px solid rgba(255,255,255,0.4); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; font-family: 'Russo One', sans-serif; transition: all 0.3s; position: relative; z-index: 10; touch-action: manipulation; -webkit-appearance: none; }
-        .modal-cart-btn:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
-        .modal-cart-btn:active { background: #ccc; transform: scale(0.96); }
+        .modal-cart-btn:hover { background: #fff; color: #0a0a0a; border-color: #fff; } .modal-cart-btn:active { background: #ccc; transform: scale(0.96); }
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; }
@@ -198,26 +186,19 @@
             .section { padding: 60px 15px; }
             .catalog-wrapper { flex-direction: column; }
             .sidebar { position: static; min-width: auto; }
-            .categories-menu { border-radius: 8px; }
-            .categories-menu h4 { display: none; }
+            .categories-menu { border-radius: 8px; } .categories-menu h4 { display: none; }
             .category-btn { padding: 8px 12px; font-size: 10px; border-left: none; border-bottom: 2px solid transparent; border-radius: 6px; }
-            .category-btn.active { border-left: none; border-bottom-color: #fff; }
-            .category-btn .count { display: none; }
+            .category-btn.active { border-left: none; border-bottom-color: #fff; } .category-btn .count { display: none; }
             .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
-            .card-img { height: 200px; }
-            .card-img .img-placeholder { font-size: 40px; }
-            .card-body { padding: 12px; }
-            .card-body h3 { font-size: 13px; }
+            .card-img { height: 200px; } .card-img .img-placeholder { font-size: 40px; }
+            .card-body { padding: 12px; } .card-body h3 { font-size: 13px; }
             .cart-panel { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-    <img src="" alt="zoom" id="lightboxImg" onclick="event.stopPropagation()">
-</div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">✕</button><img src="" alt="zoom" id="lightboxImg" onclick="event.stopPropagation()"></div>
 
 <header id="main-header">
     <div class="logo-block">
@@ -239,8 +220,7 @@
 </header>
 
 <section class="hero" id="hero">
-    <div class="hero-bg" id="hero-bg"></div>
-    <canvas id="particles-canvas"></canvas>
+    <div class="hero-bg" id="hero-bg"></div><canvas id="particles-canvas"></canvas>
     <div class="hero-content" id="hero-content">
         <h1 id="glitch-title">GOR<span class="outline">ILLA</span></h1>
         <p class="subtitle">Уличная эстетика • Омск</p>
@@ -260,75 +240,44 @@
 <div class="marquee"><span>GORILLA • OMSK • 🔥 ТВОЙ СТИЛЬ — ТВОИ ПРАВИЛА • TELEGRAM • НОВЫЙ ДРОП</span></div>
 
 <section class="section" id="catalog">
-    <p class="section-label">Drop 001</p>
-    <h2 class="section-title">Каталог</h2>
-    <p class="section-subtitle">Выбери категорию</p>
+    <p class="section-label">Drop 001</p><h2 class="section-title">Каталог</h2><p class="section-subtitle">Выбери категорию</p>
     <div class="catalog-wrapper">
         <div class="sidebar">
             <div class="categories-menu" id="categoriesMenu"></div>
-            <div class="size-filter" id="sizeFilter">
-                <h4>📏 Размер</h4>
-                <div id="sizeFilterContent"><span style="color: #666; font-size: 12px; font-family: 'Inter', sans-serif;">Выбери категорию</span></div>
-                <button class="size-filter-reset" onclick="clearSizeFilter()">✕ Сбросить размер</button>
-            </div>
+            <div class="size-filter" id="sizeFilter"><h4>📏 Размер</h4><div id="sizeFilterContent"><span style="color: #666; font-size: 12px; font-family: 'Inter', sans-serif;">Выбери категорию</span></div><button class="size-filter-reset" onclick="clearSizeFilter()">✕ Сбросить размер</button></div>
         </div>
         <div style="flex: 1;">
-            <div class="search-bar">
-                <div style="display: flex; gap: 10px; align-items: center; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 16px;">
-                    <span style="color: #666; font-size: 18px;">🔍</span>
-                    <input type="text" id="searchInput" placeholder="Поиск по товарам..." oninput="searchCatalog()">
-                    <button onclick="clearSearch()" id="clearSearchBtn" style="display: none; background: none; border: none; color: #ff3333; cursor: pointer; font-size: 18px; padding: 0 5px;">✕</button>
-                </div>
-            </div>
-            <div class="sort-bar">
-                <select id="sortSelect" onchange="sortCatalog()">
-                    <option value="default">По умолчанию</option>
-                    <option value="price-asc">Сначала дешёвые</option>
-                    <option value="price-desc">Сначала дорогие</option>
-                </select>
-            </div>
+            <div class="search-bar"><div style="display: flex; gap: 10px; align-items: center; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 16px;"><span style="color: #666; font-size: 18px;">🔍</span><input type="text" id="searchInput" placeholder="Поиск по товарам..." oninput="searchCatalog()"><button onclick="clearSearch()" id="clearSearchBtn" style="display: none; background: none; border: none; color: #ff3333; cursor: pointer; font-size: 18px; padding: 0 5px;">✕</button></div></div>
+            <div class="sort-bar"><select id="sortSelect" onchange="sortCatalog()"><option value="default">По умолчанию</option><option value="price-asc">Сначала дешёвые</option><option value="price-desc">Сначала дорогие</option></select></div>
             <div class="catalog-grid" id="catalogGrid"><div class="loading-text">Загрузка товаров...</div></div>
         </div>
     </div>
 </section>
 
 <section class="section" id="delivery">
-    <p class="section-label">Shipping</p>
-    <h2 class="section-title">Доставка</h2>
-    <p class="section-subtitle">Три способа</p>
+    <p class="section-label">Shipping</p><h2 class="section-title">Доставка</h2><p class="section-subtitle">Три способа</p>
     <div class="delivery-grid">
         <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Самовывоз</h3><p>Забери из магазина. Примерка на месте.</p></div>
         <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>По Омску</h3><p>Курьер — 300₽. В день заказа до 15:00.</p></div>
-        <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>По России</h3><p>5Post / Почта России. Трек-номер сразу.</p></div>
+        <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>По России</h3><p>5Post (Пятёрочка). Трек-номер сразу.</p></div>
     </div>
 </section>
 
 <section class="section" id="contacts">
-    <p class="section-label">Hit us up</p>
-    <h2 class="section-title">Контакты</h2>
-    <p class="section-subtitle">Будь на связи</p>
+    <p class="section-label">Hit us up</p><h2 class="section-title">Контакты</h2><p class="section-subtitle">Будь на связи</p>
     <div class="contact-block">
-        <h3>GORILLA STREETWEAR</h3>
-        <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
-        <p>📞 +7 (XXX) XXX-XX-XX</p>
+        <h3>GORILLA STREETWEAR</h3><div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div><p>📞 +7 (XXX) XXX-XX-XX</p>
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
-        <div class="contact-requisites">
-            <strong>Реквизиты:</strong><br>
-            ИП Кузякин Александр Михайлович<br>
-            ИНН: 550716638551<br>
-            ОГРНИП: 322554300047147
-        </div>
-        <p style="color: #666; font-size: 11px; margin-top: 10px; font-family: 'Inter', sans-serif;">
-            Оплачивая заказ, вы соглашаетесь с условиями оферты.
-        </p>
+        <div class="contact-requisites"><strong>Реквизиты:</strong><br>ИП Кузякин Александр Михайлович<br>ИНН: 550716638551<br>ОГРНИП: 322554300047147</div>
+        <p style="color: #666; font-size: 11px; margin-top: 10px;">Оплачивая заказ, вы соглашаетесь с условиями оферты.</p>
         <div style="margin-top: 40px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
             <h3 style="font-family: 'Russo One', sans-serif; color: #fff; font-size: 18px; letter-spacing: 2px; margin-bottom: 15px;">📲 УСТАНОВИ КАК ПРИЛОЖЕНИЕ</h3>
-            <p style="color: #888; font-size: 13px; margin-bottom: 20px; font-family: 'Inter', sans-serif;">Добавь наш сайт на главный экран телефона и получай доступ в один клик.</p>
+            <p style="color: #888; font-size: 13px; margin-bottom: 20px;">Добавь наш сайт на главный экран телефона и получай доступ в один клик.</p>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🍎 iPhone / iPad</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; font-family: 'Inter', sans-serif; line-height: 1.6;"><li>Открой сайт в <strong>Safari</strong></li><li>Нажми кнопку <strong>«Поделиться»</strong></li><li>Выбери <strong>«На экран Домой»</strong></li><li>Готово – иконка на рабочем столе</li></ol></div>
-                <div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🤖 Android</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; font-family: 'Inter', sans-serif; line-height: 1.6;"><li>Открой сайт в <strong>Chrome</strong></li><li>Нажми <strong>⋮</strong> (меню)</li><li>Выбери <strong>«Добавить на главный экран»</strong></li><li>Готово – как настоящее приложение</li></ol></div>
+                <div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🍎 iPhone / iPad</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; line-height: 1.6;"><li>Открой сайт в <strong>Safari</strong></li><li>Нажми <strong>«Поделиться»</strong></li><li>Выбери <strong>«На экран Домой»</strong></li><li>Готово</li></ol></div>
+                <div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🤖 Android</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; line-height: 1.6;"><li>Открой сайт в <strong>Chrome</strong></li><li>Нажми <strong>⋮</strong></li><li>Выбери <strong>«Добавить на главный экран»</strong></li><li>Готово</li></ol></div>
             </div>
-            <p style="color: #666; font-size: 11px; margin-top: 20px; font-family: 'Inter', sans-serif; text-align: center;">После установки сайт будет открываться в отдельном окне, без адресной строки.</p>
+            <p style="color: #666; font-size: 11px; margin-top: 20px; text-align: center;">После установки сайт будет открываться как приложение.</p>
         </div>
         <div class="social-btns" style="margin-top: 30px;">
             <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-vk">📱 ВКонтакте</a>
@@ -344,23 +293,22 @@
     
     <div class="delivery-selector" style="margin-bottom: 15px; text-align: left;">
         <p style="color: #999; font-size: 12px; margin-bottom: 8px;">🚚 Способ доставки:</p>
-        <label><input type="radio" name="delivery" value="0" checked onchange="updateDelivery()"> Самовывоз (Омск) — 0 ₽</label>
-        <label><input type="radio" name="delivery" value="200" onchange="updateDelivery()"> 5Post (Пятёрочка) — 200 ₽</label>
-        <label><input type="radio" name="delivery" value="300" onchange="updateDelivery()"> Почта России — 300 ₽</label>
+        <label><input type="radio" name="delivery" value="pickup" checked onchange="updateDelivery()"> Самовывоз (Омск) — 0 ₽</label>
+        <label><input type="radio" name="delivery" value="5post" onchange="updateDelivery()"> 5Post (Пятёрочка) — <span id="deliveryPrice">250 ₽</span></label>
+        <p style="color: #666; font-size: 11px; margin-top: 5px;">Нужна другая доставка? Напишите нам в <a href="https://t.me/gorillaomsk" target="_blank" style="color:#2b9ef1;">Telegram</a> или <a href="https://vk.com/gorillaomsk" target="_blank" style="color:#0077ff;">ВК</a>.</p>
     </div>
     
     <div class="delivery-form" style="margin-bottom: 15px; text-align: left;">
         <p style="color: #999; font-size: 12px; margin-bottom: 10px;">👤 Данные для доставки:</p>
         <input type="text" id="customerName" placeholder="ФИО">
         <input type="tel" id="customerPhone" placeholder="Телефон">
-        <input type="text" id="customerCity" placeholder="Город">
-        <input type="text" id="customerIndex" placeholder="Индекс (для Почты России)">
+        <input type="text" id="customerCity" placeholder="Город (для 5Post)">
         <input type="text" id="customerAddress" placeholder="Адрес (улица, дом, квартира)">
         <input type="text" id="customerNote" placeholder="Примечание к заказу">
     </div>
     
     <div class="cart-total" id="cartTotal">Итого: 0 ₽</div>
-    <button class="btn btn-red" style="width:100%;" onclick="checkout()">📱 Оформить заказ</button>
+    <button class="btn btn-red" style="width:100%;" onclick="placeOrder()">📱 Оформить заказ</button>
     <button id="clearCartBtn" onclick="clearCart()">🗑 Очистить корзину</button>
 </div>
 
@@ -372,18 +320,14 @@
         <button class="modal-close" onclick="closeModal()">✕</button>
         <div id="modalGalleryContainer"></div>
         <div class="modal-favorite" id="modalFavorite" onclick="toggleFavoriteFromModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <h2 class="modal-title" id="modalTitle"></h2>
-        <p class="modal-price" id="modalPrice"></p>
-        <p class="modal-color" id="modalColor"></p>
-        <div class="size-selector" id="modalSizes"></div>
-        <p class="modal-description" id="modalDesc"></p>
-        <p class="modal-stock" id="modalStock"></p>
+        <h2 class="modal-title" id="modalTitle"></h2><p class="modal-price" id="modalPrice"></p><p class="modal-color" id="modalColor"></p>
+        <div class="size-selector" id="modalSizes"></div><p class="modal-description" id="modalDesc"></p><p class="modal-stock" id="modalStock"></p>
         <button class="modal-add-btn" id="modalAddBtn" onclick="addFromModal()">Добавить в корзину</button>
         <button class="modal-cart-btn" id="modalCartBtn" onclick="goToCartFromModal()">🛒 Перейти в корзину</button>
     </div>
 </div>
 
-<div class="toast" id="toast">Текст заказа скопирован! Вставьте в чат ВК</div>
+<div class="toast" id="toast">✅ Заказ оформлен! Мы свяжемся с вами.</div>
 
 <script>
     function updateClocks() {
@@ -396,16 +340,16 @@
     updateClocks(); setInterval(updateClocks, 1000);
 
     const icons = {
-        all: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>',
-        favorites: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
-        shorts: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="4" rx="1"/><path d="M6 8v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8M4 12h16"/></svg>',
-        suits: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v1H5a2 2 0 0 0-2 2v3h18V8a2 2 0 0 0-2-2h-4V5a3 3 0 0 0-3-3zM5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>',
-        shoes: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 15h2v4h16v-4h2v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zM4 15s2-6 8-6 8 6 8 6"/><path d="M12 9V3l4 2"/></svg>',
-        accessories: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7.5A2.5 2.5 0 0 1 17.5 5H6.5A2.5 2.5 0 0 1 4 7.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.5zM4 10h16"/></svg>',
-        tshirts: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-2.5 1.5L17 6l-5 8-5-8-2.5 4.5L2 9l4-6z"/><path d="M12 14v7"/></svg>',
-        jackets: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 6-3-6-2 3-3-2 2-4zM12 15v6"/><path d="M8 21h8"/></svg>',
-        hoodies: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 8-3-8-2 3-3-2 2-4zM12 13v8M8 21h8"/><circle cx="12" cy="13" r="2"/></svg>',
-        pants: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2h16v4l-3 5v11h-4v-9H9v9H5V11L2 6V2z"/></svg>',
+        all: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>',
+        favorites: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+        shorts: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="4" rx="1"/><path d="M6 8v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8M4 12h16"/></svg>',
+        suits: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v1H5a2 2 0 0 0-2 2v3h18V8a2 2 0 0 0-2-2h-4V5a3 3 0 0 0-3-3zM5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg>',
+        shoes: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 15h2v4h16v-4h2v5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-5zM4 15s2-6 8-6 8 6 8 6"/><path d="M12 9V3l4 2"/></svg>',
+        accessories: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7.5A2.5 2.5 0 0 1 17.5 5H6.5A2.5 2.5 0 0 1 4 7.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7.5zM4 10h16"/></svg>',
+        tshirts: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-2.5 1.5L17 6l-5 8-5-8-2.5 4.5L2 9l4-6z"/><path d="M12 14v7"/></svg>',
+        jackets: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 6-3-6-2 3-3-2 2-4zM12 15v6"/><path d="M8 21h8"/></svg>',
+        hoodies: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 4-3 2-2-3-3 8-3-8-2 3-3-2 2-4zM12 13v8M8 21h8"/><circle cx="12" cy="13" r="2"/></svg>',
+        pants: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2h16v4l-3 5v11h-4v-9H9v9H5V11L2 6V2z"/></svg>',
     };
 
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
@@ -419,7 +363,7 @@
     ];
 
     let products = [], cart = JSON.parse(localStorage.getItem('gorillaCart')) || [], favorites = JSON.parse(localStorage.getItem('gorillaFavorites')) || [];
-    let activeCategory = 'all', activeSize = null, currentModalProduct = null, selectedSize = null, currentSlide = 0, currentSort = 'default', searchQuery = '', deliveryCost = 0;
+    let activeCategory = 'all', activeSize = null, currentModalProduct = null, selectedSize = null, currentSlide = 0, currentSort = 'default', searchQuery = '', deliveryType = 'pickup';
     const LETTER_SIZES_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '2XL', '3XL', '4XL', '5XL'];
 
     function saveFavorites() { localStorage.setItem('gorillaFavorites', JSON.stringify(favorites)); }
@@ -447,7 +391,7 @@
     function imgError(img, pid) { const src = img.src; if (src.endsWith('.jpg')) img.src = `${IMAGES_PATH}${pid}.png`; else if (src.endsWith('.png')) img.src = `${IMAGES_PATH}${pid}.webp`; else { img.style.display='none'; const p = document.createElement('span'); p.className='img-placeholder'; p.textContent='🦍'; img.parentNode.appendChild(p); } }
     function getSizesForCategory(catId) { const filtered = catId === 'all' ? products : products.filter(p => p.category === catId); const set = new Set(); filtered.forEach(p => { if (p.sizes && p.sizes.length) p.sizes.forEach(s => set.add(s.trim())); }); return [...set]; }
     function classifySizes(sizes) { const groups = { shoe: [], waist: [], letter: [], other: [] }; const isShoes = activeCategory === 'shoes'; const isPants = activeCategory === 'pants'; const isClothing = ['tshirts', 'hoodies', 'jackets', 'shorts', 'suits'].includes(activeCategory); sizes.forEach(size => { const upper = size.toUpperCase(); if (LETTER_SIZES_ORDER.includes(upper) || /^[A-Z]+$/.test(upper)) groups.letter.push(size); else if (/^\d+$/.test(size)) { const num = parseInt(size); if (isShoes && num >= 35 && num <= 52) groups.shoe.push(size); else if (isPants && num >= 26 && num <= 38) groups.waist.push(size); else if (isClothing) groups.letter.push(size); else if (num >= 35 && num <= 52) groups.shoe.push(size); else if (num >= 26 && num <= 38) groups.waist.push(size); else groups.other.push(size); } else groups.other.push(size); }); groups.shoe.sort((a,b) => parseInt(a)-parseInt(b)); groups.waist.sort((a,b) => parseInt(a)-parseInt(b)); groups.letter.sort((a,b) => { const aIsNum = /^\d+$/.test(a), bIsNum = /^\d+$/.test(b); if (aIsNum && bIsNum) return parseInt(a) - parseInt(b); if (aIsNum) return 1; if (bIsNum) return -1; const ia = LETTER_SIZES_ORDER.indexOf(a.toUpperCase()), ib = LETTER_SIZES_ORDER.indexOf(b.toUpperCase()); if (ia !== -1 && ib !== -1) return ia - ib; if (ia !== -1) return -1; if (ib !== -1) return 1; return a.localeCompare(b); }); groups.other.sort(); return groups; }
-    function renderSizeFilter() { const container = document.getElementById('sizeFilterContent'); if (activeCategory === 'all' || activeCategory === 'favorites') { container.innerHTML = '<span style="color: #666; font-size: 12px; font-family: \'Inter\', sans-serif;">Выберите категорию</span>'; return; } const sizes = getSizesForCategory(activeCategory); if (sizes.length === 0) { container.innerHTML = '<span style="color: #666; font-size: 12px;">Нет размеров</span>'; return; } const groups = classifySizes(sizes); let html = ''; if (groups.shoe.length) { html += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">'; groups.shoe.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } if (groups.waist.length) { html += '<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">'; groups.waist.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } if (groups.letter.length) { html += '<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">'; groups.letter.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } if (groups.other.length) { html += '<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">'; groups.other.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } container.innerHTML = html; }
+    function renderSizeFilter() { const container = document.getElementById('sizeFilterContent'); if (activeCategory === 'all' || activeCategory === 'favorites') { container.innerHTML = '<span style="color: #666; font-size: 12px;">Выберите категорию</span>'; return; } const sizes = getSizesForCategory(activeCategory); if (sizes.length === 0) { container.innerHTML = '<span style="color: #666; font-size: 12px;">Нет размеров</span>'; return; } const groups = classifySizes(sizes); let html = ''; if (groups.shoe.length) { html += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">'; groups.shoe.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } if (groups.waist.length) { html += '<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">'; groups.waist.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } if (groups.letter.length) { html += '<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">'; groups.letter.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } if (groups.other.length) { html += '<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">'; groups.other.forEach(s => { html += `<button class="size-filter-btn${activeSize===s?' active':''}" onclick="setSizeFilter('${s}')">${s}</button>`; }); html += '</div></div>'; } container.innerHTML = html; }
     function setSizeFilter(size) { activeSize = activeSize === size ? null : size; renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
     function clearSizeFilter() { activeSize = null; renderSizeFilter(); renderCatalog(); setTimeout(observeCards, 100); }
     function renderCategories() { const menu = document.getElementById('categoriesMenu'); let html = '<h4>Категории</h4>'; categories.forEach(cat => { const count = cat.id === 'all' ? products.length : cat.id === 'favorites' ? favorites.length : products.filter(p => p.category === cat.id).length; html += `<button class="category-btn${activeCategory===cat.id?' active':''}" onclick="setCategory('${cat.id}')">${icons[cat.icon] || ''} ${cat.name} <span class="count">${count}</span></button>`; }); menu.innerHTML = html; }
@@ -467,45 +411,77 @@
     function addFromModal() { if (!currentModalProduct || currentModalProduct.stock === 0) return; if (currentModalProduct.sizes && currentModalProduct.sizes.length > 0 && !selectedSize) { alert('Выберите размер'); return; } const size = selectedSize || null; const existing = cart.find(i => i.id === currentModalProduct.id && i.size === size); if (existing) cart = cart.filter(i => !(i.id === currentModalProduct.id && i.size === size)); else cart.push({ id: currentModalProduct.id, name: currentModalProduct.name, price: currentModalProduct.price, size: size, color: currentModalProduct.color, photo_id: currentModalProduct.photo_id, sizes: currentModalProduct.sizes }); saveCart(); updateCart(); document.getElementById('modalAddBtn').textContent = cart.find(i => i.id === currentModalProduct.id && i.size === size) ? '✓ В корзине' : 'Добавить в корзину'; }
     function goToCartFromModal() { document.getElementById('modalOverlay').classList.remove('active'); currentModalProduct = null; setTimeout(() => toggleCart(), 100); }
     function renderCatalog() { const grid = document.getElementById('catalogGrid'); let filtered = activeCategory === 'favorites' ? products.filter(p => favorites.includes(p.id)) : activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory); if (activeSize) filtered = filtered.filter(p => p.sizes && p.sizes.includes(activeSize)); if (searchQuery) { filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery)); } if (currentSort === 'price-asc') filtered.sort((a, b) => a.price - b.price); else if (currentSort === 'price-desc') filtered.sort((a, b) => b.price - a.price); if (filtered.length === 0) { grid.innerHTML = '<div class="no-products">Товаров пока нет</div>'; return; } grid.innerHTML = filtered.map(p => { const soldOut = p.stock === 0, lowStock = p.stock > 0 && p.stock <= 3; const stockText = soldOut ? 'SOLD OUT' : lowStock ? `Осталось: ${p.stock} шт` : `В наличии: ${p.stock} шт`; const stockClass = soldOut ? 'out' : lowStock ? 'low' : ''; const catName = categories.find(c => c.id === p.category)?.name || p.category || ''; const sizesStr = p.sizes && p.sizes.length ? p.sizes.join(', ') : ''; const colorDot = p.color ? `<span class="color-dot" style="background-color:${p.color};" title="${p.color}"></span>` : ''; const photoUrl = getPhotoURL(p.photo_id ? p.photo_id.split(';')[0].trim() : ''); const isFav = favorites.includes(p.id); return `<div class="card${soldOut?' sold-out':''}" onclick="openModal(products.find(pr=>pr.id==='${p.id}'))"><div class="card-img">${photoUrl ? `<img src="${photoUrl}" alt="${p.name}" onerror="imgError(this, '${p.photo_id ? p.photo_id.split(';')[0].trim() : ''}')">` : '<span class="img-placeholder">🦍</span>'}<div class="card-tag${soldOut?' sold':''}">${soldOut?'SOLD OUT':(p.tag||'')}</div><button class="favorite-btn${isFav?' active':''}" data-id="${p.id}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">${isFav ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="#ff3333" stroke="#ff3333" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'}</button><span class="stock-badge ${stockClass}">${stockText}</span></div><div class="card-body"><h3>${p.name} ${colorDot}</h3><p class="category">${catName}</p>${sizesStr ? `<p class="sizes">Размеры: ${sizesStr}</p>` : ''}<p class="price">${p.price.toLocaleString()} ₽</p><button class="btn-cart" onclick="event.stopPropagation(); openModal(products.find(pr=>pr.id==='${p.id}'))">Выбрать</button></div></div>`; }).join(''); }
-    function updateDelivery() { deliveryCost = parseInt(document.querySelector('input[name="delivery"]:checked').value); updateCart(); }
+    
+    function updateDelivery() {
+        deliveryType = document.querySelector('input[name="delivery"]:checked').value;
+        updateCart();
+    }
+    
+    function getDeliveryCost() {
+        if (deliveryType === 'pickup') return 0;
+        const subtotal = cart.reduce((s, i) => s + i.price, 0);
+        return subtotal >= 3000 ? 0 : 250;
+    }
+    
     function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
     function removeFromCart(id, size) { cart = cart.filter(i => !(i.id === id && i.size === size)); saveCart(); updateCart(); }
     function clearCart() { if (cart.length === 0) return; cart = []; saveCart(); updateCart(); showToast('🗑 Корзина очищена'); }
-    function updateCart() { const count = document.getElementById('cartCount'), items = document.getElementById('cartItems'), total = document.getElementById('cartTotal'); count.textContent = cart.length; cart.length > 0 ? count.classList.add('active') : count.classList.remove('active'); if (cart.length === 0) { items.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; total.textContent = 'Итого: 0 ₽'; } else { items.innerHTML = cart.map(i => { const si = i.size ? ` (${i.size})` : '', ci = i.color ? ` [${i.color}]` : ''; return `<div class="cart-item"><span>${i.name}${ci}${si}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size||''}')">✕</span></span></div>`; }).join(''); const sum = cart.reduce((s,i) => s + i.price, 0) + deliveryCost; total.textContent = `Итого: ${sum.toLocaleString()} ₽`; if (deliveryCost > 0) total.innerHTML += ` <span style="color:#888; font-size:11px;">(вкл. доставку ${deliveryCost} ₽)</span>`; } }
+    function updateCart() {
+        const count = document.getElementById('cartCount'), items = document.getElementById('cartItems'), total = document.getElementById('cartTotal');
+        count.textContent = cart.length; cart.length > 0 ? count.classList.add('active') : count.classList.remove('active');
+        const deliveryCost = getDeliveryCost();
+        document.getElementById('deliveryPrice').textContent = deliveryCost === 0 ? '0 ₽ (бесплатно от 3000 ₽)' : '250 ₽';
+        if (cart.length === 0) { items.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; total.textContent = 'Итого: 0 ₽'; }
+        else {
+            items.innerHTML = cart.map(i => { const si = i.size ? ` (${i.size})` : '', ci = i.color ? ` [${i.color}]` : ''; return `<div class="cart-item"><span>${i.name}${ci}${si}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size||''}')">✕</span></span></div>`; }).join('');
+            const sum = cart.reduce((s,i) => s + i.price, 0) + deliveryCost;
+            total.textContent = `Итого: ${sum.toLocaleString()} ₽`;
+            if (deliveryCost > 0) total.innerHTML += ` <span style="color:#888; font-size:11px;">(вкл. доставку ${deliveryCost} ₽)</span>`;
+        }
+    }
     function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); document.getElementById('cartOverlay').classList.toggle('open'); }
-    function copyToClipboard(text) { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text); const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(); }
-    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
     
-    function checkout() {
+    function placeOrder() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
+        
         const name = document.getElementById('customerName').value || 'Не указано';
         const phone = document.getElementById('customerPhone').value || 'Не указан';
         const city = document.getElementById('customerCity').value || 'Не указан';
-        const index = document.getElementById('customerIndex').value || 'Не указан';
         const address = document.getElementById('customerAddress').value || 'Не указан';
         const note = document.getElementById('customerNote').value || 'Нет';
-        const delivery = document.querySelector('input[name="delivery"]:checked');
-        const deliveryText = delivery ? delivery.parentElement.textContent.trim() : 'Не выбрана';
+        const deliveryCost = getDeliveryCost();
+        const deliveryText = deliveryType === 'pickup' ? 'Самовывоз (0 ₽)' : `5Post (${deliveryCost === 0 ? 'бесплатно' : '250 ₽'})`;
         const total = cart.reduce((s, i) => s + i.price, 0) + deliveryCost;
         const orderId = 'GOR-' + Date.now().toString().slice(-6);
         
-        const msg = `🦍 НОВЫЙ ЗАКАЗ №${orderId}:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n🚚 Доставка: ${deliveryText}\n\n👤 Клиент: ${name}\n📞 Телефон: ${phone}\n📍 Город: ${city}\n📮 Индекс: ${index}\n🏠 Адрес: ${address}\n📝 Примечание: ${note}\n\n💰 Итого: ${total.toLocaleString()} ₽`;
+        const order = {
+            id: orderId,
+            date: new Date().toLocaleString('ru-RU'),
+            items: cart.map(i => ({ name: i.name, color: i.color, size: i.size, price: i.price })),
+            delivery: deliveryText,
+            deliveryCost: deliveryCost,
+            customer: { name, phone, city, address, note },
+            total: total,
+            status: 'Новый'
+        };
         
-        // Открываем Telegram
-        window.open(`https://t.me/Yupi13?text=${encodeURIComponent(msg)}`, '_blank');
-        
-        // Копируем в буфер и открываем ВК
-        copyToClipboard(msg).then(() => {
-            showToast('✅ Заказ оформлен! Отправляем в Telegram и ВК...');
-            setTimeout(() => { window.open('https://vk.me/gorillaomsk', '_blank'); }, 300);
-        }).catch(() => {
-            window.open('https://vk.me/gorillaomsk', '_blank');
-        });
+        // Сохраняем заказ
+        const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
+        orders.push(order);
+        localStorage.setItem('gorillaOrders', JSON.stringify(orders));
         
         // Очищаем корзину
         cart = [];
         saveCart();
         updateCart();
+        
+        // Показываем номер заказа
+        showToast('✅ Заказ №' + orderId + ' оформлен! Отследить: /track');
+        
+        // Закрываем корзину
+        document.getElementById('cartPanel').classList.remove('open');
+        document.getElementById('cartOverlay').classList.remove('open');
     }
     
     loadProducts();
