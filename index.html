@@ -148,6 +148,7 @@
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; } .cart-overlay.open { display: block; }
         .delivery-form input { width: 100%; padding: 10px; margin-bottom: 8px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; }
         .delivery-form input::placeholder { color: #555; }
+        .delivery-form .required { border-color: #ff3333; }
         .delivery-selector label { display: block; padding: 8px; margin-bottom: 5px; cursor: pointer; color: #ccc; font-size: 13px; }
         .delivery-selector input { margin-right: 8px; }
         #clearCartBtn { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; padding: 14px 0 !important; margin-top: 8px !important; background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.3) !important; font-family: 'Russo One', sans-serif !important; font-size: 12px !important; letter-spacing: 2px !important; text-transform: uppercase !important; cursor: pointer !important; position: relative !important; z-index: 30 !important; pointer-events: auto !important; user-select: none !important; border-radius: 100px !important; transition: all 0.3s !important; min-height: 50px !important; }
@@ -178,21 +179,13 @@
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #0a0a0a; padding: 12px 28px; border-radius: 100px; font-size: 13px; font-weight: 600; letter-spacing: 1px; z-index: 3000; opacity: 0; transition: opacity 0.3s, bottom 0.3s; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
         .toast.show { opacity: 1; bottom: 40px; }
         @media (max-width: 768px) {
-            header { padding: 15px 20px; flex-direction: column; gap: 12px; }
-            .logo-text { font-size: 22px; }
-            nav { gap: 12px; flex-wrap: wrap; justify-content: center; }
-            nav a { font-size: 9px; letter-spacing: 1px; }
-            .hero h1 { font-size: 45px; }
-            .section { padding: 60px 15px; }
-            .catalog-wrapper { flex-direction: column; }
-            .sidebar { position: static; min-width: auto; }
+            header { padding: 15px 20px; flex-direction: column; gap: 12px; } .logo-text { font-size: 22px; } nav { gap: 12px; flex-wrap: wrap; justify-content: center; } nav a { font-size: 9px; letter-spacing: 1px; }
+            .hero h1 { font-size: 45px; } .section { padding: 60px 15px; } .catalog-wrapper { flex-direction: column; } .sidebar { position: static; min-width: auto; }
             .categories-menu { border-radius: 8px; } .categories-menu h4 { display: none; }
             .category-btn { padding: 8px 12px; font-size: 10px; border-left: none; border-bottom: 2px solid transparent; border-radius: 6px; }
             .category-btn.active { border-left: none; border-bottom-color: #fff; } .category-btn .count { display: none; }
-            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; }
-            .card-img { height: 200px; } .card-img .img-placeholder { font-size: 40px; }
-            .card-body { padding: 12px; } .card-body h3 { font-size: 13px; }
-            .cart-panel { max-width: 100%; }
+            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; } .card-img { height: 200px; } .card-img .img-placeholder { font-size: 40px; }
+            .card-body { padding: 12px; } .card-body h3 { font-size: 13px; } .cart-panel { max-width: 100%; }
         }
     </style>
 </head>
@@ -201,90 +194,24 @@
 <div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">✕</button><img src="" alt="zoom" id="lightboxImg" onclick="event.stopPropagation()"></div>
 
 <header id="main-header">
-    <div class="logo-block">
-        <img src="GGVP.jpg" alt="GORILLA" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-        <span style="display:none; font-size:26px; color:#fff;">🦍</span>
-        <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
-    </div>
+    <div class="logo-block"><img src="GGVP.jpg" alt="GORILLA" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';"><span style="display:none; font-size:26px; color:#fff;">🦍</span><div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div></div>
     <nav>
-        <a href="#catalog">Каталог</a>
-        <a href="#delivery">Доставка</a>
-        <a href="#contacts">Контакты</a>
+        <a href="#catalog">Каталог</a><a href="#delivery">Доставка</a><a href="#contacts">Контакты</a>
         <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener">VK</a>
         <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener">TG</a>
-        <a href="#" class="cart-icon" onclick="toggleCart()">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            <span class="cart-count" id="cartCount">0</span>
-        </a>
+        <a href="#" class="cart-icon" onclick="toggleCart()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="cart-count" id="cartCount">0</span></a>
     </nav>
 </header>
 
-<section class="hero" id="hero">
-    <div class="hero-bg" id="hero-bg"></div><canvas id="particles-canvas"></canvas>
-    <div class="hero-content" id="hero-content">
-        <h1 id="glitch-title">GOR<span class="outline">ILLA</span></h1>
-        <p class="subtitle">Уличная эстетика • Омск</p>
-        <div class="hero-clocks">
-            <div class="hero-clock-item"><span class="hero-clock-city">Омск</span><span class="hero-clock-time" id="omskTime">--:--</span></div>
-            <div class="hero-clock-divider"></div>
-            <div class="hero-clock-item"><span class="hero-clock-city">Москва</span><span class="hero-clock-time" id="mskTime">--:--</span></div>
-        </div>
-        <div class="btn-group">
-            <a href="#catalog" class="btn btn-white">Смотреть дроп</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">Telegram</a>
-            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">VK</a>
-        </div>
-    </div>
-</section>
+<section class="hero" id="hero"><div class="hero-bg" id="hero-bg"></div><canvas id="particles-canvas"></canvas><div class="hero-content" id="hero-content"><h1 id="glitch-title">GOR<span class="outline">ILLA</span></h1><p class="subtitle">Уличная эстетика • Омск</p><div class="hero-clocks"><div class="hero-clock-item"><span class="hero-clock-city">Омск</span><span class="hero-clock-time" id="omskTime">--:--</span></div><div class="hero-clock-divider"></div><div class="hero-clock-item"><span class="hero-clock-city">Москва</span><span class="hero-clock-time" id="mskTime">--:--</span></div></div><div class="btn-group"><a href="#catalog" class="btn btn-white">Смотреть дроп</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">Telegram</a><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn btn-outline">VK</a></div></div></section>
 
 <div class="marquee"><span>GORILLA • OMSK • 🔥 ТВОЙ СТИЛЬ — ТВОИ ПРАВИЛА • TELEGRAM • НОВЫЙ ДРОП</span></div>
 
-<section class="section" id="catalog">
-    <p class="section-label">Drop 001</p><h2 class="section-title">Каталог</h2><p class="section-subtitle">Выбери категорию</p>
-    <div class="catalog-wrapper">
-        <div class="sidebar">
-            <div class="categories-menu" id="categoriesMenu"></div>
-            <div class="size-filter" id="sizeFilter"><h4>📏 Размер</h4><div id="sizeFilterContent"><span style="color: #666; font-size: 12px; font-family: 'Inter', sans-serif;">Выбери категорию</span></div><button class="size-filter-reset" onclick="clearSizeFilter()">✕ Сбросить размер</button></div>
-        </div>
-        <div style="flex: 1;">
-            <div class="search-bar"><div style="display: flex; gap: 10px; align-items: center; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 16px;"><span style="color: #666; font-size: 18px;">🔍</span><input type="text" id="searchInput" placeholder="Поиск по товарам..." oninput="searchCatalog()"><button onclick="clearSearch()" id="clearSearchBtn" style="display: none; background: none; border: none; color: #ff3333; cursor: pointer; font-size: 18px; padding: 0 5px;">✕</button></div></div>
-            <div class="sort-bar"><select id="sortSelect" onchange="sortCatalog()"><option value="default">По умолчанию</option><option value="price-asc">Сначала дешёвые</option><option value="price-desc">Сначала дорогие</option></select></div>
-            <div class="catalog-grid" id="catalogGrid"><div class="loading-text">Загрузка товаров...</div></div>
-        </div>
-    </div>
-</section>
+<section class="section" id="catalog"><p class="section-label">Drop 001</p><h2 class="section-title">Каталог</h2><p class="section-subtitle">Выбери категорию</p><div class="catalog-wrapper"><div class="sidebar"><div class="categories-menu" id="categoriesMenu"></div><div class="size-filter" id="sizeFilter"><h4>📏 Размер</h4><div id="sizeFilterContent"><span style="color: #666; font-size: 12px;">Выбери категорию</span></div><button class="size-filter-reset" onclick="clearSizeFilter()">✕ Сбросить размер</button></div></div><div style="flex: 1;"><div class="search-bar"><div style="display: flex; gap: 10px; align-items: center; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 16px;"><span style="color: #666; font-size: 18px;">🔍</span><input type="text" id="searchInput" placeholder="Поиск по товарам..." oninput="searchCatalog()"><button onclick="clearSearch()" id="clearSearchBtn" style="display: none; background: none; border: none; color: #ff3333; cursor: pointer; font-size: 18px; padding: 0 5px;">✕</button></div></div><div class="sort-bar"><select id="sortSelect" onchange="sortCatalog()"><option value="default">По умолчанию</option><option value="price-asc">Сначала дешёвые</option><option value="price-desc">Сначала дорогие</option></select></div><div class="catalog-grid" id="catalogGrid"><div class="loading-text">Загрузка товаров...</div></div></div></div></section>
 
-<section class="section" id="delivery">
-    <p class="section-label">Shipping</p><h2 class="section-title">Доставка</h2><p class="section-subtitle">Три способа</p>
-    <div class="delivery-grid">
-        <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Самовывоз</h3><p>Забери из магазина. Примерка на месте.</p></div>
-        <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>По Омску</h3><p>Курьер — 300₽. В день заказа до 15:00.</p></div>
-        <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>По России</h3><p>5Post (Пятёрочка). Трек-номер сразу.</p></div>
-    </div>
-</section>
+<section class="section" id="delivery"><p class="section-label">Shipping</p><h2 class="section-title">Доставка</h2><p class="section-subtitle">Три способа</p><div class="delivery-grid"><div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Самовывоз</h3><p>Забери из магазина. Примерка на месте.</p></div><div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>По Омску</h3><p>Курьер — 300₽. В день заказа до 15:00.</p></div><div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>По России</h3><p>5Post (Пятёрочка). Трек-номер сразу.</p></div></div></section>
 
-<section class="section" id="contacts">
-    <p class="section-label">Hit us up</p><h2 class="section-title">Контакты</h2><p class="section-subtitle">Будь на связи</p>
-    <div class="contact-block">
-        <h3>GORILLA STREETWEAR</h3><div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div><p>📞 +7 (XXX) XXX-XX-XX</p>
-        <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
-        <div class="contact-requisites"><strong>Реквизиты:</strong><br>ИП Кузякин Александр Михайлович<br>ИНН: 550716638551<br>ОГРНИП: 322554300047147</div>
-        <p style="color: #666; font-size: 11px; margin-top: 10px;">Оплачивая заказ, вы соглашаетесь с условиями оферты.</p>
-        <div style="margin-top: 40px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
-            <h3 style="font-family: 'Russo One', sans-serif; color: #fff; font-size: 18px; letter-spacing: 2px; margin-bottom: 15px;">📲 УСТАНОВИ КАК ПРИЛОЖЕНИЕ</h3>
-            <p style="color: #888; font-size: 13px; margin-bottom: 20px;">Добавь наш сайт на главный экран телефона и получай доступ в один клик.</p>
-            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🍎 iPhone / iPad</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; line-height: 1.6;"><li>Открой сайт в <strong>Safari</strong></li><li>Нажми <strong>«Поделиться»</strong></li><li>Выбери <strong>«На экран Домой»</strong></li><li>Готово</li></ol></div>
-                <div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🤖 Android</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; line-height: 1.6;"><li>Открой сайт в <strong>Chrome</strong></li><li>Нажми <strong>⋮</strong></li><li>Выбери <strong>«Добавить на главный экран»</strong></li><li>Готово</li></ol></div>
-            </div>
-            <p style="color: #666; font-size: 11px; margin-top: 20px; text-align: center;">После установки сайт будет открываться как приложение.</p>
-        </div>
-        <div class="social-btns" style="margin-top: 30px;">
-            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-vk">📱 ВКонтакте</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a>
-        </div>
-    </div>
-</section>
+<section class="section" id="contacts"><p class="section-label">Hit us up</p><h2 class="section-title">Контакты</h2><p class="section-subtitle">Будь на связи</p><div class="contact-block"><h3>GORILLA STREETWEAR</h3><div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div><p>📞 +7 (XXX) XXX-XX-XX</p><div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div><div class="contact-requisites"><strong>Реквизиты:</strong><br>ИП Кузякин Александр Михайлович<br>ИНН: 550716638551<br>ОГРНИП: 322554300047147</div><p style="color: #666; font-size: 11px; margin-top: 10px;">Оплачивая заказ, вы соглашаетесь с условиями оферты.</p><div style="margin-top: 40px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 20px; max-width: 500px; margin-left: auto; margin-right: auto;"><h3 style="font-family: 'Russo One', sans-serif; color: #fff; font-size: 18px; letter-spacing: 2px; margin-bottom: 15px;">📲 УСТАНОВИ КАК ПРИЛОЖЕНИЕ</h3><p style="color: #888; font-size: 13px; margin-bottom: 20px;">Добавь наш сайт на главный экран телефона и получай доступ в один клик.</p><div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;"><div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🍎 iPhone / iPad</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; line-height: 1.6;"><li>Открой сайт в <strong>Safari</strong></li><li>Нажми <strong>«Поделиться»</strong></li><li>Выбери <strong>«На экран Домой»</strong></li><li>Готово</li></ol></div><div style="flex: 1; min-width: 180px; text-align: left;"><p style="color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 8px;">🤖 Android</p><ol style="color: #aaa; font-size: 12px; margin: 0; padding-left: 18px; line-height: 1.6;"><li>Открой сайт в <strong>Chrome</strong></li><li>Нажми <strong>⋮</strong></li><li>Выбери <strong>«Добавить на главный экран»</strong></li><li>Готово</li></ol></div></div><p style="color: #666; font-size: 11px; margin-top: 20px; text-align: center;">После установки сайт будет открываться как приложение.</p></div><div class="social-btns" style="margin-top: 30px;"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-vk">📱 ВКонтакте</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-tg">✈️ Telegram</a></div></div></section>
 
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-panel" id="cartPanel">
@@ -299,12 +226,13 @@
     </div>
     
     <div class="delivery-form" style="margin-bottom: 15px; text-align: left;">
-        <p style="color: #999; font-size: 12px; margin-bottom: 10px;">👤 Данные для доставки:</p>
-        <input type="text" id="customerName" placeholder="ФИО">
-        <input type="tel" id="customerPhone" placeholder="Телефон">
+        <p style="color: #999; font-size: 12px; margin-bottom: 10px;">👤 Данные для доставки <span style="color:#ff3333;">*</span></p>
+        <input type="text" id="customerName" placeholder="ФИО *" required>
+        <input type="tel" id="customerPhone" placeholder="Телефон *" required>
         <input type="text" id="customerCity" placeholder="Город (для 5Post)">
         <input type="text" id="customerAddress" placeholder="Адрес (улица, дом, квартира)">
         <input type="text" id="customerNote" placeholder="Примечание к заказу">
+        <p style="color: #666; font-size: 10px; margin-top: 5px;">* Обязательные поля</p>
     </div>
     
     <div class="cart-total" id="cartTotal">Итого: 0 ₽</div>
@@ -315,19 +243,9 @@
 <footer><p>© 2024 GORILLA STREETWEAR • OMSK</p></footer>
 <a href="#" class="scroll-top">↑</a>
 
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-    <div class="modal" id="modalBox" onclick="event.stopPropagation()">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <div id="modalGalleryContainer"></div>
-        <div class="modal-favorite" id="modalFavorite" onclick="toggleFavoriteFromModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <h2 class="modal-title" id="modalTitle"></h2><p class="modal-price" id="modalPrice"></p><p class="modal-color" id="modalColor"></p>
-        <div class="size-selector" id="modalSizes"></div><p class="modal-description" id="modalDesc"></p><p class="modal-stock" id="modalStock"></p>
-        <button class="modal-add-btn" id="modalAddBtn" onclick="addFromModal()">Добавить в корзину</button>
-        <button class="modal-cart-btn" id="modalCartBtn" onclick="goToCartFromModal()">🛒 Перейти в корзину</button>
-    </div>
-</div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)"><div class="modal" id="modalBox" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeModal()">✕</button><div id="modalGalleryContainer"></div><div class="modal-favorite" id="modalFavorite" onclick="toggleFavoriteFromModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h2 class="modal-title" id="modalTitle"></h2><p class="modal-price" id="modalPrice"></p><p class="modal-color" id="modalColor"></p><div class="size-selector" id="modalSizes"></div><p class="modal-description" id="modalDesc"></p><p class="modal-stock" id="modalStock"></p><button class="modal-add-btn" id="modalAddBtn" onclick="addFromModal()">Добавить в корзину</button><button class="modal-cart-btn" id="modalCartBtn" onclick="goToCartFromModal()">🛒 Перейти в корзину</button></div></div>
 
-<div class="toast" id="toast">✅ Заказ оформлен! Мы свяжемся с вами.</div>
+<div class="toast" id="toast">✅ Заказ оформлен!</div>
 
 <script>
     function updateClocks() {
@@ -376,7 +294,6 @@
     }
     function toggleFavoriteFromModal() { if (currentModalProduct) toggleFavorite(currentModalProduct.id); }
     function updateModalFavorite() { const favBtn = document.getElementById('modalFavorite'); if (!currentModalProduct) return; const isFav = favorites.includes(currentModalProduct.id); favBtn.innerHTML = isFav ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="#ff3333" stroke="#ff3333" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'; if (isFav) favBtn.classList.add('active'); else favBtn.classList.remove('active'); }
-
     const heroBg = document.getElementById('hero-bg'), heroContent = document.getElementById('hero-content');
     window.addEventListener('scroll', () => { const s = window.pageYOffset || document.documentElement.scrollTop; if (heroBg) heroBg.style.transform = `translateY(${s * 0.4}px)`; if (heroContent) heroContent.style.transform = `translateY(${s * 0.2}px)`; });
     const glitchTitle = document.getElementById('glitch-title');
@@ -384,7 +301,6 @@
     (function() { const canvas = document.getElementById('particles-canvas'); if (!canvas) return; const ctx = canvas.getContext('2d'); let particles = [], maxParticles = 60; function resize() { canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; } window.addEventListener('resize', resize); resize(); class Particle { constructor() { this.reset(); } reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.size = Math.random()*2+0.5; this.speedY = Math.random()*0.5+0.2; this.opacity = Math.random()*0.5+0.2; } update() { this.y -= this.speedY; if (this.y < -10) { this.y = canvas.height+10; this.x = Math.random()*canvas.width; } } draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${this.opacity})`; ctx.fill(); } } while (particles.length < maxParticles) particles.push(new Particle()); function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); } animate(); })();
     window.addEventListener('scroll', () => { const h = document.getElementById('main-header'); if (h) h.classList.toggle('scrolled', window.scrollY > 50); });
     function observeCards() { document.querySelectorAll('.card').forEach(card => { const observer = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { entries[0].target.classList.add('revealed'); observer.unobserve(entries[0].target); } }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }); observer.observe(card); }); }
-
     async function loadProducts() { const grid = document.getElementById('catalogGrid'); grid.innerHTML = '<div class="loading-text">Загрузка товаров...</div>'; try { const r = await fetch(CSV_URL); if (!r.ok) throw new Error('HTTP '+r.status); const csv = await r.text(); products = parseCSV(csv); renderCategories(); renderSizeFilter(); renderCatalog(); updateCart(); setTimeout(observeCards, 100); } catch (e) { console.error(e); grid.innerHTML = '<div class="no-products">⚠️ Не удалось загрузить товары.</div>'; } }
     function parseCSV(csv) { const lines = csv.trim().split('\n'); if (lines.length < 2) return []; const headers = lines[0].split(',').map(h => h.trim().toLowerCase()); const colorIdx = headers.indexOf('colors')!==-1 ? headers.indexOf('colors') : headers.indexOf('color'); if (colorIdx !== -1) headers[colorIdx] = 'color'; const result = []; for (let i = 1; i < lines.length; i++) { const values = lines[i].split(',').map(v => v.trim()); if (values.length < headers.length) continue; const item = {}; headers.forEach((h, idx) => { item[h] = values[idx] || ''; }); item.id = item.id || ''; item.price = parseInt(item.price)||0; item.stock = parseInt(item.stock)||0; item.photo_id = item.photo_id || ''; item.sizes = item.sizes ? item.sizes.split(';').map(s => s.trim()).filter(s => s) : []; item.color = item.color || ''; item.description = item.description || ''; item.category = (item.category || '').toLowerCase(); if (item.id && item.name) result.push(item); } return result; }
     function getPhotoURL(pid) { return pid ? `${IMAGES_PATH}${pid}.jpg` : null; }
@@ -412,17 +328,8 @@
     function goToCartFromModal() { document.getElementById('modalOverlay').classList.remove('active'); currentModalProduct = null; setTimeout(() => toggleCart(), 100); }
     function renderCatalog() { const grid = document.getElementById('catalogGrid'); let filtered = activeCategory === 'favorites' ? products.filter(p => favorites.includes(p.id)) : activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory); if (activeSize) filtered = filtered.filter(p => p.sizes && p.sizes.includes(activeSize)); if (searchQuery) { filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery)); } if (currentSort === 'price-asc') filtered.sort((a, b) => a.price - b.price); else if (currentSort === 'price-desc') filtered.sort((a, b) => b.price - a.price); if (filtered.length === 0) { grid.innerHTML = '<div class="no-products">Товаров пока нет</div>'; return; } grid.innerHTML = filtered.map(p => { const soldOut = p.stock === 0, lowStock = p.stock > 0 && p.stock <= 3; const stockText = soldOut ? 'SOLD OUT' : lowStock ? `Осталось: ${p.stock} шт` : `В наличии: ${p.stock} шт`; const stockClass = soldOut ? 'out' : lowStock ? 'low' : ''; const catName = categories.find(c => c.id === p.category)?.name || p.category || ''; const sizesStr = p.sizes && p.sizes.length ? p.sizes.join(', ') : ''; const colorDot = p.color ? `<span class="color-dot" style="background-color:${p.color};" title="${p.color}"></span>` : ''; const photoUrl = getPhotoURL(p.photo_id ? p.photo_id.split(';')[0].trim() : ''); const isFav = favorites.includes(p.id); return `<div class="card${soldOut?' sold-out':''}" onclick="openModal(products.find(pr=>pr.id==='${p.id}'))"><div class="card-img">${photoUrl ? `<img src="${photoUrl}" alt="${p.name}" onerror="imgError(this, '${p.photo_id ? p.photo_id.split(';')[0].trim() : ''}')">` : '<span class="img-placeholder">🦍</span>'}<div class="card-tag${soldOut?' sold':''}">${soldOut?'SOLD OUT':(p.tag||'')}</div><button class="favorite-btn${isFav?' active':''}" data-id="${p.id}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">${isFav ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="#ff3333" stroke="#ff3333" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'}</button><span class="stock-badge ${stockClass}">${stockText}</span></div><div class="card-body"><h3>${p.name} ${colorDot}</h3><p class="category">${catName}</p>${sizesStr ? `<p class="sizes">Размеры: ${sizesStr}</p>` : ''}<p class="price">${p.price.toLocaleString()} ₽</p><button class="btn-cart" onclick="event.stopPropagation(); openModal(products.find(pr=>pr.id==='${p.id}'))">Выбрать</button></div></div>`; }).join(''); }
     
-    function updateDelivery() {
-        deliveryType = document.querySelector('input[name="delivery"]:checked').value;
-        updateCart();
-    }
-    
-    function getDeliveryCost() {
-        if (deliveryType === 'pickup') return 0;
-        const subtotal = cart.reduce((s, i) => s + i.price, 0);
-        return subtotal >= 3000 ? 0 : 250;
-    }
-    
+    function updateDelivery() { deliveryType = document.querySelector('input[name="delivery"]:checked').value; updateCart(); }
+    function getDeliveryCost() { if (deliveryType === 'pickup') return 0; const subtotal = cart.reduce((s, i) => s + i.price, 0); return subtotal >= 3000 ? 0 : 250; }
     function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
     function removeFromCart(id, size) { cart = cart.filter(i => !(i.id === id && i.size === size)); saveCart(); updateCart(); }
     function clearCart() { if (cart.length === 0) return; cart = []; saveCart(); updateCart(); showToast('🗑 Корзина очищена'); }
@@ -432,21 +339,21 @@
         const deliveryCost = getDeliveryCost();
         document.getElementById('deliveryPrice').textContent = deliveryCost === 0 ? '0 ₽ (бесплатно от 3000 ₽)' : '250 ₽';
         if (cart.length === 0) { items.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; total.textContent = 'Итого: 0 ₽'; }
-        else {
-            items.innerHTML = cart.map(i => { const si = i.size ? ` (${i.size})` : '', ci = i.color ? ` [${i.color}]` : ''; return `<div class="cart-item"><span>${i.name}${ci}${si}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size||''}')">✕</span></span></div>`; }).join('');
-            const sum = cart.reduce((s,i) => s + i.price, 0) + deliveryCost;
-            total.textContent = `Итого: ${sum.toLocaleString()} ₽`;
-            if (deliveryCost > 0) total.innerHTML += ` <span style="color:#888; font-size:11px;">(вкл. доставку ${deliveryCost} ₽)</span>`;
-        }
+        else { items.innerHTML = cart.map(i => { const si = i.size ? ` (${i.size})` : '', ci = i.color ? ` [${i.color}]` : ''; return `<div class="cart-item"><span>${i.name}${ci}${si}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size||''}')">✕</span></span></div>`; }).join(''); const sum = cart.reduce((s,i) => s + i.price, 0) + deliveryCost; total.textContent = `Итого: ${sum.toLocaleString()} ₽`; if (deliveryCost > 0) total.innerHTML += ` <span style="color:#888; font-size:11px;">(вкл. доставку ${deliveryCost} ₽)</span>`; }
     }
     function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); document.getElementById('cartOverlay').classList.toggle('open'); }
-    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 4000); }
     
     function placeOrder() {
         if (cart.length === 0) { alert('Корзина пуста!'); return; }
         
-        const name = document.getElementById('customerName').value || 'Не указано';
-        const phone = document.getElementById('customerPhone').value || 'Не указан';
+        const name = document.getElementById('customerName').value.trim();
+        const phone = document.getElementById('customerPhone').value.trim();
+        
+        // Проверка обязательных полей
+        if (!name) { alert('Укажите ФИО'); document.getElementById('customerName').focus(); return; }
+        if (!phone) { alert('Укажите телефон'); document.getElementById('customerPhone').focus(); return; }
+        
         const city = document.getElementById('customerCity').value || 'Не указан';
         const address = document.getElementById('customerAddress').value || 'Не указан';
         const note = document.getElementById('customerNote').value || 'Нет';
@@ -455,31 +362,18 @@
         const total = cart.reduce((s, i) => s + i.price, 0) + deliveryCost;
         const orderId = 'GOR-' + Date.now().toString().slice(-6);
         
-        const order = {
-            id: orderId,
-            date: new Date().toLocaleString('ru-RU'),
-            items: cart.map(i => ({ name: i.name, color: i.color, size: i.size, price: i.price })),
-            delivery: deliveryText,
-            deliveryCost: deliveryCost,
-            customer: { name, phone, city, address, note },
-            total: total,
-            status: 'Новый'
-        };
+        const order = { id: orderId, date: new Date().toLocaleString('ru-RU'), items: cart.map(i => ({ name: i.name, color: i.color, size: i.size, price: i.price })), delivery: deliveryText, deliveryCost: deliveryCost, customer: { name, phone, city, address, note }, total: total, status: 'Новый' };
         
-        // Сохраняем заказ
         const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
         orders.push(order);
         localStorage.setItem('gorillaOrders', JSON.stringify(orders));
         
-        // Очищаем корзину
-        cart = [];
-        saveCart();
-        updateCart();
+        cart = []; saveCart(); updateCart();
         
-        // Показываем номер заказа
-        showToast('✅ Заказ №' + orderId + ' оформлен! Отследить: /track');
+        // Показываем сообщение с номером заказа и ссылкой на отслеживание
+        showToast('✅ Заказ №' + orderId + ' оформлен!');
+        alert('✅ Заказ №' + orderId + ' оформлен!\n\nОтследить заказ: gorilla-omsk.github.io/track\nВведите номер заказа: ' + orderId + '\nИ ваш телефон.');
         
-        // Закрываем корзину
         document.getElementById('cartPanel').classList.remove('open');
         document.getElementById('cartOverlay').classList.remove('open');
     }
