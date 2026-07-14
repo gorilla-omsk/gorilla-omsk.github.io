@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GORILLA — Заказы</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Russo+One&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #d0d0d0; padding: 30px; min-height: 100vh; }
+        h1 { font-family: 'Russo One', sans-serif; color: #fff; margin-bottom: 20px; font-size: 28px; letter-spacing: 2px; }
+        .order { background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+        .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .order h3 { color: #fff; font-size: 18px; }
+        .order-date { color: #666; font-size: 12px; }
+        .order p { margin: 4px 0; font-size: 13px; color: #aaa; }
+        .order-items { margin: 10px 0; padding-left: 15px; border-left: 2px solid rgba(255,255,255,0.1); }
+        .order-total { font-size: 16px; font-weight: 700; color: #fff; margin-top: 10px; }
+        .btn { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; letter-spacing: 1px; transition: all 0.3s; }
+        .btn-copy { background: #0077ff; color: #fff; }
+        .btn-copy:hover { background: #0066dd; }
+        .btn-delete { background: #ff3333; color: #fff; margin-left: 8px; }
+        .btn-delete:hover { background: #cc0000; }
+        .btn-status { background: #4caf50; color: #fff; }
+        .btn-status:hover { background: #388e3c; }
+        .empty { color: #666; text-align: center; padding: 60px; font-size: 16px; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #0a0a0a; padding: 12px 28px; border-radius: 100px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s; }
+        .toast.show { opacity: 1; }
+        .logout-btn { position: absolute; top: 30px; right: 30px; background: rgba(255,255,255,0.1); color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+        @media (max-width: 768px) { body { padding: 15px; } .order-header { flex-direction: column; align-items: flex-start; } }
+    </style>
+</head>
+<body>
+    <h1>🦍 GORILLA — Заказы</h1>
+    <button class="logout-btn" onclick="logout()">Выйти</button>
+    <div id="ordersList"></div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const PASSWORD = 'Sofa190925';
+        
+        // Проверка пароля
+        if (sessionStorage.getItem('gorillaAuth') !== 'true') {
+            const userPass = prompt('Введите пароль для доступа к заказам:');
+            if (userPass !== PASSWORD) {
+                alert('Неверный пароль!');
+                window.location.href = '/';
+            } else {
+                sessionStorage.setItem('gorillaAuth', 'true');
+                location.reload();
+            }
+        }
+        
+        function logout() {
+            sessionStorage.removeItem('gorillaAuth');
+            window.location.href = '/';
+        }
+        
+        function renderOrders() {
+            const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
+            const container = document.getElementById('ordersList');
+            if (orders.length === 0) {
+                container.innerHTML = '<div class="empty">Нет заказов</div>';
+                return;
+            }
+            container.innerHTML = orders.reverse().map((order, index) => {
+                const originalIndex = orders.length - 1 - index;
+                const msg = `🦍 ЗАКАЗ №${order.id} (${order.date})\n\n${order.items.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n🚚 Доставка: ${order.delivery}\n\n👤 Клиент: ${order.customer.name}\n📞 Телефон: ${order.customer.phone}\n📍 Город: ${order.customer.city}\n🏠 Адрес: ${order.customer.address}\n📝 Примечание: ${order.customer.note}\n\n💰 Итого: ${order.total.toLocaleString()} ₽\n\n🆔 ID: ${order.id}`;
+                return `<div class="order">
+                    <div class="order-header">
+                        <h3>Заказ №${order.id}</h3>
+                        <span class="order-date">${order.date}</span>
+                    </div>
+                    <p><strong>Статус:</strong> ${order.status || 'Новый'}</p>
+                    <p><strong>Доставка:</strong> ${order.delivery}</p>
+                    <p><strong>Клиент:</strong> ${order.customer.name}, 📞 ${order.customer.phone}</p>
+                    <p><strong>Город:</strong> ${order.customer.city}</p>
+                    <p><strong>Адрес:</strong> ${order.customer.address}</p>
+                    <p><strong>Примечание:</strong> ${order.customer.note}</p>
+                    <div class="order-items">
+                        ${order.items.map(i => `<p>• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽</p>`).join('')}
+                    </div>
+                    <p class="order-total">💰 Итого: ${order.total.toLocaleString()} ₽</p>
+                    <div style="margin-top: 12px;">
+                        <button class="btn btn-copy" onclick="copyOrder('${order.id}')">📋 Скопировать</button>
+                        <button class="btn btn-status" onclick="changeStatus('${order.id}')">🔄 Сменить статус</button>
+                        <button class="btn btn-delete" onclick="deleteOrder(${originalIndex})">🗑 Удалить</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+        
+        window.copyOrder = function(orderId) {
+            const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            const msg = `🦍 ЗАКАЗ №${order.id} (${order.date})\n\n${order.items.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n🚚 Доставка: ${order.delivery}\n\n👤 Клиент: ${order.customer.name}\n📞 Телефон: ${order.customer.phone}\n📍 Город: ${order.customer.city}\n🏠 Адрес: ${order.customer.address}\n📝 Примечание: ${order.customer.note}\n\n💰 Итого: ${order.total.toLocaleString()} ₽\n\n🆔 ID: ${order.id}`;
+            navigator.clipboard.writeText(msg).then(() => showToast('✅ Скопировано!'));
+        };
+        
+        window.changeStatus = function(orderId) {
+            const statuses = ['Новый', 'Обрабатывается', 'Отправлен', 'Доставлен', 'Отменён'];
+            const current = statuses.join('\n');
+            const newStatus = prompt('Выберите статус:\n' + statuses.map((s, i) => `${i+1}. ${s}`).join('\n') + '\n\nВведите номер:');
+            if (newStatus && statuses[parseInt(newStatus)-1]) {
+                const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
+                const order = orders.find(o => o.id === orderId);
+                if (order) {
+                    order.status = statuses[parseInt(newStatus)-1];
+                    localStorage.setItem('gorillaOrders', JSON.stringify(orders));
+                    renderOrders();
+                    showToast('✅ Статус обновлён!');
+                }
+            }
+        };
+        
+        window.deleteOrder = function(index) {
+            if (confirm('Удалить этот заказ?')) {
+                const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
+                orders.splice(index, 1);
+                localStorage.setItem('gorillaOrders', JSON.stringify(orders));
+                renderOrders();
+                showToast('🗑 Заказ удалён');
+            }
+        };
+        
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+        
+        renderOrders();
+    </script>
+</body>
+</html>
