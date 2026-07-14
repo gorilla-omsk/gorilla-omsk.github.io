@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GORILLA — Мои заказы</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Russo+One&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #d0d0d0; padding: 30px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .track-container { background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 30px; max-width: 500px; width: 100%; }
+        h1 { font-family: 'Russo One', sans-serif; color: #fff; text-align: center; margin-bottom: 20px; font-size: 24px; letter-spacing: 2px; }
+        input { width: 100%; padding: 12px; margin-bottom: 12px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; font-size: 14px; }
+        input::placeholder { color: #555; }
+        .btn { width: 100%; padding: 14px; background: #ff3333; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; letter-spacing: 1px; transition: all 0.3s; font-family: 'Russo One', sans-serif; }
+        .btn:hover { background: #cc0000; }
+        .order-result { margin-top: 20px; background: #0c0c0c; border-radius: 8px; padding: 20px; display: none; }
+        .order-result h3 { color: #fff; margin-bottom: 10px; }
+        .order-result p { font-size: 13px; color: #aaa; margin: 4px 0; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
+        .status-new { background: #0077ff; color: #fff; }
+        .status-process { background: #ff9933; color: #fff; }
+        .status-sent { background: #4caf50; color: #fff; }
+        .status-done { background: #888; color: #fff; }
+        .status-cancel { background: #ff3333; color: #fff; }
+        .error { color: #ff3333; text-align: center; margin-top: 10px; font-size: 13px; display: none; }
+        .back-link { text-align: center; margin-top: 15px; }
+        .back-link a { color: #666; font-size: 12px; text-decoration: none; }
+        .back-link a:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="track-container">
+        <h1>📦 Мои заказы</h1>
+        <p style="color: #666; text-align: center; margin-bottom: 20px; font-size: 13px;">Введите номер заказа и телефон для отслеживания</p>
+        
+        <input type="text" id="orderId" placeholder="Номер заказа (GOR-XXXXXX)">
+        <input type="tel" id="orderPhone" placeholder="Телефон, указанный при заказе">
+        <button class="btn" onclick="trackOrder()">🔍 Найти заказ</button>
+        
+        <div class="error" id="error">Заказ не найден. Проверьте номер и телефон.</div>
+        
+        <div class="order-result" id="orderResult">
+            <h3 id="resultTitle"></h3>
+            <p id="resultStatus"></p>
+            <p id="resultDelivery"></p>
+            <div id="resultItems"></div>
+            <p style="margin-top: 10px; font-weight: 700; color: #fff;" id="resultTotal"></p>
+            <p style="color: #4caf50; margin-top: 8px;" id="resultTrack"></p>
+        </div>
+        
+        <div class="back-link"><a href="/">← Вернуться в магазин</a></div>
+    </div>
+
+    <script>
+        function trackOrder() {
+            const id = document.getElementById('orderId').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            const errorDiv = document.getElementById('error');
+            const resultDiv = document.getElementById('orderResult');
+            
+            errorDiv.style.display = 'none';
+            resultDiv.style.display = 'none';
+            
+            if (!id || !phone) {
+                errorDiv.textContent = 'Введите номер заказа и телефон';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Нормализуем телефон (оставляем только цифры)
+            const normalizedPhone = phone.replace(/\D/g, '');
+            
+            const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
+            const order = orders.find(o => o.id === id && o.customer.phone.replace(/\D/g, '') === normalizedPhone);
+            
+            if (!order) {
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Показываем заказ
+            const statusMap = {
+                'Новый': 'status-new',
+                'Обрабатывается': 'status-process',
+                'Отправлен': 'status-sent',
+                'Доставлен': 'status-done',
+                'Отменён': 'status-cancel'
+            };
+            
+            document.getElementById('resultTitle').textContent = `Заказ №${order.id} (${order.date})`;
+            document.getElementById('resultStatus').innerHTML = `Статус: <span class="status-badge ${statusMap[order.status || 'Новый']}">${order.status || 'Новый'}</span>`;
+            document.getElementById('resultDelivery').textContent = `Доставка: ${order.delivery}`;
+            document.getElementById('resultItems').innerHTML = order.items.map(i => `<p>• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽</p>`).join('');
+            document.getElementById('resultTotal').textContent = `💰 Итого: ${order.total.toLocaleString()} ₽`;
+            
+            if (order.trackNumber) {
+                document.getElementById('resultTrack').textContent = `📮 Трек-номер: ${order.trackNumber}`;
+            } else {
+                document.getElementById('resultTrack').textContent = '';
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Проверка по Enter
+        document.getElementById('orderPhone').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') trackOrder();
+        });
+    </script>
+</body>
+</html>
