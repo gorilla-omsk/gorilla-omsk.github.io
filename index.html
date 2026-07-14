@@ -4,61 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>GORILLA STREETWEAR — Уличная одежда Омск</title>
-    
-    <!-- Иконки и PWA -->
     <link rel="apple-touch-icon" href="GGVP.jpg">
     <link rel="icon" type="image/jpeg" href="GGVP.jpg">
     <link rel="manifest" href="data:application/manifest+json,{ 'name': 'GORILLA STREETWEAR', 'short_name': 'GORILLA', 'icons': [{ 'src': 'GGVP.jpg', 'sizes': '512x512', 'type': 'image/jpeg' }], 'start_url': '/', 'display': 'standalone', 'background_color': '#0a0a0a', 'theme_color': '#0a0a0a' }">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0a0a">
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Russo+One&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #d0d0d0;
-            overflow-x: hidden;
-            line-height: 1.5;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(0); }
-            20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
-            40% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(2px, -2px); }
-            60% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); }
-            80% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(2px, -2px); }
-            100% { text-shadow: none; transform: translate(0); }
-        }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #d0d0d0; overflow-x: hidden; line-height: 1.5; -webkit-tap-highlight-color: transparent; }
+        @keyframes glitch { 0% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(0); } 20% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); } 40% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(2px, -2px); } 60% { text-shadow: -2px 0 red, 2px 0 blue; transform: translate(-2px, 2px); } 80% { text-shadow: 2px 0 red, -2px 0 blue; transform: translate(2px, -2px); } 100% { text-shadow: none; transform: translate(0); } }
         .glitch-active { animation: glitch 0.3s ease-in-out; }
-
-        #particles-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 3;
-        }
-
-        h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title,
-        .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3,
-        .delivery-card h3, .categories-menu h4 {
-            font-family: 'Russo One', sans-serif;
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-
-        header {
-            background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); padding: 20px 50px;
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.06);
-            transition: background 0.3s;
-        }
+        #particles-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+        h1, h2, h3, h4, .logo-text, .btn, .category-btn, .cart-panel h3, .modal-title, .section-title, .section-label, .marquee span, .card-body h3, .contact-block h3, .delivery-card h3, .categories-menu h4 { font-family: 'Russo One', sans-serif; font-weight: 400; letter-spacing: 1px; }
+        header { background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.06); transition: background 0.3s; }
         header.scrolled { background: rgba(10,10,10,0.98); }
-
         .logo-block { display: flex; align-items: center; gap: 10px; }
         .logo-img { height: 40px; vertical-align: middle; border-radius: 50%; }
         .logo-text { font-size: 26px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
@@ -70,30 +32,13 @@
         .cart-count { position: absolute; top: -10px; right: -12px; background: #ff3333; color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
         .cart-count.active { display: flex; animation: pop 0.3s ease; }
         @keyframes pop { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
-
-        .hero-clocks {
-            display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 30px;
-        }
+        .hero-clocks { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 30px; }
         .hero-clock-item { text-align: center; }
-        .hero-clock-city {
-            display: block; color: #888; font-size: 10px; letter-spacing: 3px;
-            text-transform: uppercase; margin-bottom: 4px; font-family: 'Inter', sans-serif;
-        }
-        .hero-clock-time {
-            display: block; color: #fff; font-size: 32px; font-weight: 700;
-            letter-spacing: 2px; font-family: 'Russo One', sans-serif;
-        }
+        .hero-clock-city { display: block; color: #888; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
+        .hero-clock-time { display: block; color: #fff; font-size: 32px; font-weight: 700; letter-spacing: 2px; font-family: 'Russo One', sans-serif; }
         .hero-clock-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
-
-        .hero {
-            position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; overflow: hidden; background: #0a0a0a;
-        }
-        .hero-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 120%;
-            background: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a);
-            will-change: transform; z-index: 1;
-        }
+        .hero { position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #0a0a0a; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 120%; background: radial-gradient(circle at 50% 30%, #1a1a1a, #0a0a0a); will-change: transform; z-index: 1; }
         .hero-content { position: relative; z-index: 2; max-width: 850px; padding: 0 20px; will-change: transform; }
         .hero h1 { font-size: clamp(60px, 10vw, 120px); font-weight: 400; letter-spacing: -2px; line-height: 0.85; color: #fff; margin-bottom: 20px; text-transform: uppercase; cursor: pointer; user-select: none; }
         .hero h1 .outline { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px #666; }
@@ -110,16 +55,13 @@
         .btn-gray { background: #222; color: #555; cursor: not-allowed; }
         .btn-vk { background: #0077ff; color: #fff; }
         .btn-vk:hover { background: #0066dd; transform: translateY(-2px); box-shadow: 0 0 15px rgba(0,119,255,0.6); }
-
         .marquee { background: #0d0d0d; padding: 14px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
         .marquee span { display: inline-block; animation: marquee 35s linear infinite; font-size: 11px; letter-spacing: 5px; color: #888; text-transform: uppercase; font-weight: 700; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
         .section { padding: 80px 50px; }
         .section-label { text-align: center; font-size: 9px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: #555; margin-bottom: 15px; }
         .section-title { text-align: center; font-size: clamp(28px, 4vw, 42px); font-weight: 400; letter-spacing: -1px; margin-bottom: 12px; color: #fff; text-transform: uppercase; }
         .section-subtitle { text-align: center; color: #666; font-size: 13px; letter-spacing: 3px; margin-bottom: 50px; font-family: 'Inter', sans-serif; }
-
         .catalog-wrapper { display: flex; gap: 20px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
         .sidebar { min-width: 220px; position: sticky; top: 100px; display: flex; flex-direction: column; gap: 15px; }
         .categories-menu { background: #0c0c0c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
@@ -136,20 +78,13 @@
         .size-filter-btn { padding: 5px 9px; background: transparent; color: #ccc; border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 11px; transition: all 0.2s; }
         .size-filter-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; }
         .size-filter-reset { width: 100%; margin-top: 8px; padding: 8px; background: transparent; color: #ff3333; border: 1px solid rgba(255,51,51,0.3); border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 11px; transition: all 0.3s; }
-
         .search-bar { margin-bottom: 15px; width: 100%; }
         .search-bar input { background: transparent; border: none; color: #fff; font-family: 'Inter', sans-serif; font-size: 14px; width: 100%; outline: none; caret-color: #fff; }
         .search-bar input::placeholder { color: #555; }
-
         .sort-bar { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 15px; width: 100%; }
         .sort-bar select { background: #0c0c0c; color: #ccc; border: 1px solid rgba(255,255,255,0.15); padding: 8px 14px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; }
-
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; flex: 1; }
-        .card {
-            background: #0c0c0c; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); position: relative; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer;
-            opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease;
-        }
+        .card { background: #0c0c0c; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.04); border-radius: 8px; cursor: pointer; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .card.revealed { opacity: 1; transform: translateY(0); }
         .card:hover { background: #121212; border-color: rgba(255,255,255,0.1); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .card.sold-out { opacity: 0.5; pointer-events: none; }
@@ -177,7 +112,6 @@
         .btn-cart.in-cart { background: #ff3333; border-color: #ff3333; color: #fff; }
         .no-products { text-align: center; padding: 60px; color: #555; font-size: 14px; letter-spacing: 2px; width: 100%; font-family: 'Inter', sans-serif; }
         .loading-text { text-align: center; padding: 60px; color: #666; font-family: 'Inter', sans-serif; }
-
         .modal-gallery { position: relative; width: 100%; height: 300px; border-radius: 8px; overflow: hidden; background: #080808; margin-bottom: 15px; }
         .modal-gallery-slides { width: 100%; height: 100%; position: relative; }
         .modal-gallery-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; background: #080808; opacity: 0; transition: opacity 0.3s; pointer-events: none; cursor: zoom-in; }
@@ -188,30 +122,27 @@
         .modal-gallery-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; }
         .modal-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s; }
         .modal-dot.active { background: #fff; }
-
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .lightbox.active { opacity: 1; visibility: visible; }
         .lightbox img { max-width: 95%; max-height: 95%; object-fit: contain; cursor: zoom-out; transition: transform 0.3s; }
         .lightbox-close { position: absolute; top: 20px; right: 25px; background: rgba(255,255,255,0.1); color: #fff; border: none; font-size: 30px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
         .lightbox-close:hover { background: rgba(255,255,255,0.3); }
-
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; }
         .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; }
         .delivery-card:hover { background: #121212; transform: translateY(-3px); }
         .delivery-card .icon { font-size: 34px; margin-bottom: 22px; opacity: 0.5; }
         .delivery-card h3 { font-size: 14px; font-weight: 400; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; color: #fff; }
         .delivery-card p { color: #777; font-size: 12px; line-height: 1.8; font-family: 'Inter', sans-serif; }
-
         .contact-block { max-width: 500px; margin: 0 auto; text-align: center; }
         .contact-block h3 { font-size: 22px; font-weight: 400; margin-bottom: 35px; color: #fff; text-transform: uppercase; }
         .contact-block p { font-size: 14px; margin: 10px 0; color: #999; font-family: 'Inter', sans-serif; }
         .contact-schedule { display: inline-block; padding: 12px 30px; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; font-size: 13px; color: #ccc; margin: 20px 0 35px; font-family: 'Inter', sans-serif; }
         .contact-address { font-size: 15px; color: #fff; margin: 35px 0; padding: 28px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; font-family: 'Inter', sans-serif; }
+        .contact-requisites { font-size: 12px; color: #777; margin-top: 15px; line-height: 1.6; font-family: 'Inter', sans-serif; }
         .social-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .btn-social { display: inline-block; padding: 14px 35px; font-weight: 600; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; font-family: 'Russo One', sans-serif; }
         .btn-vk { background: #0077ff; color: #fff; } .btn-vk:hover { background: #0066dd; transform: translateY(-2px); box-shadow: 0 0 15px rgba(0,119,255,0.6); }
         .btn-tg { background: #2b9ef1; color: #fff; } .btn-tg:hover { background: #2390dd; transform: translateY(-2px); box-shadow: 0 0 15px rgba(43,158,241,0.6); }
-
         .cart-panel { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #1a1a1a; border-radius: 20px 20px 0 0; padding: 25px; z-index: 999; transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2); border: 1px solid rgba(255,255,255,0.1); border-bottom: none; }
         .cart-panel.open { bottom: 0; }
         .cart-panel h3 { font-size: 16px; font-weight: 400; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
@@ -227,7 +158,6 @@
         #clearCartBtn { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; padding: 14px 0 !important; margin-top: 8px !important; background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.3) !important; font-family: 'Russo One', sans-serif !important; font-size: 12px !important; letter-spacing: 2px !important; text-transform: uppercase !important; cursor: pointer !important; position: relative !important; z-index: 30 !important; pointer-events: auto !important; user-select: none !important; border-radius: 100px !important; transition: all 0.3s !important; min-height: 50px !important; }
         #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; }
         #clearCartBtn:active { transform: scale(0.96) !important; }
-
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; }
@@ -250,14 +180,12 @@
         .modal-cart-btn { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); color: #fff; border: 2px solid rgba(255,255,255,0.4); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; font-family: 'Russo One', sans-serif; transition: all 0.3s; position: relative; z-index: 10; touch-action: manipulation; -webkit-appearance: none; }
         .modal-cart-btn:hover { background: #fff; color: #0a0a0a; border-color: #fff; }
         .modal-cart-btn:active { background: #ccc; transform: scale(0.96); }
-
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
         footer p { color: #444; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
         .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; }
         .scroll-top:hover { opacity: 1; transform: translateY(-3px); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #0a0a0a; padding: 12px 28px; border-radius: 100px; font-size: 13px; font-weight: 600; letter-spacing: 1px; z-index: 3000; opacity: 0; transition: opacity 0.3s, bottom 0.3s; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
         .toast.show { opacity: 1; bottom: 40px; }
-
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-direction: column; gap: 12px; }
             .logo-text { font-size: 22px; }
@@ -381,6 +309,15 @@
         <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
         <p>📞 +7 (XXX) XXX-XX-XX</p>
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
+        <div class="contact-requisites">
+            <strong>Реквизиты:</strong><br>
+            ИП Кузякин Александр Михайлович<br>
+            ИНН: 550716638551<br>
+            ОГРНИП: [укажи свой ОГРНИП]
+        </div>
+        <p style="color: #666; font-size: 11px; margin-top: 10px; font-family: 'Inter', sans-serif;">
+            Оплачивая заказ, вы соглашаетесь с <a href="#" style="color: #888;">условиями оферты</a>.
+        </p>
         <div style="margin-top: 40px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
             <h3 style="font-family: 'Russo One', sans-serif; color: #fff; font-size: 18px; letter-spacing: 2px; margin-bottom: 15px;">📲 УСТАНОВИ КАК ПРИЛОЖЕНИЕ</h3>
             <p style="color: #888; font-size: 13px; margin-bottom: 20px; font-family: 'Inter', sans-serif;">Добавь наш сайт на главный экран телефона и получай доступ в один клик.</p>
@@ -429,7 +366,6 @@
 <div class="toast" id="toast">Текст заказа скопирован! Вставьте в чат ВК</div>
 
 <script>
-    // ---------- ЖИВЫЕ ЧАСЫ ----------
     function updateClocks() {
         const now = new Date();
         const mskTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
@@ -439,7 +375,6 @@
     }
     updateClocks(); setInterval(updateClocks, 1000);
 
-    // ---------- ИКОНКИ SVG ----------
     const icons = {
         all: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>',
         favorites: '<svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
