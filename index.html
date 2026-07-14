@@ -52,7 +52,6 @@
         .btn-outline:hover { border-color: #fff; transform: translateY(-2px); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
         .btn-red { background: #ff3333; color: #fff; }
         .btn-red:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 0 15px rgba(255,51,51,0.6); }
-        .btn-gray { background: #222; color: #555; cursor: not-allowed; }
         .btn-vk { background: #0077ff; color: #fff; }
         .btn-vk:hover { background: #0066dd; transform: translateY(-2px); box-shadow: 0 0 15px rgba(0,119,255,0.6); }
         .marquee { background: #0d0d0d; padding: 14px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -155,6 +154,10 @@
         .cart-empty { color: #666; text-align: center; padding: 20px; font-size: 13px; font-family: 'Inter', sans-serif; }
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; }
         .cart-overlay.open { display: block; }
+        .delivery-form input { width: 100%; padding: 10px; margin-bottom: 8px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; }
+        .delivery-form input::placeholder { color: #555; }
+        .delivery-selector label { display: block; padding: 8px; margin-bottom: 5px; cursor: pointer; color: #ccc; font-size: 13px; }
+        .delivery-selector input { margin-right: 8px; }
         #clearCartBtn { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; padding: 14px 0 !important; margin-top: 8px !important; background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.3) !important; font-family: 'Russo One', sans-serif !important; font-size: 12px !important; letter-spacing: 2px !important; text-transform: uppercase !important; cursor: pointer !important; position: relative !important; z-index: 30 !important; pointer-events: auto !important; user-select: none !important; border-radius: 100px !important; transition: all 0.3s !important; min-height: 50px !important; }
         #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; }
         #clearCartBtn:active { transform: scale(0.96) !important; }
@@ -296,7 +299,7 @@
     <div class="delivery-grid">
         <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>Самовывоз</h3><p>Забери из магазина. Примерка на месте.</p></div>
         <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>По Омску</h3><p>Курьер — 300₽. В день заказа до 15:00.</p></div>
-        <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>По России</h3><p>СДЭК / Почта России. Трек-номер сразу.</p></div>
+        <div class="delivery-card"><div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><h3>По России</h3><p>5Post / Почта России. Трек-номер сразу.</p></div>
     </div>
 </section>
 
@@ -309,7 +312,6 @@
         <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
         <p>📞 +7 (XXX) XXX-XX-XX</p>
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
-        <div id="oferta"></div>
         <div class="contact-requisites">
             <strong>Реквизиты:</strong><br>
             ИП Кузякин Александр Михайлович<br>
@@ -317,7 +319,7 @@
             ОГРНИП: 322554300047147
         </div>
         <p style="color: #666; font-size: 11px; margin-top: 10px; font-family: 'Inter', sans-serif;">
-            Оплачивая заказ, вы соглашаетесь с <a href="#oferta" style="color: #888;">условиями оферты</a>.
+            Оплачивая заказ, вы соглашаетесь с условиями оферты.
         </p>
         <div style="margin-top: 40px; background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
             <h3 style="font-family: 'Russo One', sans-serif; color: #fff; font-size: 18px; letter-spacing: 2px; margin-bottom: 15px;">📲 УСТАНОВИ КАК ПРИЛОЖЕНИЕ</h3>
@@ -339,9 +341,26 @@
 <div class="cart-panel" id="cartPanel">
     <h3>🛒 Корзина</h3>
     <div class="cart-items" id="cartItems"><div class="cart-empty">Корзина пуста</div></div>
+    
+    <div class="delivery-selector" style="margin-bottom: 15px; text-align: left;">
+        <p style="color: #999; font-size: 12px; margin-bottom: 8px;">🚚 Способ доставки:</p>
+        <label><input type="radio" name="delivery" value="0" checked onchange="updateDelivery()"> Самовывоз (Омск) — 0 ₽</label>
+        <label><input type="radio" name="delivery" value="200" onchange="updateDelivery()"> 5Post (Пятёрочка) — 200 ₽</label>
+        <label><input type="radio" name="delivery" value="300" onchange="updateDelivery()"> Почта России — 300 ₽</label>
+    </div>
+    
+    <div class="delivery-form" style="margin-bottom: 15px; text-align: left;">
+        <p style="color: #999; font-size: 12px; margin-bottom: 10px;">👤 Данные для доставки:</p>
+        <input type="text" id="customerName" placeholder="ФИО">
+        <input type="tel" id="customerPhone" placeholder="Телефон">
+        <input type="text" id="customerCity" placeholder="Город">
+        <input type="text" id="customerIndex" placeholder="Индекс (для Почты России)">
+        <input type="text" id="customerAddress" placeholder="Адрес (улица, дом, квартира)">
+        <input type="text" id="customerNote" placeholder="Примечание к заказу">
+    </div>
+    
     <div class="cart-total" id="cartTotal">Итого: 0 ₽</div>
-    <button class="btn btn-red" style="width:100%;" onclick="checkoutTG()">📱 Заказать через Telegram</button>
-    <button class="btn btn-vk" style="width:100%; margin-top:8px;" onclick="checkoutVK()">📱 Заказать через ВКонтакте</button>
+    <button class="btn btn-red" style="width:100%;" onclick="checkout()">📱 Оформить заказ</button>
     <button id="clearCartBtn" onclick="clearCart()">🗑 Очистить корзину</button>
 </div>
 
@@ -400,7 +419,7 @@
     ];
 
     let products = [], cart = JSON.parse(localStorage.getItem('gorillaCart')) || [], favorites = JSON.parse(localStorage.getItem('gorillaFavorites')) || [];
-    let activeCategory = 'all', activeSize = null, currentModalProduct = null, selectedSize = null, currentSlide = 0, currentSort = 'default', searchQuery = '';
+    let activeCategory = 'all', activeSize = null, currentModalProduct = null, selectedSize = null, currentSlide = 0, currentSort = 'default', searchQuery = '', deliveryCost = 0;
     const LETTER_SIZES_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '2XL', '3XL', '4XL', '5XL'];
 
     function saveFavorites() { localStorage.setItem('gorillaFavorites', JSON.stringify(favorites)); }
@@ -448,15 +467,47 @@
     function addFromModal() { if (!currentModalProduct || currentModalProduct.stock === 0) return; if (currentModalProduct.sizes && currentModalProduct.sizes.length > 0 && !selectedSize) { alert('Выберите размер'); return; } const size = selectedSize || null; const existing = cart.find(i => i.id === currentModalProduct.id && i.size === size); if (existing) cart = cart.filter(i => !(i.id === currentModalProduct.id && i.size === size)); else cart.push({ id: currentModalProduct.id, name: currentModalProduct.name, price: currentModalProduct.price, size: size, color: currentModalProduct.color, photo_id: currentModalProduct.photo_id, sizes: currentModalProduct.sizes }); saveCart(); updateCart(); document.getElementById('modalAddBtn').textContent = cart.find(i => i.id === currentModalProduct.id && i.size === size) ? '✓ В корзине' : 'Добавить в корзину'; }
     function goToCartFromModal() { document.getElementById('modalOverlay').classList.remove('active'); currentModalProduct = null; setTimeout(() => toggleCart(), 100); }
     function renderCatalog() { const grid = document.getElementById('catalogGrid'); let filtered = activeCategory === 'favorites' ? products.filter(p => favorites.includes(p.id)) : activeCategory === 'all' ? products : products.filter(p => p.category === activeCategory); if (activeSize) filtered = filtered.filter(p => p.sizes && p.sizes.includes(activeSize)); if (searchQuery) { filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery)); } if (currentSort === 'price-asc') filtered.sort((a, b) => a.price - b.price); else if (currentSort === 'price-desc') filtered.sort((a, b) => b.price - a.price); if (filtered.length === 0) { grid.innerHTML = '<div class="no-products">Товаров пока нет</div>'; return; } grid.innerHTML = filtered.map(p => { const soldOut = p.stock === 0, lowStock = p.stock > 0 && p.stock <= 3; const stockText = soldOut ? 'SOLD OUT' : lowStock ? `Осталось: ${p.stock} шт` : `В наличии: ${p.stock} шт`; const stockClass = soldOut ? 'out' : lowStock ? 'low' : ''; const catName = categories.find(c => c.id === p.category)?.name || p.category || ''; const sizesStr = p.sizes && p.sizes.length ? p.sizes.join(', ') : ''; const colorDot = p.color ? `<span class="color-dot" style="background-color:${p.color};" title="${p.color}"></span>` : ''; const photoUrl = getPhotoURL(p.photo_id ? p.photo_id.split(';')[0].trim() : ''); const isFav = favorites.includes(p.id); return `<div class="card${soldOut?' sold-out':''}" onclick="openModal(products.find(pr=>pr.id==='${p.id}'))"><div class="card-img">${photoUrl ? `<img src="${photoUrl}" alt="${p.name}" onerror="imgError(this, '${p.photo_id ? p.photo_id.split(';')[0].trim() : ''}')">` : '<span class="img-placeholder">🦍</span>'}<div class="card-tag${soldOut?' sold':''}">${soldOut?'SOLD OUT':(p.tag||'')}</div><button class="favorite-btn${isFav?' active':''}" data-id="${p.id}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">${isFav ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="#ff3333" stroke="#ff3333" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'}</button><span class="stock-badge ${stockClass}">${stockText}</span></div><div class="card-body"><h3>${p.name} ${colorDot}</h3><p class="category">${catName}</p>${sizesStr ? `<p class="sizes">Размеры: ${sizesStr}</p>` : ''}<p class="price">${p.price.toLocaleString()} ₽</p><button class="btn-cart" onclick="event.stopPropagation(); openModal(products.find(pr=>pr.id==='${p.id}'))">Выбрать</button></div></div>`; }).join(''); }
+    function updateDelivery() { deliveryCost = parseInt(document.querySelector('input[name="delivery"]:checked').value); updateCart(); }
     function saveCart() { localStorage.setItem('gorillaCart', JSON.stringify(cart)); }
     function removeFromCart(id, size) { cart = cart.filter(i => !(i.id === id && i.size === size)); saveCart(); updateCart(); }
     function clearCart() { if (cart.length === 0) return; cart = []; saveCart(); updateCart(); showToast('🗑 Корзина очищена'); }
-    function updateCart() { const count = document.getElementById('cartCount'), items = document.getElementById('cartItems'), total = document.getElementById('cartTotal'); count.textContent = cart.length; cart.length > 0 ? count.classList.add('active') : count.classList.remove('active'); if (cart.length === 0) { items.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; total.textContent = 'Итого: 0 ₽'; } else { items.innerHTML = cart.map(i => { const si = i.size ? ` (${i.size})` : '', ci = i.color ? ` [${i.color}]` : ''; return `<div class="cart-item"><span>${i.name}${ci}${si}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size||''}')">✕</span></span></div>`; }).join(''); total.textContent = `Итого: ${cart.reduce((s,i) => s + i.price, 0).toLocaleString()} ₽`; } }
+    function updateCart() { const count = document.getElementById('cartCount'), items = document.getElementById('cartItems'), total = document.getElementById('cartTotal'); count.textContent = cart.length; cart.length > 0 ? count.classList.add('active') : count.classList.remove('active'); if (cart.length === 0) { items.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; total.textContent = 'Итого: 0 ₽'; } else { items.innerHTML = cart.map(i => { const si = i.size ? ` (${i.size})` : '', ci = i.color ? ` [${i.color}]` : ''; return `<div class="cart-item"><span>${i.name}${ci}${si}</span><span>${i.price.toLocaleString()} ₽ <span class="remove" onclick="removeFromCart('${i.id}','${i.size||''}')">✕</span></span></div>`; }).join(''); const sum = cart.reduce((s,i) => s + i.price, 0) + deliveryCost; total.textContent = `Итого: ${sum.toLocaleString()} ₽`; if (deliveryCost > 0) total.innerHTML += ` <span style="color:#888; font-size:11px;">(вкл. доставку ${deliveryCost} ₽)</span>`; } }
     function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); document.getElementById('cartOverlay').classList.toggle('open'); }
     function copyToClipboard(text) { if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text); const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(); }
     function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
-    function checkoutTG() { if (cart.length === 0) { alert('Корзина пуста!'); return; } const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color?' ['+i.color+']':''}${i.size?' ('+i.size+')':''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s,i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`; window.open(`https://t.me/Yupi13?text=${encodeURIComponent(msg)}`, '_blank'); }
-    function checkoutVK() { if (cart.length === 0) { alert('Корзина пуста!'); return; } const msg = `🦍 НОВЫЙ ЗАКАЗ:\n\n${cart.map(i => `• ${i.name}${i.color?' ['+i.color+']':''}${i.size?' ('+i.size+')':''} — ${i.price} ₽`).join('\n')}\n\n💰 Итого: ${cart.reduce((s,i) => s + i.price, 0).toLocaleString()} ₽\n\n📞 Прошу связаться для оформления!`; copyToClipboard(msg).then(() => { showToast('✅ Текст заказа скопирован! Вставьте в чат ВК'); window.open('https://vk.me/gorillaomsk', '_blank'); }).catch(() => { showToast('Не удалось скопировать. Откройте ВК и вставьте текст вручную'); window.open('https://vk.me/gorillaomsk', '_blank'); }); }
+    
+    function checkout() {
+        if (cart.length === 0) { alert('Корзина пуста!'); return; }
+        const name = document.getElementById('customerName').value || 'Не указано';
+        const phone = document.getElementById('customerPhone').value || 'Не указан';
+        const city = document.getElementById('customerCity').value || 'Не указан';
+        const index = document.getElementById('customerIndex').value || 'Не указан';
+        const address = document.getElementById('customerAddress').value || 'Не указан';
+        const note = document.getElementById('customerNote').value || 'Нет';
+        const delivery = document.querySelector('input[name="delivery"]:checked');
+        const deliveryText = delivery ? delivery.parentElement.textContent.trim() : 'Не выбрана';
+        const total = cart.reduce((s, i) => s + i.price, 0) + deliveryCost;
+        const orderId = 'GOR-' + Date.now().toString().slice(-6);
+        
+        const msg = `🦍 НОВЫЙ ЗАКАЗ №${orderId}:\n\n${cart.map(i => `• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽`).join('\n')}\n\n🚚 Доставка: ${deliveryText}\n\n👤 Клиент: ${name}\n📞 Телефон: ${phone}\n📍 Город: ${city}\n📮 Индекс: ${index}\n🏠 Адрес: ${address}\n📝 Примечание: ${note}\n\n💰 Итого: ${total.toLocaleString()} ₽`;
+        
+        // Открываем Telegram
+        window.open(`https://t.me/Yupi13?text=${encodeURIComponent(msg)}`, '_blank');
+        
+        // Копируем в буфер и открываем ВК
+        copyToClipboard(msg).then(() => {
+            showToast('✅ Заказ оформлен! Отправляем в Telegram и ВК...');
+            setTimeout(() => { window.open('https://vk.me/gorillaomsk', '_blank'); }, 300);
+        }).catch(() => {
+            window.open('https://vk.me/gorillaomsk', '_blank');
+        });
+        
+        // Очищаем корзину
+        cart = [];
+        saveCart();
+        updateCart();
+    }
+    
     loadProducts();
 </script>
 
