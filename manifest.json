@@ -1,0 +1,13 @@
+{
+    "name": "GORILLA STREETWEAR",
+    "short_name": "GORILLA",
+    "icons": [{
+        "src": "GGVP.jpg",
+        "sizes": "512x512",
+        "type": "image/jpeg"
+    }],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#0a0a0a"
+}
