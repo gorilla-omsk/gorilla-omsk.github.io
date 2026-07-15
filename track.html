@@ -4,109 +4,232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GORILLA — Мои заказы</title>
+    <link rel="icon" type="image/jpeg" href="GGVP.jpg">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Russo+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #d0d0d0; padding: 30px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-        .track-container { background: #111; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 30px; max-width: 500px; width: 100%; }
-        h1 { font-family: 'Russo One', sans-serif; color: #fff; text-align: center; margin-bottom: 20px; font-size: 24px; letter-spacing: 2px; }
-        input { width: 100%; padding: 12px; margin-bottom: 12px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; font-size: 14px; }
-        input::placeholder { color: #555; }
-        .btn { width: 100%; padding: 14px; background: #ff3333; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; letter-spacing: 1px; transition: all 0.3s; font-family: 'Russo One', sans-serif; }
-        .btn:hover { background: #cc0000; }
-        .order-result { margin-top: 20px; background: #0c0c0c; border-radius: 8px; padding: 20px; display: none; }
-        .order-result h3 { color: #fff; margin-bottom: 10px; }
-        .order-result p { font-size: 13px; color: #aaa; margin: 4px 0; }
-        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1px; }
-        .status-new { background: #0077ff; color: #fff; }
-        .status-process { background: #ff9933; color: #fff; }
-        .status-sent { background: #4caf50; color: #fff; }
-        .status-done { background: #888; color: #fff; }
-        .status-cancel { background: #ff3333; color: #fff; }
-        .error { color: #ff3333; text-align: center; margin-top: 10px; font-size: 13px; display: none; }
-        .back-link { text-align: center; margin-top: 15px; }
-        .back-link a { color: #666; font-size: 12px; text-decoration: none; }
-        .back-link a:hover { color: #fff; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #d0d0d0; min-height: 100vh; padding: 20px; }
+        h1, h2, h3, button, .btn { font-family: 'Russo One', sans-serif; letter-spacing: 1px; }
+
+        .container { max-width: 700px; margin: 0 auto; }
+        
+        .logo { text-align: center; margin-bottom: 40px; }
+        .logo h1 { color: #fff; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; }
+        .logo span { color: #999; font-size: 10px; letter-spacing: 5px; display: block; }
+
+        .search-box {
+            background: #0c0c0c; border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 30px; margin-bottom: 30px; text-align: center;
+        }
+        .search-box h2 { color: #fff; font-size: 18px; margin-bottom: 8px; }
+        .search-box p { color: #888; font-size: 12px; letter-spacing: 2px; margin-bottom: 20px; }
+        .search-box input {
+            width: 100%; max-width: 320px; padding: 14px 20px;
+            background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; color: #fff; font-size: 14px; text-align: center;
+            margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto;
+            font-family: 'Inter', sans-serif;
+        }
+        .search-box input::placeholder { color: #666; }
+        .search-box button {
+            padding: 14px 40px; background: #fff; color: #0a0a0a; border: none;
+            border-radius: 100px; cursor: pointer; font-size: 13px; text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .search-box button:hover { background: #ccc; transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+
+        .order-card {
+            background: #0c0c0c; border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px; padding: 20px; margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+        .order-card:hover { background: #121212; }
+        .order-header {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+        }
+        .order-id { color: #fff; font-weight: 700; font-size: 16px; }
+        .order-date { color: #888; font-size: 12px; }
+        .order-status {
+            padding: 5px 14px; border-radius: 100px; font-size: 11px;
+            font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .status-new { background: rgba(0,119,255,0.15); color: #0077ff; }
+        .status-processing { background: rgba(255,153,51,0.15); color: #ff9933; }
+        .status-shipped { background: rgba(76,175,80,0.15); color: #4caf50; }
+        .status-delivered { background: rgba(156,39,176,0.15); color: #9c27b0; }
+        .status-cancelled { background: rgba(255,51,51,0.15); color: #ff3333; }
+
+        .order-body p { font-size: 13px; margin: 4px 0; color: #aaa; }
+        .order-body strong { color: #ccc; }
+        .items-list { margin: 8px 0; padding-left: 18px; }
+        .items-list li { font-size: 13px; color: #bbb; margin: 3px 0; }
+
+        .timeline {
+            display: flex; justify-content: space-between; margin-top: 15px;
+            padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .timeline-step { text-align: center; flex: 1; }
+        .timeline-step .dot {
+            width: 12px; height: 12px; border-radius: 50%; margin: 0 auto 6px;
+            background: rgba(255,255,255,0.1);
+        }
+        .timeline-step .dot.active { background: #4caf50; box-shadow: 0 0 8px rgba(76,175,80,0.6); }
+        .timeline-step .dot.current { background: #0077ff; box-shadow: 0 0 8px rgba(0,119,255,0.6); }
+        .timeline-step .step-label { font-size: 9px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+        .timeline-step .dot.active + .step-label,
+        .timeline-step .dot.current + .step-label { color: #fff; }
+
+        .empty { text-align: center; padding: 40px; color: #888; font-size: 13px; letter-spacing: 2px; }
+        .error { text-align: center; color: #ff3333; font-size: 13px; margin-top: 10px; }
+        .back-link {
+            display: block; text-align: center; margin-top: 30px; color: #aaa;
+            text-decoration: none; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #fff; }
+
+        @media (max-width: 768px) {
+            .order-header { flex-direction: column; align-items: flex-start; }
+            .timeline { flex-wrap: wrap; gap: 8px; }
+            .timeline-step { flex: 0 0 45%; }
+        }
     </style>
 </head>
 <body>
-    <div class="track-container">
-        <h1>📦 Мои заказы</h1>
-        <p style="color: #666; text-align: center; margin-bottom: 20px; font-size: 13px;">Введите номер заказа и телефон для отслеживания</p>
-        
-        <input type="text" id="orderId" placeholder="Номер заказа (GOR-XXXXXX)">
-        <input type="tel" id="orderPhone" placeholder="Телефон, указанный при заказе">
-        <button class="btn" onclick="trackOrder()">🔍 Найти заказ</button>
-        
-        <div class="error" id="error">Заказ не найден. Проверьте номер и телефон.</div>
-        
-        <div class="order-result" id="orderResult">
-            <h3 id="resultTitle"></h3>
-            <p id="resultStatus"></p>
-            <p id="resultDelivery"></p>
-            <div id="resultItems"></div>
-            <p style="margin-top: 10px; font-weight: 700; color: #fff;" id="resultTotal"></p>
-            <p style="color: #4caf50; margin-top: 8px;" id="resultTrack"></p>
-        </div>
-        
-        <div class="back-link"><a href="/">← Вернуться в магазин</a></div>
+
+<div class="container">
+    <div class="logo">
+        <h1>🦍 GORILLA</h1>
+        <span>Мои заказы</span>
     </div>
 
-    <script>
-        function trackOrder() {
-            const id = document.getElementById('orderId').value.trim();
-            const phone = document.getElementById('orderPhone').value.trim();
-            const errorDiv = document.getElementById('error');
-            const resultDiv = document.getElementById('orderResult');
-            
-            errorDiv.style.display = 'none';
-            resultDiv.style.display = 'none';
-            
-            if (!id || !phone) {
-                errorDiv.textContent = 'Введите номер заказа и телефон';
-                errorDiv.style.display = 'block';
-                return;
-            }
-            
-            // Нормализуем телефон (оставляем только цифры)
-            const normalizedPhone = phone.replace(/\D/g, '');
-            
-            const orders = JSON.parse(localStorage.getItem('gorillaOrders')) || [];
-            const order = orders.find(o => o.id === id && o.customer.phone.replace(/\D/g, '') === normalizedPhone);
-            
-            if (!order) {
-                errorDiv.style.display = 'block';
-                return;
-            }
-            
-            // Показываем заказ
-            const statusMap = {
-                'Новый': 'status-new',
-                'Обрабатывается': 'status-process',
-                'Отправлен': 'status-sent',
-                'Доставлен': 'status-done',
-                'Отменён': 'status-cancel'
-            };
-            
-            document.getElementById('resultTitle').textContent = `Заказ №${order.id} (${order.date})`;
-            document.getElementById('resultStatus').innerHTML = `Статус: <span class="status-badge ${statusMap[order.status || 'Новый']}">${order.status || 'Новый'}</span>`;
-            document.getElementById('resultDelivery').textContent = `Доставка: ${order.delivery}`;
-            document.getElementById('resultItems').innerHTML = order.items.map(i => `<p>• ${i.name}${i.color ? ' ['+i.color+']' : ''}${i.size ? ' ('+i.size+')' : ''} — ${i.price} ₽</p>`).join('');
-            document.getElementById('resultTotal').textContent = `💰 Итого: ${order.total.toLocaleString()} ₽`;
-            
-            if (order.trackNumber) {
-                document.getElementById('resultTrack').textContent = `📮 Трек-номер: ${order.trackNumber}`;
-            } else {
-                document.getElementById('resultTrack').textContent = '';
-            }
-            
-            resultDiv.style.display = 'block';
+    <div class="search-box">
+        <h2>📦 Отследить заказ</h2>
+        <p>Введите номер заказа и телефон</p>
+        <input type="text" id="orderIdInput" placeholder="Номер заказа (GOR-XXXXXX)" onkeydown="if(event.key==='Enter')trackOrder()">
+        <input type="tel" id="phoneInput" placeholder="Телефон, указанный при заказе" onkeydown="if(event.key==='Enter')trackOrder()">
+        <button onclick="trackOrder()">🔍 Найти</button>
+        <p class="error" id="trackError"></p>
+    </div>
+
+    <div id="resultsContainer"></div>
+
+    <a href="/" class="back-link">← Вернуться в магазин</a>
+</div>
+
+<script>
+(function() {
+    function safeGetItem(key, fallback = []) {
+        try {
+            const v = localStorage.getItem(key);
+            return v ? JSON.parse(v) : fallback;
+        } catch(e) { return fallback; }
+    }
+
+    function getStatusClass(status) {
+        switch(status) {
+            case 'Новый': return 'status-new';
+            case 'Обрабатывается': return 'status-processing';
+            case 'Отправлен': return 'status-shipped';
+            case 'Доставлен': return 'status-delivered';
+            case 'Отменён': return 'status-cancelled';
+            default: return 'status-new';
         }
+    }
+
+    function getTimelineSteps(status) {
+        const steps = ['Новый', 'Обрабатывается', 'Отправлен', 'Доставлен'];
+        const currentIndex = steps.indexOf(status);
         
-        // Проверка по Enter
-        document.getElementById('orderPhone').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') trackOrder();
+        return steps.map((step, index) => {
+            let dotClass = '';
+            if (status === 'Отменён') {
+                dotClass = step === 'Новый' ? 'current' : '';
+            } else if (index < currentIndex) {
+                dotClass = 'active';
+            } else if (index === currentIndex) {
+                dotClass = 'current';
+            }
+            return { step, dotClass };
         });
-    </script>
+    }
+
+    window.trackOrder = function() {
+        const orderId = document.getElementById('orderIdInput').value.trim().toUpperCase();
+        const phone = document.getElementById('phoneInput').value.trim();
+        const error = document.getElementById('trackError');
+        const container = document.getElementById('resultsContainer');
+        
+        error.textContent = '';
+        container.innerHTML = '';
+
+        if (!orderId) {
+            error.textContent = 'Введите номер заказа';
+            return;
+        }
+        if (!phone) {
+            error.textContent = 'Введите номер телефона';
+            return;
+        }
+
+        // Нормализуем телефон: оставляем только цифры
+        const phoneDigits = phone.replace(/\D/g, '');
+        if (phoneDigits.length < 10) {
+            error.textContent = 'Введите корректный номер телефона (минимум 10 цифр)';
+            return;
+        }
+
+        const orders = safeGetItem('gorillaOrders', []);
+        
+        // Ищем заказы по номеру телефона
+        const foundOrders = orders.filter(o => {
+            const orderPhone = (o.customer?.phone || '').replace(/\D/g, '');
+            // Ищем по номеру заказа ИЛИ по последним 10 цифрам телефона
+            const matchId = o.id.toUpperCase() === orderId;
+            const matchPhone = orderPhone.includes(phoneDigits) || phoneDigits.includes(orderPhone.slice(-10));
+            return matchId || matchPhone;
+        });
+
+        if (!foundOrders.length) {
+            container.innerHTML = '<div class="empty">🔍 Заказы не найдены. Проверьте номер заказа и телефон.</div>';
+            return;
+        }
+
+        container.innerHTML = foundOrders.map(order => {
+            const timeline = getTimelineSteps(order.status);
+            
+            return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#${order.id}</span>
+                        <span class="order-date">${order.date}</span>
+                        <span class="order-status ${getStatusClass(order.status)}">${order.status}</span>
+                    </div>
+                    <div class="order-body">
+                        <p><strong>Клиент:</strong> ${order.customer?.name || '—'}</p>
+                        ${order.customer?.city ? `<p><strong>Город:</strong> ${order.customer.city}</p>` : ''}
+                        <p><strong>Доставка:</strong> ${order.delivery || '—'}</p>
+                        <p><strong>Товары:</strong></p>
+                        <ul class="items-list">
+                            ${(order.items || []).map(i => `<li>${i.name}${i.size ? ' (' + i.size + ')' : ''} — ${i.price?.toLocaleString() || 0} ₽</li>`).join('')}
+                        </ul>
+                        <p><strong>💰 Итого:</strong> <span style="color:#fff;font-weight:700;">${order.total?.toLocaleString() || 0} ₽</span></p>
+                    </div>
+                    ${order.status !== 'Отменён' ? `
+                        <div class="timeline">
+                            ${timeline.map(t => `
+                                <div class="timeline-step">
+                                    <div class="dot ${t.dotClass}"></div>
+                                    <div class="step-label">${t.step}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : '<p style="color:#ff3333;font-size:12px;margin-top:10px;">🚫 Заказ отменён</p>'}
+                </div>`;
+        }).join('');
+    };
+})();
+</script>
 </body>
 </html>
