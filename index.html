@@ -61,10 +61,200 @@
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; } .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; } .delivery-card:hover { background: #121212; transform: translateY(-3px); } .delivery-card .icon { font-size: 34px; margin-bottom: 22px; opacity: 0.5; } .delivery-card h3 { font-size: 14px; font-weight: 400; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; color: #fff; } .delivery-card p { color: #999; font-size: 12px; line-height: 1.8; }
         .contact-block { max-width: 500px; margin: 0 auto; text-align: center; } .contact-block h3 { font-size: 22px; font-weight: 400; margin-bottom: 35px; color: #fff; text-transform: uppercase; } .contact-block p { font-size: 14px; margin: 10px 0; color: #aaa; } .contact-schedule { display: inline-block; padding: 12px 30px; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; font-size: 13px; color: #ccc; margin: 20px 0 35px; } .contact-address { font-size: 15px; color: #fff; margin: 35px 0; padding: 28px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; } .contact-requisites { font-size: 12px; color: #999; margin-top: 15px; line-height: 1.6; }
         .social-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; } .btn-social { display: inline-block; padding: 14px 35px; font-weight: 600; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; font-family: 'Russo One', sans-serif; } .btn-vk { background: #0077ff; color: #fff; } .btn-vk:hover { background: #0066dd; } .btn-tg { background: #2b9ef1; color: #fff; } .btn-tg:hover { background: #2390dd; }
-        .cart-panel { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #1a1a1a; border-radius: 20px 20px 0 0; padding: 25px; z-index: 999; transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2); border: 1px solid rgba(255,255,255,0.1); border-bottom: none; } .cart-panel.open { bottom: 0; } .cart-panel h3 { font-size: 16px; font-weight: 400; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; } .cart-items { max-height: 200px; overflow-y: auto; margin-bottom: 15px; } .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; } .cart-item:hover { background: rgba(255,255,255,0.02); } .cart-item .remove { color: #ff3333; cursor: pointer; font-size: 16px; padding: 5px; } .cart-total { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 15px; text-align: right; } .cart-empty { color: #888; text-align: center; padding: 20px; font-size: 13px; } .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; } .cart-overlay.open { display: block; }
-        .delivery-form input { width: 100%; padding: 10px; margin-bottom: 8px; background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-size: 13px; } .delivery-form input::placeholder { color: #666; }
-        .delivery-selector label { display: block; padding: 8px; margin-bottom: 5px; cursor: pointer; color: #ccc; font-size: 13px; } .delivery-selector input { margin-right: 8px; }
-        #clearCartBtn { display: flex !important; align-items: center !important; justify-content: center !important; width: 100% !important; padding: 14px 0 !important; margin-top: 8px !important; background: transparent !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.3) !important; font-family: 'Russo One', sans-serif !important; font-size: 12px !important; letter-spacing: 2px !important; text-transform: uppercase !important; cursor: pointer !important; position: relative !important; z-index: 30 !important; pointer-events: auto !important; user-select: none !important; border-radius: 100px !important; transition: all 0.3s !important; min-height: 50px !important; } #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; } #clearCartBtn:active { transform: scale(0.96) !important; }
+
+        /* ===== ИСПРАВЛЕНИЕ КОРЗИНЫ ===== */
+        .cart-overlay { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.6); 
+            z-index: 998; 
+            display: none; 
+        }
+        .cart-overlay.open { display: block; }
+
+        .cart-panel { 
+            position: fixed; 
+            bottom: -100%; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 100%; 
+            max-width: 500px; 
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #1a1a1a; 
+            border-radius: 20px 20px 0 0; 
+            padding: 25px; 
+            z-index: 999; 
+            transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-bottom: none;
+            /* Гарантируем, что кнопки внутри панели кликабельны */
+            pointer-events: auto;
+        }
+        .cart-panel.open { bottom: 0; }
+        
+        /* Заголовок с кнопкой закрытия */
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .cart-header h3 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+        .cart-close-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10;
+            pointer-events: auto;
+        }
+        .cart-close-btn:hover { background: rgba(255,255,255,0.2); }
+        .cart-close-btn:active { transform: scale(0.9); }
+
+        .cart-items { 
+            max-height: 200px; 
+            overflow-y: auto; 
+            margin-bottom: 15px; 
+            pointer-events: auto;
+        }
+        .cart-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            font-size: 13px; 
+            pointer-events: auto;
+        }
+        .cart-item:hover { background: rgba(255,255,255,0.02); } 
+        .cart-item .remove { 
+            color: #ff3333; 
+            cursor: pointer; 
+            font-size: 16px; 
+            padding: 5px; 
+            z-index: 10;
+            pointer-events: auto;
+        }
+        .cart-total { 
+            font-size: 18px; 
+            font-weight: 700; 
+            color: #fff; 
+            margin-bottom: 15px; 
+            text-align: right; 
+        }
+        .cart-empty { 
+            color: #888; 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 13px; 
+        }
+
+        .delivery-form input { 
+            width: 100%; 
+            padding: 10px; 
+            margin-bottom: 8px; 
+            background: #0c0c0c; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 8px; 
+            color: #fff; 
+            font-size: 13px; 
+            pointer-events: auto;
+            position: relative;
+            z-index: 10;
+        }
+        .delivery-form input::placeholder { color: #666; }
+        
+        .delivery-selector label { 
+            display: block; 
+            padding: 8px; 
+            margin-bottom: 5px; 
+            cursor: pointer; 
+            color: #ccc; 
+            font-size: 13px; 
+            pointer-events: auto;
+        }
+        .delivery-selector input { 
+            margin-right: 8px; 
+            pointer-events: auto;
+        }
+
+        /* Кнопки в корзине — гарантированная кликабельность */
+        #btnPlaceOrder {
+            width: 100% !important;
+            padding: 16px !important;
+            font-size: 13px !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            position: relative !important;
+            z-index: 100 !important;
+            display: block !important;
+            border: none !important;
+            border-radius: 100px !important;
+            touch-action: manipulation !important;
+        }
+        #btnPay {
+            width: 100% !important;
+            margin-top: 8px !important;
+            padding: 16px !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            position: relative !important;
+            z-index: 100 !important;
+            display: block !important;
+            border-radius: 100px !important;
+            touch-action: manipulation !important;
+        }
+        #clearCartBtn { 
+            display: flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            width: 100% !important; 
+            padding: 14px 0 !important; 
+            margin-top: 8px !important; 
+            background: transparent !important; 
+            color: #fff !important; 
+            border: 1px solid rgba(255,255,255,0.3) !important; 
+            font-family: 'Russo One', sans-serif !important; 
+            font-size: 12px !important; 
+            letter-spacing: 2px !important; 
+            text-transform: uppercase !important; 
+            cursor: pointer !important; 
+            position: relative !important; 
+            z-index: 100 !important; 
+            pointer-events: auto !important; 
+            user-select: none !important; 
+            border-radius: 100px !important; 
+            transition: all 0.3s !important; 
+            min-height: 50px !important; 
+            touch-action: manipulation !important;
+        }
+        #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; } 
+        #clearCartBtn:active { transform: scale(0.96) !important; }
+
+        /* Фикс для мобильных — кнопки не перекрываются */
+        .delivery-form, .delivery-selector {
+            pointer-events: auto;
+            position: relative;
+            z-index: 10;
+        }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s; } .modal-overlay.active { opacity: 1; visibility: visible; } .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; } .modal-overlay.active .modal { transform: scale(1); } .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; z-index: 5; } .modal-title { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 5px; } .modal-price { font-size: 18px; color: #ccc; margin-bottom: 15px; } .modal-color { font-size: 14px; color: #aaa; margin-bottom: 15px; } .size-selector { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; } .size-btn { padding: 8px 16px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.2s; touch-action: manipulation; } .size-btn:hover, .size-btn.selected { background: #fff; color: #0a0a0a; border-color: #fff; } .modal-description { color: #aaa; font-size: 13px; line-height: 1.6; margin-bottom: 20px; } .modal-stock { font-size: 12px; color: #888; margin-bottom: 15px; } .modal-favorite { font-size: 20px; cursor: pointer; text-align: right; margin-bottom: 10px; color: #888; } .modal-favorite.active { color: #ff3333; } .modal-add-btn { width: 100%; padding: 16px; background: #fff; color: #0a0a0a; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; transition: all 0.3s; font-family: 'Russo One', sans-serif; margin-bottom: 12px; touch-action: manipulation; } .modal-add-btn:hover { background: #ccc; box-shadow: 0 0 15px rgba(255,255,255,0.4); } .modal-add-btn:disabled { background: #333; color: #666; } .modal-cart-btn { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); color: #fff; border: 2px solid rgba(255,255,255,0.4); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; cursor: pointer; border-radius: 100px; font-family: 'Russo One', sans-serif; transition: all 0.3s; position: relative; z-index: 10; touch-action: manipulation; } .modal-cart-btn:hover { background: #fff; color: #0a0a0a; border-color: #fff; } .modal-cart-btn:active { background: #ccc; transform: scale(0.96); }
         .order-success-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s; } .order-success-overlay.active { opacity: 1; visibility: visible; } .order-success { background: #111; max-width: 450px; width: 90%; border-radius: 16px; padding: 30px; text-align: center; border: 1px solid rgba(255,255,255,0.1); } .order-success .success-icon { font-size: 50px; margin-bottom: 15px; } .order-success h2 { color: #4caf50; font-size: 22px; margin-bottom: 10px; font-family: 'Russo One', sans-serif; } .order-success .order-id { color: #fff; font-size: 28px; font-weight: 700; margin-bottom: 15px; } .order-success .order-info { color: #aaa; font-size: 13px; margin: 6px 0; text-align: left; padding: 10px; background: #0c0c0c; border-radius: 8px; } .btn-track { display: inline-block; margin-top: 20px; padding: 14px 30px; background: #4caf50; color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 13px; letter-spacing: 1px; transition: all 0.3s; } .btn-track:hover { background: #388e3c; transform: translateY(-2px); } .btn-close { display: block; width: 100%; margin-top: 10px; padding: 12px; background: transparent; color: #aaa; border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; font-size: 12px; transition: all 0.3s; } .btn-close:hover { color: #fff; border-color: #fff; }
         footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); } footer p { color: #666; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; } .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; } .scroll-top:hover { opacity: 1; transform: translateY(-3px); } .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #0a0a0a; padding: 12px 28px; border-radius: 100px; font-size: 13px; font-weight: 600; z-index: 3000; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 20px rgba(255,255,255,0.3); } .toast.show { opacity: 1; bottom: 40px; }
@@ -257,7 +447,11 @@
 
 <div class="cart-overlay" id="cartOverlay"></div>
 <div class="cart-panel" id="cartPanel">
-    <h3>🛒 Корзина</h3>
+    <!-- Заголовок с кнопкой закрытия -->
+    <div class="cart-header">
+        <h3>🛒 Корзина</h3>
+        <button class="cart-close-btn" id="cartCloseBtn">✕</button>
+    </div>
     <div class="cart-items" id="cartItems">
         <div class="cart-empty">Корзина пуста</div>
     </div>
@@ -369,6 +563,7 @@
         cartPanel: document.getElementById('cartPanel'),
         cartOverlay: document.getElementById('cartOverlay'),
         cartIcon: document.getElementById('cartIcon'),
+        cartCloseBtn: document.getElementById('cartCloseBtn'),
         cartCount: document.getElementById('cartCount'),
         cartItems: document.getElementById('cartItems'),
         cartTotal: document.getElementById('cartTotal'),
@@ -597,7 +792,6 @@
         
         const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase());
         
-        // Нормализация заголовков
         const colorIndex = headers.indexOf('colors') !== -1 ? headers.indexOf('colors') : headers.indexOf('color');
         if (colorIndex !== -1) headers[colorIndex] = 'color';
         
@@ -675,7 +869,6 @@
         }
         saveFavorites();
         
-        // Обновляем кнопки в каталоге
         document.querySelectorAll('.favorite-btn').forEach(btn => {
             if (btn.getAttribute('data-id') === id) {
                 const isFav = favorites.includes(id);
@@ -684,7 +877,6 @@
             }
         });
         
-        // Обновляем в модалке
         if (currentModalProduct && currentModalProduct.id === id) {
             updateModalFavorite();
         }
@@ -814,7 +1006,6 @@
         
         dom.sizeFilterContent.innerHTML = html;
         
-        // Добавляем обработчики через делегирование
         dom.sizeFilterContent.querySelectorAll('.size-filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const size = btn.getAttribute('data-size');
@@ -853,7 +1044,6 @@
         
         dom.categoriesMenu.innerHTML = html;
         
-        // Делегирование
         dom.categoriesMenu.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const catId = btn.getAttribute('data-category');
@@ -978,7 +1168,6 @@
         
         updateModalFavorite();
         
-        // Размеры
         dom.modalSizes.innerHTML = '';
         if (product.sizes && product.sizes.length) {
             product.sizes.forEach(size => {
@@ -996,7 +1185,6 @@
             dom.modalSizes.innerHTML = '<span style="color:#888;">Без размеров</span>';
         }
         
-        // Кнопка "Добавить"
         if (product.stock === 0) {
             dom.modalAddBtn.disabled = true;
             dom.modalAddBtn.textContent = 'Нет в наличии';
@@ -1008,7 +1196,6 @@
         
         dom.modalOverlay.classList.add('active');
         
-        // Привязываем обработчики галереи
         setTimeout(() => {
             const prevBtn = dom.modalBox.querySelector('.modal-gallery-prev');
             const nextBtn = dom.modalBox.querySelector('.modal-gallery-next');
@@ -1135,10 +1322,8 @@
                 </div>`;
         }).join('');
         
-        // Привязываем обработчики
         dom.catalogGrid.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', (e) => {
-                // Не открываем модалку при клике на кнопки
                 if (e.target.closest('.favorite-btn') || e.target.closest('.btn-cart')) return;
                 const productId = card.getAttribute('data-product-id');
                 const product = products.find(p => p.id === productId);
@@ -1236,7 +1421,6 @@
                     ' <span style="color:#4caf50;font-size:11px;">(доставка бесплатно)</span>'
             }`;
             
-            // Привязываем кнопки удаления
             dom.cartItems.querySelectorAll('.remove').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = btn.getAttribute('data-id');
@@ -1250,6 +1434,12 @@
     function toggleCart() {
         dom.cartPanel.classList.toggle('open');
         dom.cartOverlay.classList.toggle('open');
+        // Блокируем скролл body когда корзина открыта
+        if (dom.cartPanel.classList.contains('open')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
     }
 
     function showToast(msg) {
@@ -1298,7 +1488,6 @@
             `5Post (${deliveryCost === 0 ? 'бесплатно' : '250 ₽'})`;
         const total = cart.reduce((sum, i) => sum + i.price, 0) + deliveryCost;
         
-        // Уникальный ID
         const orderId = 'GOR-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
         
         const order = {
@@ -1336,7 +1525,6 @@
         
         dom.orderSuccessOverlay.classList.add('active');
         
-        // Отправляем событие в Метрику
         if (typeof ym !== 'undefined') {
             ym(110754345, 'reachGoal', 'order');
             if (window.dataLayer) {
@@ -1360,7 +1548,6 @@
         updateCart();
         toggleCart();
         
-        // Очищаем поля
         dom.customerName.value = '';
         dom.customerPhone.value = '';
         dom.customerCity.value = '';
@@ -1374,16 +1561,19 @@
 
     // ============ ПРИВЯЗКА ОБРАБОТЧИКОВ ============
     function bindEvents() {
-        // Корзина
+        // Корзина — открытие/закрытие
         dom.cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
             toggleCart();
         });
         
         dom.cartOverlay.addEventListener('click', toggleCart);
-        dom.clearCartBtn.addEventListener('click', clearCart);
+        dom.cartCloseBtn.addEventListener('click', toggleCart);
+        
+        // Кнопки внутри корзины
         dom.btnPlaceOrder.addEventListener('click', placeOrder);
         dom.btnPay.addEventListener('click', payOrder);
+        dom.clearCartBtn.addEventListener('click', clearCart);
         
         // Доставка
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
@@ -1436,6 +1626,9 @@
                 closeLightbox();
                 if (dom.modalOverlay.classList.contains('active')) {
                     closeModal();
+                }
+                if (dom.cartPanel.classList.contains('open')) {
+                    toggleCart();
                 }
             }
         });
