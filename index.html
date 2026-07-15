@@ -62,7 +62,7 @@
         .contact-block { max-width: 500px; margin: 0 auto; text-align: center; } .contact-block h3 { font-size: 22px; font-weight: 400; margin-bottom: 35px; color: #fff; text-transform: uppercase; } .contact-block p { font-size: 14px; margin: 10px 0; color: #aaa; } .contact-schedule { display: inline-block; padding: 12px 30px; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; font-size: 13px; color: #ccc; margin: 20px 0 35px; } .contact-address { font-size: 15px; color: #fff; margin: 35px 0; padding: 28px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; } .contact-requisites { font-size: 12px; color: #999; margin-top: 15px; line-height: 1.6; }
         .social-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; } .btn-social { display: inline-block; padding: 14px 35px; font-weight: 600; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; font-family: 'Russo One', sans-serif; } .btn-vk { background: #0077ff; color: #fff; } .btn-vk:hover { background: #0066dd; } .btn-tg { background: #2b9ef1; color: #fff; } .btn-tg:hover { background: #2390dd; }
 
-        /* ===== ИСПРАВЛЕНИЕ КОРЗИНЫ ===== */
+        /* ===== КОРЗИНА ===== */
         .cart-overlay { 
             position: fixed; 
             top: 0; left: 0; 
@@ -89,12 +89,10 @@
             transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.2); 
             border: 1px solid rgba(255,255,255,0.1); 
             border-bottom: none;
-            /* Гарантируем, что кнопки внутри панели кликабельны */
             pointer-events: auto;
         }
         .cart-panel.open { bottom: 0; }
         
-        /* Заголовок с кнопкой закрытия */
         .cart-header {
             display: flex;
             justify-content: space-between;
@@ -195,7 +193,6 @@
             pointer-events: auto;
         }
 
-        /* Кнопки в корзине — гарантированная кликабельность */
         #btnPlaceOrder {
             width: 100% !important;
             padding: 16px !important;
@@ -248,7 +245,6 @@
         #clearCartBtn:hover { background: rgba(255,255,255,0.1) !important; border-color: #fff !important; } 
         #clearCartBtn:active { transform: scale(0.96) !important; }
 
-        /* Фикс для мобильных — кнопки не перекрываются */
         .delivery-form, .delivery-selector {
             pointer-events: auto;
             position: relative;
@@ -447,7 +443,6 @@
 
 <div class="cart-overlay" id="cartOverlay"></div>
 <div class="cart-panel" id="cartPanel">
-    <!-- Заголовок с кнопкой закрытия -->
     <div class="cart-header">
         <h3>🛒 Корзина</h3>
         <button class="cart-close-btn" id="cartCloseBtn">✕</button>
@@ -487,7 +482,7 @@
         <div class="order-id" id="successOrderId">GOR-XXXXXX</div>
         <div class="order-info" id="successOrderInfo"></div>
         <p style="color:#ff9933;font-size:12px;margin-top:10px;">⚠️ Оплата временно не подключена. Мы свяжемся с вами для подтверждения заказа.</p>
-        <a href="/track" class="btn-track">📦 Перейти в Мои заказы</a>
+        <a href="/track" class="btn-track" id="btnTrackLink">📦 Перейти в Мои заказы</a>
         <button class="btn-close" id="btnCloseSuccess">Закрыть</button>
     </div>
 </div>
@@ -593,6 +588,7 @@
         orderSuccessOverlay: document.getElementById('orderSuccessOverlay'),
         successOrderId: document.getElementById('successOrderId'),
         successOrderInfo: document.getElementById('successOrderInfo'),
+        btnTrackLink: document.getElementById('btnTrackLink'),
         btnCloseSuccess: document.getElementById('btnCloseSuccess'),
         lightbox: document.getElementById('lightbox'),
         lightboxImg: document.getElementById('lightboxImg'),
@@ -1434,7 +1430,6 @@
     function toggleCart() {
         dom.cartPanel.classList.toggle('open');
         dom.cartOverlay.classList.toggle('open');
-        // Блокируем скролл body когда корзина открыта
         if (dom.cartPanel.classList.contains('open')) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -1510,6 +1505,13 @@
         orders.push(order);
         safeSetItem('gorillaOrders', orders);
         
+        // Сохраняем последний заказ для быстрого доступа
+        safeSetItem('gorillaLastOrder', {
+            id: orderId,
+            phone: phone,
+            date: order.date
+        });
+        
         dom.successOrderId.textContent = orderId;
         dom.successOrderInfo.innerHTML = `
             <p><strong>Статус:</strong> <span style="color:#0077ff;">Новый</span></p>
@@ -1521,7 +1523,11 @@
             ${city ? `<p><strong>Адрес:</strong> ${city}, ${address}</p>` : ''}
             <p style="margin-top:8px;font-size:16px;"><strong>💰 Итого: ${total.toLocaleString()} ₽</strong></p>
             <p style="margin-top:8px;color:#888;font-size:11px;">Номер заказа: ${orderId}</p>
+            <p style="margin-top:8px;color:#4caf50;font-size:11px;">💡 Номер сохранён — отслеживайте без повторного ввода</p>
         `;
+        
+        // Обновляем ссылку на отслеживание с параметрами
+        dom.btnTrackLink.href = `/track?order=${orderId}&phone=${encodeURIComponent(phone)}`;
         
         dom.orderSuccessOverlay.classList.add('active');
         
@@ -1561,7 +1567,6 @@
 
     // ============ ПРИВЯЗКА ОБРАБОТЧИКОВ ============
     function bindEvents() {
-        // Корзина — открытие/закрытие
         dom.cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
             toggleCart();
@@ -1570,57 +1575,46 @@
         dom.cartOverlay.addEventListener('click', toggleCart);
         dom.cartCloseBtn.addEventListener('click', toggleCart);
         
-        // Кнопки внутри корзины
         dom.btnPlaceOrder.addEventListener('click', placeOrder);
         dom.btnPay.addEventListener('click', payOrder);
         dom.clearCartBtn.addEventListener('click', clearCart);
         
-        // Доставка
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
             radio.addEventListener('change', updateDelivery);
         });
         
-        // Поиск
         dom.searchInput.addEventListener('input', searchCatalog);
         dom.clearSearchBtn.addEventListener('click', clearSearch);
         
-        // Сортировка
         dom.sortSelect.addEventListener('change', sortCatalog);
         
-        // Размеры
         dom.sizeFilterReset.addEventListener('click', clearSizeFilter);
         
-        // Модалка
         dom.modalClose.addEventListener('click', closeModal);
         dom.modalOverlay.addEventListener('click', closeModal);
         dom.modalAddBtn.addEventListener('click', addFromModal);
         dom.modalCartBtn.addEventListener('click', goToCartFromModal);
         dom.modalFavorite.addEventListener('click', toggleFavoriteFromModal);
         
-        // Лайтбокс
         dom.lightbox.addEventListener('click', closeLightbox);
         dom.lightboxClose.addEventListener('click', closeLightbox);
         dom.lightboxImg.addEventListener('click', (e) => e.stopPropagation());
         
-        // Окно успеха
         dom.btnCloseSuccess.addEventListener('click', () => {
             dom.orderSuccessOverlay.classList.remove('active');
         });
         
-        // Скролл вверх
         dom.scrollTop.addEventListener('click', (e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         
-        // Логотип
         if (dom.logoImg) {
             dom.logoImg.addEventListener('error', function() {
                 this.style.display = 'none';
             });
         }
         
-        // Закрытие по Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeLightbox();
