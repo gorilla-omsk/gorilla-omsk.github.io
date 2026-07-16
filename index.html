@@ -22,6 +22,7 @@
         *{margin:0;padding:0;box-sizing:border-box}
         html{scroll-behavior:smooth}
         body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#d0d0d0;overflow-x:hidden;line-height:1.5;-webkit-tap-highlight-color:transparent}
+        
         /* NOISE OVERLAY */
         body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;opacity:1}
 
@@ -36,8 +37,8 @@
         @keyframes loading{0%{width:0;margin-left:0}50%{width:60%;margin-left:20%}100%{width:0;margin-left:100%}}
         .preloader-tagline{color:#666;font-size:10px;letter-spacing:4px;text-transform:uppercase;margin-top:15px}
 
-        /* GLITCH & 3D TITLE */
-        #glitch-title{transition: transform 0.2s ease-out, text-shadow 0.2s ease-out; cursor: pointer; will-change: transform, text-shadow;}
+        /* 3D TITLE */
+        #glitch-title{transition:transform .2s ease-out,text-shadow .2s ease-out;cursor:pointer;will-change:transform,text-shadow}
         @keyframes glitch{0%{text-shadow:2px 0 red,-2px 0 blue;transform:translate(0)}20%{text-shadow:-2px 0 red,2px 0 blue;transform:translate(-2px,2px)}40%{text-shadow:2px 0 red,-2px 0 blue;transform:translate(2px,-2px)}60%{text-shadow:-2px 0 red,2px 0 blue;transform:translate(-2px,2px)}80%{text-shadow:2px 0 red,-2px 0 blue;transform:translate(2px,-2px)}100%{text-shadow:none;transform:translate(0)}}
         .glitch-active{animation:glitch .3s}
         #particles-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3}
@@ -122,7 +123,7 @@
         .card.revealed{opacity:1;transform:translateY(0)}
         .card:hover{background:#121212;border-color:rgba(255,255,255,.1);transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,.5)}
         .card.sold-out{opacity:.5;pointer-events:none}
-        .card::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.08) 45%,rgba(255,255,255,.25) 50%,rgba(255,255,255,.08) 55%,transparent 60%);filter:blur(8px);transform:translateX(-100%);transition:transform 0.8s ease;z-index:5;pointer-events:none}
+        .card::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.08) 45%,rgba(255,255,255,.25) 50%,rgba(255,255,255,.08) 55%,transparent 60%);filter:blur(8px);transform:translateX(-100%);transition:transform .8s;z-index:5;pointer-events:none}
         .card:hover::after{transform:translateX(100%)}
         .card-img{height:300px;display:flex;align-items:center;justify-content:center;position:relative;background:#080808;overflow:hidden}
         .card-img img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;transition:transform .3s;background:#080808}
@@ -150,8 +151,9 @@
         .btn-order-vk{border-color:rgba(0,119,255,.3)}
         .btn-order-vk:hover{background:#07f;border-color:#07f;box-shadow:0 0 15px rgba(0,119,255,.3)}
         .btn-order-tg{border-color:rgba(43,158,241,.3)}
-        .btn-order-tg:hover{background:#2b9ef1;border-color:#2b9ef1;box-shadow:0 0 15px rgba(43,158,241,.4)}
+        .btn-order-tg:hover{background:#2b9ef1;border-color:#2b9ef1;box-shadow:0 0 15px rgba(43,158,241,.3)}
         .no-products{text-align:center;padding:60px;color:#888;font-size:14px;letter-spacing:2px;width:100%}
+        
         /* SKELETON */
         .skeleton-card{height:420px;background:#0c0c0c;border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
         .skeleton-img{height:300px;background:linear-gradient(90deg,#1a1a1a 25%,#2a2a2a 50%,#1a1a1a 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
@@ -166,9 +168,9 @@
         .modal-overlay.active{opacity:1;visibility:visible}
         .modal{background:#111;max-width:500px;width:90%;border-radius:12px;padding:25px;position:relative;border:1px solid rgba(255,255,255,.1);max-height:90vh;overflow-y:auto;transform:scale(.9);transition:transform .3s}
         .modal-overlay.active .modal{transform:scale(1)}
-        .modal-close{position:absolute;top:15px;right:15px;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:24px;cursor:pointer;z-index:999999;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1;padding:0;backdrop-filter:blur(5px)}
-        .modal-close:hover{background:rgba(255,255,255,0.3);transform:scale(1.1)}
-        .modal-close:active{transform:scale(0.9)}
+        .modal-close{position:absolute;top:15px;right:15px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:24px;cursor:pointer;z-index:999999;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1;padding:0;backdrop-filter:blur(5px)}
+        .modal-close:hover{background:rgba(255,255,255,.3);transform:scale(1.1)}
+        .modal-close:active{transform:scale(.9)}
         .modal-title{font-size:22px;color:#fff;margin-bottom:5px;padding-right:50px}
         .modal-price{font-size:18px;color:#ccc;margin-bottom:15px}
         .modal-color{font-size:14px;color:#aaa;margin-bottom:15px}
@@ -226,12 +228,12 @@
         .toast.show{opacity:1;bottom:40px}
 
         /* MOBILE STICKY ORDER */
-        .mobile-sticky-order{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9997;background:#2b9ef1;color:#fff;padding:12px 25px;border-radius:50px;font-family:'Russo One',sans-serif;font-weight:600;text-transform:uppercase;text-decoration:none;letter-spacing:1px;box-shadow:0 0 20px rgba(43,158,241,.5);display:none;animation:pulse-tg 2s infinite}
-        .mobile-sticky-order:active{transform:translateX(-50%) scale(0.95)}
-        @keyframes pulse-tg{0%{box-shadow:0 0 0 0 rgba(43,158,241,0.7)}70%{box-shadow:0 0 0 15px rgba(43,158,241,0)}100%{box-shadow:0 0 0 0 rgba(43,158,241,0)}}
+        .mobile-sticky-order{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9997;background:#07f;color:#fff;padding:12px 25px;border-radius:50px;font-family:'Russo One',sans-serif;font-weight:600;text-transform:uppercase;text-decoration:none;letter-spacing:1px;box-shadow:0 0 20px rgba(0,119,255,.5);display:none;animation:pulse-btn 2s infinite}
+        .mobile-sticky-order:active{transform:translateX(-50%) scale(.95)}
+        @keyframes pulse-btn{0%{box-shadow:0 0 0 0 rgba(0,119,255,.7)}70%{box-shadow:0 0 0 15px rgba(0,119,255,0)}100%{box-shadow:0 0 0 0 rgba(0,119,255,0)}}
         .categories-scroll{display:none;overflow-x:auto;white-space:nowrap;padding:15px 5px;gap:8px;-ms-overflow-style:none;scrollbar-width:none;margin-bottom:10px}
         .categories-scroll::-webkit-scrollbar{display:none}
-        .categories-scroll .category-btn{display:inline-block;width:auto;border:1px solid rgba(255,255,255,0.2);border-radius:50px;margin-right:8px;padding:8px 16px;font-size:12px}
+        .categories-scroll .category-btn{display:inline-block;width:auto;border:1px solid rgba(255,255,255,.2);border-radius:50px;margin-right:8px;padding:8px 16px;font-size:12px}
 
         @media(max-width:768px){
             header{padding:15px 20px;flex-direction:column;gap:12px}
@@ -311,7 +313,6 @@
     <h2 class="section-title">Каталог</h2>
     <p class="section-subtitle">Понравился товар? Напиши нам в VK или Telegram</p>
 
-    <!-- Mobile Categories Scroll -->
     <div class="categories-scroll" id="categoriesScroll"></div>
 
     <div class="catalog-wrapper">
@@ -386,16 +387,14 @@
 
 <footer><p>© 2026 GORILLA STREETWEAR • OMSK</p></footer>
 <a href="#" class="scroll-top" id="scrollTop">↑</a>
-
-<!-- MOBILE STICKY ORDER BUTTON -->
-<a href="https://t.me/gorillaomsk" target="_blank" class="mobile-sticky-order">✈️ Заказать в Telegram</a>
+<a href="https://vk.com/gorillaomsk" target="_blank" class="mobile-sticky-order">📱 Заказать в VK</a>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modalBox">
         <button class="modal-close" id="modalClose">✕</button>
         <div id="modalGalleryContainer"></div>
-        <div class="modal-favorite" id="modalFavorite" style="position:absolute; top:20px; right:65px; font-size:24px; cursor:pointer; z-index:10; transition: transform 0.2s;">🤍</div>
+        <div class="modal-favorite" id="modalFavorite" style="position:absolute;top:20px;right:65px;font-size:24px;cursor:pointer;z-index:10;">🤍</div>
         <h2 class="modal-title" id="modalTitle"></h2>
         <p class="modal-price" id="modalPrice"></p>
         <p class="modal-color" id="modalColor"></p>
@@ -457,21 +456,9 @@ F=gSI('gorillaFavorites',[]);
 function uC(){const n=new Date();const m=new Date(n.getTime()+3*3600000);const o=new Date(n.getTime()+6*3600000);D.mTt.textContent=m.getUTCHours().toString().padStart(2,'0')+':'+m.getUTCMinutes().toString().padStart(2,'0');D.oT.textContent=o.getUTCHours().toString().padStart(2,'0')+':'+o.getUTCMinutes().toString().padStart(2,'0')}
 uC();cI=setInterval(uC,1000);
 
-// 3D TITLE MOVEMENT
-const hero = document.querySelector('.hero');
-if (hero && D.gT) {
-    hero.addEventListener('mousemove', (e) => {
-        const rect = hero.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) - 0.5;
-        const y = ((e.clientY - rect.top) / rect.height) - 0.5;
-        D.gT.style.transform = `translate(${x * 15}px, ${y * 15}px)`;
-        D.gT.style.textShadow = `${x * 20}px ${y * 20}px 0 rgba(255, 0, 0, 0.7), ${-x * 20}px ${-y * 20}px 0 rgba(0, 255, 255, 0.7)`;
-    });
-    hero.addEventListener('mouseleave', () => {
-        D.gT.style.transform = 'translate(0, 0)';
-        D.gT.style.textShadow = 'none';
-    });
-}
+// 3D TITLE
+const hero=document.querySelector('.hero');
+if(hero&&D.gT){hero.addEventListener('mousemove',function(e){const rect=hero.getBoundingClientRect();const x=((e.clientX-rect.left)/rect.width)-0.5;const y=((e.clientY-rect.top)/rect.height)-0.5;D.gT.style.transform='translate('+(x*15)+'px,'+(y*15)+'px)';D.gT.style.textShadow=x*20+'px '+y*20+'px 0 rgba(255,0,0,.7),'+(-x*20)+'px '+(-y*20)+'px 0 rgba(0,255,255,.7)'});hero.addEventListener('mouseleave',function(){D.gT.style.transform='translate(0,0)';D.gT.style.textShadow='none'})}
 
 // GLITCH
 function tG(){if(!D.gT)return;D.gT.classList.add('glitch-active');setTimeout(function(){D.gT.classList.remove('glitch-active')},300)}
@@ -488,15 +475,8 @@ window.addEventListener('scroll',function(){const s=window.pageYOffset||document
 // OBSERVER
 function oC(){document.querySelectorAll('.card:not(.revealed):not(.observed)').forEach(function(card){card.classList.add('observed');const o=new IntersectionObserver(function(e){if(e[0].isIntersecting){e[0].target.classList.add('revealed');o.unobserve(e[0].target)}},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});o.observe(card)})}
 
-// SKELETONS (адаптируются под мобилку)
-function rSkeletons(){
-    const count = window.innerWidth <= 768 ? 4 : 6;
-    let h='';
-    for(let i=0;i<count;i++){
-        h+='<div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>';
-    }
-    D.cG.innerHTML=h;
-}
+// SKELETONS (адаптивные)
+function rSkeletons(){const count=window.innerWidth<=768?4:6;let h='';for(let i=0;i<count;i++){h+='<div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>'}D.cG.innerHTML=h}
 
 // CSV PARSER
 function pL(line){const r=[];let c='',q=false;for(let ch of line){if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c=''}else c+=ch}r.push(c.trim());return r}
@@ -511,9 +491,9 @@ function iE(img,pid){const src=img.src;if(src.endsWith('.jpg'))img.src=IMAGES_PA
 
 // FAVORITES
 function sF(){sSI('gorillaFavorites',F)}
-function tF(id){if(F.includes(id))F=F.filter(function(f){return f!==id});else F.push(id);sF();document.querySelectorAll('.favorite-btn').forEach(function(btn){if(btn.getAttribute('data-id')===id){const isFav=F.includes(id);btn.innerHTML=isFav?'❤️':'🤍';btn.classList.toggle('active',isFav)}});if(cP&&cP.id===id)uMF();rC();rMobCats();rCat();}
+function tF(id){if(F.includes(id))F=F.filter(function(f){return f!==id});else F.push(id);sF();document.querySelectorAll('.favorite-btn').forEach(function(btn){if(btn.getAttribute('data-id')===id){const isFav=F.includes(id);btn.innerHTML=isFav?'❤️':'🤍';btn.classList.toggle('active',isFav)}});if(cP&&cP.id===id)uMF();rC();rMobCats();rCat()}
 function tFFM(){if(cP)tF(cP.id)}
-function uMF(){if(!cP)return;const isFav=F.includes(cP.id);D.mFv.textContent=isFav?'❤️':'🤍';D.mFv.classList.toggle('active',isFav)}
+function uMF(){if(!cP)return;const isFav=F.includes(cP.id);D.mFv.textContent=isFav?'❤️':'🤍';D.mFv.style.transform='scale(1.3)';setTimeout(function(){D.mFv.style.transform='scale(1)'},200)}
 
 // SIZE FILTER
 function gSFC(catId){const f=catId==='all'?P:P.filter(function(p){return p.category===catId});const s=new Set();f.forEach(function(p){if(p.sizes)p.sizes.forEach(function(x){s.add(x.trim())})});return Array.from(s)}
@@ -523,33 +503,9 @@ function sSF(size){aS=aS===size?null:size;rSF();rCat();setTimeout(oC,100)}
 function cSF(){aS=null;rSF();rCat();setTimeout(oC,100)}
 
 // CATEGORIES
-function rC(){
-    let h='<h4>Категории</h4>';
-    CATS.forEach(function(cat){
-        const count=cat.id==='all'?P.length:cat.id==='favorites'?F.length:P.filter(function(p){return p.category===cat.id}).length;
-        h+='<button class="category-btn'+(aC===cat.id?' active':'')+'" data-category="'+cat.id+'">'+cat.e+' '+cat.name+' <span class="count">'+count+'</span></button>';
-    });
-    D.cM.innerHTML=h;
-    D.cM.querySelectorAll('.category-btn').forEach(function(btn){btn.addEventListener('click',function(){sC(btn.getAttribute('data-category'))})});
-}
-
-function rMobCats(){
-    if(!D.cScr)return;
-    let h='';
-    CATS.forEach(function(cat){
-        const count=cat.id==='all'?P.length:cat.id==='favorites'?F.length:P.filter(function(p){return p.category===cat.id}).length;
-        h+='<button class="category-btn'+(aC===cat.id?' active':'')+'" data-category="'+cat.id+'">'+cat.e+' '+cat.name+' ('+count+')</button>';
-    });
-    D.cScr.innerHTML=h;
-    D.cScr.querySelectorAll('.category-btn').forEach(function(btn){btn.addEventListener('click',function(){sC(btn.getAttribute('data-category'))})});
-}
-
-function sC(catId){
-    aC=catId;
-    rC();rMobCats();rSF();rCat();
-    if(window.innerWidth<=768){document.getElementById('catalog').scrollIntoView({behavior:'smooth'})}
-    setTimeout(oC,100);
-}
+function rC(){let h='<h4>Категории</h4>';CATS.forEach(function(cat){const count=cat.id==='all'?P.length:cat.id==='favorites'?F.length:P.filter(function(p){return p.category===cat.id}).length;h+='<button class="category-btn'+(aC===cat.id?' active':'')+'" data-category="'+cat.id+'">'+cat.e+' '+cat.name+' <span class="count">'+count+'</span></button>'});D.cM.innerHTML=h;D.cM.querySelectorAll('.category-btn').forEach(function(btn){btn.addEventListener('click',function(){sC(btn.getAttribute('data-category'))})})}
+function rMobCats(){if(!D.cScr)return;let h='';CATS.forEach(function(cat){const count=cat.id==='all'?P.length:cat.id==='favorites'?F.length:P.filter(function(p){return p.category===cat.id}).length;h+='<button class="category-btn'+(aC===cat.id?' active':'')+'" data-category="'+cat.id+'">'+cat.e+' '+cat.name+' ('+count+')</button>'});D.cScr.innerHTML=h;D.cScr.querySelectorAll('.category-btn').forEach(function(btn){btn.addEventListener('click',function(){sC(btn.getAttribute('data-category'))})})}
+function sC(catId){aC=catId;rC();rMobCats();rSF();rCat();if(window.innerWidth<=768){document.getElementById('catalog').scrollIntoView({behavior:'smooth'})}setTimeout(oC,100)}
 
 // SORT & SEARCH
 function sCat(){cSo=D.sS.value;rCat();setTimeout(oC,100)}
@@ -564,7 +520,13 @@ function uG(){document.querySelectorAll('#modalBox .modal-gallery-img').forEach(
 function oL(src){D.lI.src=src;D.lB.classList.add('active');document.body.style.overflow='hidden'}
 function cL(){D.lB.classList.remove('active');document.body.style.overflow=''}
 
-// MODAL
+// MODAL — ЧИСТЫЙ closeModal БЕЗ ДУБЛИРОВАНИЯ
+function closeModal(){
+    D.mO.classList.remove('active');
+    document.body.style.overflow='';
+    cP=null;
+}
+
 function oM(product){
     cP=product;sS2=(product.sizes&&product.sizes.length===1)?product.sizes[0]:null;cS=0;
     const pids=product.photo_id?product.photo_id.split(';').map(function(s){return s.trim()}):[];
@@ -590,41 +552,21 @@ function oM(product){
             const btn=document.createElement('button');
             btn.className='size-btn'+(size===sS2?' selected':'');
             btn.textContent=size;
-            btn.addEventListener('click',function(){
-                D.mSz.querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('selected')});
-                btn.classList.add('selected');
-                sS2=size;
-            });
+            btn.addEventListener('click',function(){D.mSz.querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('selected')});btn.classList.add('selected');sS2=size});
             D.mSz.appendChild(btn);
         });
-    } else {
-        D.mSz.innerHTML='<span style="color:#888;">Без размеров</span>';
-    }
+    }else{D.mSz.innerHTML='<span style="color:#888;">Без размеров</span>'}
     D.mO.classList.add('active');
     document.body.style.overflow='hidden';
-
     setTimeout(function(){
         const prevBtn=D.mB.querySelector('.modal-gallery-prev');
         const nextBtn=D.mB.querySelector('.modal-gallery-next');
         const dots=D.mB.querySelectorAll('.modal-dot');
         const images=D.mB.querySelectorAll('[data-lightbox-src]');
-        if(prevBtn)prevBtn.onclick=pS;
-        if(nextBtn)nextBtn.onclick=nS;
-        dots.forEach(function(dot){
-            const slide=parseInt(dot.getAttribute('data-slide'));
-            dot.onclick=function(){gTS(slide)};
-        });
-        images.forEach(function(img){
-            img.onclick=function(){oL(img.getAttribute('data-lightbox-src'))};
-        });
+        if(prevBtn)prevBtn.onclick=pS;if(nextBtn)nextBtn.onclick=nS;
+        dots.forEach(function(dot){const slide=parseInt(dot.getAttribute('data-slide'));dot.onclick=function(){gTS(slide)}});
+        images.forEach(function(img){img.onclick=function(){oL(img.getAttribute('data-lightbox-src'))}});
     },0);
-}
-
-// Чистая функция закрытия модалки (исправление 🔴 #2)
-function closeModal(){
-    D.mO.classList.remove('active');
-    document.body.style.overflow='';
-    cP=null;
 }
 
 // RENDER CATALOG
@@ -655,24 +597,15 @@ function bE(){
     D.cSB.addEventListener('click',cS2);
     D.sS.addEventListener('change',sCat);
     D.sFR.addEventListener('click',cSF);
-    
-    // Закрытие модалки (исправлено)
-    D.mCl.addEventListener('click', closeModal);
-    D.mO.addEventListener('click', function(e){ if(e.target===D.mO) closeModal(); });
-    
-    D.mFv.addEventListener('click', tFFM);
-    D.lB.addEventListener('click', cL);
-    D.lCl.addEventListener('click', cL);
+    D.mCl.addEventListener('click',closeModal);
+    D.mO.addEventListener('click',function(e){if(e.target===D.mO)closeModal()});
+    D.mFv.addEventListener('click',tFFM);
+    D.lB.addEventListener('click',cL);
+    D.lCl.addEventListener('click',cL);
     D.lI.addEventListener('click',function(e){e.stopPropagation()});
     D.sT.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});
     if(D.lI2)D.lI2.addEventListener('error',function(){this.style.display='none'});
-    
-    document.addEventListener('keydown',function(e){
-        if(e.key==='Escape'){
-            cL();
-            if(D.mO.classList.contains('active')) closeModal();
-        }
-    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'){cL();if(D.mO.classList.contains('active'))closeModal()}});
 }
 
 bE();lP();
