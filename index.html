@@ -73,33 +73,32 @@
         .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #999; font-size: 10px; letter-spacing: 1px; z-index: 2; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; } .stock-badge.low { color: #ff9933; } .stock-badge.out { color: #ff3333; }
         .card-body { padding: 20px; } .card-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #fff; } .card-body .category { color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; } .card-body .sizes { font-size: 12px; color: #aaa; margin-bottom: 10px; font-weight: 500; } .card-body .price { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; } .card-body .free-delivery { color: #4caf50; font-size: 11px; display: block; margin-bottom: 8px; }
 
-        /* Кнопки заказа в карточке */
         .card-actions { display: flex; gap: 6px; flex-wrap: wrap; }
         .btn-order { flex: 1; min-width: 100px; padding: 10px 8px; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; font-family: 'Russo One', sans-serif; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; text-decoration: none; text-align: center; display: inline-block; color: #fff; background: transparent; }
         .btn-order-vk { border-color: rgba(0,119,255,0.3); } .btn-order-vk:hover { background: #0077ff; border-color: #0077ff; box-shadow: 0 0 15px rgba(0,119,255,0.3); }
         .btn-order-tg { border-color: rgba(43,158,241,0.3); } .btn-order-tg:hover { background: #2b9ef1; border-color: #2b9ef1; box-shadow: 0 0 15px rgba(43,158,241,0.3); }
 
         .no-products { text-align: center; padding: 60px; color: #888; font-size: 14px; letter-spacing: 2px; width: 100%; } .loading-text { text-align: center; padding: 60px; color: #888; }
-        
-        /* Модалка */
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s; } .modal-overlay.active { opacity: 1; visibility: visible; } .modal { background: #111; max-width: 500px; width: 90%; border-radius: 12px; padding: 25px; position: relative; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; transform: scale(0.9); transition: transform 0.3s; } .modal-overlay.active .modal { transform: scale(1); } .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; z-index: 5; } .modal-title { font-size: 22px; font-weight: 400; color: #fff; margin-bottom: 5px; } .modal-price { font-size: 18px; color: #ccc; margin-bottom: 15px; } .modal-color { font-size: 14px; color: #aaa; margin-bottom: 15px; } .modal-description { color: #aaa; font-size: 13px; line-height: 1.6; margin-bottom: 20px; } .modal-stock { font-size: 12px; color: #888; margin-bottom: 15px; }
-        
-        /* Кнопки в модалке */
+
         .modal-order-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
         .modal-order-btn { flex: 1; padding: 14px 20px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; text-decoration: none; text-align: center; cursor: pointer; transition: all 0.3s; font-family: 'Russo One', sans-serif; letter-spacing: 1px; }
-        .modal-order-vk { background: #0077ff; color: #fff; }
-        .modal-order-vk:hover { background: #0066dd; transform: translateY(-2px); box-shadow: 0 0 20px rgba(0,119,255,0.4); }
-        .modal-order-tg { background: #2b9ef1; color: #fff; }
-        .modal-order-tg:hover { background: #2390dd; transform: translateY(-2px); box-shadow: 0 0 20px rgba(43,158,241,0.4); }
+        .modal-order-vk { background: #0077ff; color: #fff; } .modal-order-vk:hover { background: #0066dd; transform: translateY(-2px); box-shadow: 0 0 20px rgba(0,119,255,0.4); }
+        .modal-order-tg { background: #2b9ef1; color: #fff; } .modal-order-tg:hover { background: #2390dd; transform: translateY(-2px); box-shadow: 0 0 20px rgba(43,158,241,0.4); }
         .modal-order-hint { text-align: center; color: #888; font-size: 11px; margin-top: 8px; }
 
         .modal-gallery { position: relative; width: 100%; height: 300px; border-radius: 8px; overflow: hidden; background: #080808; margin-bottom: 15px; } .modal-gallery-slides { width: 100%; height: 100%; position: relative; } .modal-gallery-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; background: #080808; opacity: 0; transition: opacity 0.3s; pointer-events: none; cursor: zoom-in; } .modal-gallery-img.active { opacity: 1; pointer-events: auto; } .modal-gallery-prev, .modal-gallery-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; font-size: 28px; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; transition: background 0.3s; } .modal-gallery-prev { left: 8px; } .modal-gallery-next { right: 8px; } .modal-gallery-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; } .modal-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s; } .modal-dot.active { background: #fff; }
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s; } .lightbox.active { opacity: 1; visibility: visible; } .lightbox img { max-width: 95%; max-height: 95%; object-fit: contain; cursor: zoom-out; } .lightbox-close { position: absolute; top: 20px; right: 25px; background: rgba(255,255,255,0.1); color: #fff; border: none; font-size: 30px; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; z-index: 10000; display: flex; align-items: center; justify-content: center; }
         .delivery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; max-width: 1100px; margin: 0 auto; background: #141414; } .delivery-card { background: #0c0c0c; padding: 55px 35px; text-align: center; transition: all 0.3s; } .delivery-card:hover { background: #121212; transform: translateY(-3px); } .delivery-card .icon { font-size: 34px; margin-bottom: 22px; opacity: 0.5; } .delivery-card h3 { font-size: 14px; font-weight: 400; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; color: #fff; } .delivery-card p { color: #999; font-size: 12px; line-height: 1.8; }
-        .contact-block { max-width: 500px; margin: 0 auto; text-align: center; } .contact-block h3 { font-size: 22px; font-weight: 400; margin-bottom: 35px; color: #fff; text-transform: uppercase; } .contact-block p { font-size: 14px; margin: 10px 0; color: #aaa; } .contact-schedule { display: inline-block; padding: 12px 30px; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; font-size: 13px; color: #ccc; margin: 20px 0 35px; } .contact-address { font-size: 15px; color: #fff; margin: 35px 0; padding: 28px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; } .contact-requisites { font-size: 12px; color: #999; margin-top: 15px; line-height: 1.6; }
+        .contact-block { max-width: 500px; margin: 0 auto; text-align: center; } .contact-block h3 { font-size: 22px; font-weight: 400; margin-bottom: 35px; color: #fff; text-transform: uppercase; } .contact-block p { font-size: 14px; margin: 10px 0; color: #aaa; } .contact-schedule { display: inline-block; padding: 12px 30px; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; font-size: 13px; color: #ccc; margin: 20px 0 35px; } .contact-address { font-size: 15px; color: #fff; margin: 35px 0; padding: 28px; border: 1px solid rgba(255,255,255,0.1); line-height: 1.8; }
         .social-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; } .btn-social { display: inline-block; padding: 14px 35px; font-weight: 600; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: all 0.3s; border-radius: 100px; font-family: 'Russo One', sans-serif; }
+        .btn-social-vk { background: #0077ff; color: #fff; } .btn-social-vk:hover { background: #0066dd; transform: translateY(-2px); }
+        .btn-social-tg { background: #2b9ef1; color: #fff; } .btn-social-tg:hover { background: #2390dd; transform: translateY(-2px); }
 
-        footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); } footer p { color: #666; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; } .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; } .scroll-top:hover { opacity: 1; transform: translateY(-3px); }
+        footer { text-align: center; padding: 50px; border-top: 1px solid rgba(255,255,255,0.05); } footer p { color: #666; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+        .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 45px; height: 45px; background: #fff; color: #0a0a0a; text-align: center; line-height: 45px; font-weight: 700; cursor: pointer; z-index: 997; text-decoration: none; border-radius: 50%; opacity: 0.6; transition: all 0.3s; } .scroll-top:hover { opacity: 1; transform: translateY(-3px); }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #0a0a0a; padding: 12px 28px; border-radius: 100px; font-size: 13px; font-weight: 600; z-index: 3000; opacity: 0; transition: opacity 0.3s; box-shadow: 0 0 20px rgba(255,255,255,0.3); } .toast.show { opacity: 1; bottom: 40px; }
         @media (max-width: 768px) { header { padding: 15px 20px; flex-direction: column; gap: 12px; } .logo-text { font-size: 22px; } nav { gap: 12px; justify-content: center; } nav a { font-size: 9px; letter-spacing: 1px; } .hero h1 { font-size: 45px; } .section { padding: 60px 15px; } .catalog-wrapper { flex-direction: column; } .sidebar { position: static; min-width: auto; } .categories-menu { border-radius: 8px; } .categories-menu h4 { display: none; } .category-btn { padding: 8px 12px; font-size: 10px; border-left: none; border-bottom: 2px solid transparent; border-radius: 6px; } .category-btn.active { border-left: none; border-bottom-color: #fff; } .category-btn .count { display: none; } .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; } .card-img { height: 200px; } .card-body { padding: 12px; } .card-body h3 { font-size: 13px; } .card-actions { flex-direction: column; } }
     </style>
 </head>
@@ -218,19 +217,13 @@
         <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
         <p>📞 +7 (XXX) XXX-XX-XX</p>
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
-        <div class="contact-requisites">
-            <strong>Реквизиты:</strong><br>
-            ИП Кузякин Александр Михайлович<br>
-            ИНН: 550716638551<br>
-            ОГРНИП: 322554300047147
-        </div>
         <p style="color:#ff9933;font-size:13px;margin:20px 0;padding:16px;background:rgba(255,153,51,0.05);border:1px solid rgba(255,153,51,0.15);border-radius:10px;">
             💡 <strong>Как заказать?</strong><br>
             Напиши нам в VK или Telegram —<br>мы отправим фото, уточним размер и оформим доставку
         </p>
         <div class="social-btns">
-            <a href="https://vk.com/gorillaomsk" target="_blank" class="btn-social btn-vk">📱 VKontakte</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" class="btn-social btn-tg">✈️ Telegram</a>
+            <a href="https://vk.com/gorillaomsk" target="_blank" class="btn-social btn-social-vk">📱 VK</a>
+            <a href="https://t.me/gorillaomsk" target="_blank" class="btn-social btn-social-tg">✈️ Telegram</a>
         </div>
     </div>
 </section>
@@ -268,7 +261,6 @@
             document.getElementById('preloader').classList.add('hidden');
         }, 800);
     });
-    // Фолбэк — если грузится дольше 5 секунд
     setTimeout(function() {
         document.getElementById('preloader').classList.add('hidden');
     }, 5000);
