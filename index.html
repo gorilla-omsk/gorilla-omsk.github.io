@@ -71,7 +71,30 @@
         .card-tag { position: absolute; top: 12px; left: 12px; background: #fff; color: #0a0a0a; padding: 4px 10px; font-size: 8px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; z-index: 2; } .card-tag.sold { background: #ff3333; color: #fff; }
         .favorite-btn { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); color: #fff; border: none; font-size: 18px; cursor: pointer; z-index: 3; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; touch-action: manipulation; } .favorite-btn:active { transform: scale(1.3); } .favorite-btn:hover { transform: scale(1.2); } .favorite-btn.active { color: #ff3333; }
         .stock-badge { position: absolute; bottom: 10px; right: 12px; color: #999; font-size: 10px; letter-spacing: 1px; z-index: 2; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; } .stock-badge.low { color: #ff9933; } .stock-badge.out { color: #ff3333; }
-        .card-body { padding: 20px; } .card-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #fff; } .card-body .category { color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; } .card-body .sizes { font-size: 12px; color: #aaa; margin-bottom: 10px; font-weight: 500; } .card-body .price { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; } .card-body .free-delivery { color: #4caf50; font-size: 11px; display: block; margin-bottom: 8px; }
+        .free-delivery-tag {
+            position: absolute; bottom: 10px; left: 12px;
+            background: #4caf50; color: #fff; padding: 4px 8px;
+            font-size: 7px; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; z-index: 2; border-radius: 3px;
+        }
+        .card-body { padding: 20px; } .card-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #fff; } .card-body .category { color: #888; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; }
+        
+        /* Размеры в карточке */
+        .sizes-block {
+            display: flex; align-items: baseline; gap: 6px;
+            margin-bottom: 6px; flex-wrap: wrap;
+        }
+        .sizes-label { color: #777; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .sizes-values {
+            color: #fff; font-size: 12px; font-weight: 600;
+            background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;
+        }
+        .free-delivery-badge {
+            display: block; color: #4caf50; font-size: 11px;
+            font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px;
+        }
+        
+        .card-body .price { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; }
 
         .card-actions { display: flex; gap: 6px; flex-wrap: wrap; }
         .btn-order { flex: 1; min-width: 100px; padding: 10px 8px; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; font-family: 'Russo One', sans-serif; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; text-decoration: none; text-align: center; display: inline-block; color: #fff; background: transparent; }
@@ -130,7 +153,7 @@
         <a href="#delivery">Доставка</a>
         <a href="#contacts">Контакты</a>
         <a href="https://vk.com/gorillaomsk" target="_blank">VK</a>
-        <a href="https://t.me/gorillaomsk" target="_blank">TG</a>
+        <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank">TG</a>
     </nav>
 </header>
 
@@ -148,17 +171,17 @@
         <div class="btn-group">
             <a href="#catalog" class="btn btn-white">Смотреть дроп</a>
             <a href="https://vk.com/gorillaomsk" target="_blank" class="btn btn-vk">📱 Написать в VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" class="btn btn-tg">✈️ Написать в TG</a>
+            <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" class="btn btn-tg">🤖 Заказать через бота</a>
         </div>
     </div>
 </section>
 
-<div class="marquee"><span>GORILLA • OMSK • 🔥 ЗАКАЗ ЧЕРЕЗ ЛС VK ИЛИ TELEGRAM • ДОСТАВКА 5POST • НОВЫЙ ДРОП</span></div>
+<div class="marquee"><span>GORILLA • OMSK • 🔥 ЗАКАЗ ЧЕРЕЗ VK / TELEGRAM-БОТА • ДОСТАВКА 5POST • НОВЫЙ ДРОП</span></div>
 
 <section class="section" id="catalog">
     <p class="section-label">Drop 001</p>
     <h2 class="section-title">Каталог</h2>
-    <p class="section-subtitle">Для заказа — напиши нам в VK или Telegram</p>
+    <p class="section-subtitle">Для заказа — напиши нам в VK или Telegram-боту</p>
     <div class="catalog-wrapper">
         <div class="sidebar">
             <div class="categories-menu" id="categoriesMenu"></div>
@@ -203,7 +226,7 @@
         </div>
         <div class="delivery-card">
             <div class="icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
-            <h3>По России</h3><p>5Post (Пятёрочка). Трек-номер сразу.</p>
+            <h3>По России</h3><p>5Post (Пятёрочка) — 250₽<br><strong style="color:#4caf50;">Бесплатно от 3000₽</strong></p>
         </div>
     </div>
 </section>
@@ -218,12 +241,14 @@
         <p>📞 +7 (XXX) XXX-XX-XX</p>
         <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
         <p style="color:#ff9933;font-size:13px;margin:20px 0;padding:16px;background:rgba(255,153,51,0.05);border:1px solid rgba(255,153,51,0.15);border-radius:10px;">
-            💡 <strong>Как заказать?</strong><br>
-            Напиши нам в VK или Telegram —<br>мы отправим фото, уточним размер и оформим доставку
+            💡 <strong>Как заказать?</strong><br><br>
+            📱 <strong>VK:</strong> напиши в сообщения группы<br>
+            🤖 <strong>Telegram-бот:</strong> @gorilla_omsk_shop_bot<br><br>
+            Мы отправим фото, уточним размер и оформим доставку
         </p>
         <div class="social-btns">
             <a href="https://vk.com/gorillaomsk" target="_blank" class="btn-social btn-social-vk">📱 VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" class="btn-social btn-social-tg">✈️ Telegram</a>
+            <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" class="btn-social btn-social-tg">🤖 Telegram-бот</a>
         </div>
     </div>
 </section>
@@ -243,7 +268,7 @@
         <p class="modal-stock" id="modalStock"></p>
         <div class="modal-order-btns">
             <a href="https://vk.com/gorillaomsk" target="_blank" class="modal-order-btn modal-order-vk">📱 Заказать в VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" class="modal-order-btn modal-order-tg">✈️ Заказать в TG</a>
+            <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" class="modal-order-btn modal-order-tg">🤖 Заказать через бота</a>
         </div>
         <p class="modal-order-hint">Напиши нам — уточним размер, скинем доп. фото и оформим заказ</p>
     </div>
@@ -359,7 +384,45 @@
 
     function showToast(msg){dom.toast.textContent=msg;dom.toast.classList.add('show');setTimeout(()=>dom.toast.classList.remove('show'),3000);}
 
-    function renderCatalog(){let f=activeCategory==='favorites'?products.filter(p=>favorites.includes(p.id)):activeCategory==='all'?products:products.filter(p=>p.category===activeCategory);if(activeSize)f=f.filter(p=>p.sizes&&p.sizes.includes(activeSize));if(searchQuery)f=f.filter(p=>{const nm=p.name.toLowerCase().includes(searchQuery);const cm=CATEGORY_NAMES_RU[p.category]?CATEGORY_NAMES_RU[p.category].includes(searchQuery):false;const cem=p.category.toLowerCase().includes(searchQuery);return nm||cm||cem;});if(currentSort==='price-asc')f.sort((a,b)=>a.price-b.price);else if(currentSort==='price-desc')f.sort((a,b)=>b.price-a.price);if(!f.length){dom.catalogGrid.innerHTML='<div class="no-products">Товаров пока нет</div>';return;}dom.catalogGrid.innerHTML=f.map(p=>{const so=p.stock===0,ls=p.stock>0&&p.stock<=3;const st=so?'SOLD OUT':ls?`Осталось: ${p.stock} шт`:`В наличии: ${p.stock} шт`;const catName=categories.find(c=>c.id===p.category)?.name||'';const sz=p.sizes?p.sizes.join(', '):'';const pu=getPhotoURL(p.photo_id?p.photo_id.split(';')[0].trim():'');const isFav=favorites.includes(p.id);const fd=p.price>=3000?'<span class="free-delivery">🚚 Бесплатная доставка</span>':'';return `<div class="card${so?' sold-out':''}" data-product-id="${p.id}"><div class="card-img">${pu?`<img src="${pu}" alt="${p.name}" onerror="imgError(this,'${p.photo_id.split(';')[0].trim()}')">`:'<span class="img-placeholder">🦍</span>'}<div class="card-tag${so?' sold':''}">${so?'SOLD OUT':(p.tag||'')}</div><button class="favorite-btn${isFav?' active':''}" data-id="${p.id}">${isFav?'❤️':'🤍'}</button><span class="stock-badge${ls?' low':''}${so?' out':''}">${st}</span></div><div class="card-body"><h3>${p.name} ${p.color?`<span style="display:inline-block;width:12px;height:12px;background-color:${p.color};border-radius:50%;vertical-align:middle;" title="${p.color}"></span>`:''}</h3><p class="category">${catName}</p>${sz?`<p class="sizes">Размеры: ${sz}</p>`:''}<p class="price">${p.price.toLocaleString()} ₽</p>${fd}<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" class="btn-order btn-order-vk" onclick="event.stopPropagation();">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" class="btn-order btn-order-tg" onclick="event.stopPropagation();">✈️ TG</a></div></div></div>`;}).join('');dom.catalogGrid.querySelectorAll('.card').forEach(card=>{card.addEventListener('click',(e)=>{if(e.target.closest('.favorite-btn')||e.target.closest('.btn-order'))return;const pid=card.getAttribute('data-product-id');const product=products.find(p=>p.id===pid);if(product)openModal(product);});});dom.catalogGrid.querySelectorAll('.favorite-btn').forEach(btn=>{btn.addEventListener('click',(e)=>{e.stopPropagation();const id=btn.getAttribute('data-id');toggleFavorite(id);});});}
+    function renderCatalog(){
+        let f=activeCategory==='favorites'?products.filter(p=>favorites.includes(p.id)):activeCategory==='all'?products:products.filter(p=>p.category===activeCategory);
+        if(activeSize)f=f.filter(p=>p.sizes&&p.sizes.includes(activeSize));
+        if(searchQuery)f=f.filter(p=>{const nm=p.name.toLowerCase().includes(searchQuery);const cm=CATEGORY_NAMES_RU[p.category]?CATEGORY_NAMES_RU[p.category].includes(searchQuery):false;const cem=p.category.toLowerCase().includes(searchQuery);return nm||cm||cem;});
+        if(currentSort==='price-asc')f.sort((a,b)=>a.price-b.price);else if(currentSort==='price-desc')f.sort((a,b)=>b.price-a.price);
+        if(!f.length){dom.catalogGrid.innerHTML='<div class="no-products">Товаров пока нет</div>';return;}
+        dom.catalogGrid.innerHTML=f.map(p=>{
+            const so=p.stock===0,ls=p.stock>0&&p.stock<=3;
+            const st=so?'SOLD OUT':ls?`Осталось: ${p.stock} шт`:`В наличии: ${p.stock} шт`;
+            const catName=categories.find(c=>c.id===p.category)?.name||'';
+            const sizes=p.sizes?p.sizes.join(', '):'';
+            const pu=getPhotoURL(p.photo_id?p.photo_id.split(';')[0].trim():'');
+            const isFav=favorites.includes(p.id);
+            const hasFreeDelivery=p.price>=3000;
+            const fd=hasFreeDelivery?'<span class="free-delivery-badge">🚚 Бесплатная доставка 5Post</span>':'';
+            return `<div class="card${so?' sold-out':''}" data-product-id="${p.id}">
+                <div class="card-img">
+                    ${pu?`<img src="${pu}" alt="${p.name}" onerror="imgError(this,'${p.photo_id.split(';')[0].trim()}')">`:'<span class="img-placeholder">🦍</span>'}
+                    <div class="card-tag${so?' sold':''}">${so?'SOLD OUT':(p.tag||'')}</div>
+                    <button class="favorite-btn${isFav?' active':''}" data-id="${p.id}">${isFav?'❤️':'🤍'}</button>
+                    <span class="stock-badge${ls?' low':''}${so?' out':''}">${st}</span>
+                    ${hasFreeDelivery?`<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>`:''}
+                </div>
+                <div class="card-body">
+                    <h3>${p.name} ${p.color?`<span style="display:inline-block;width:12px;height:12px;background-color:${p.color};border-radius:50%;vertical-align:middle;margin-left:6px;" title="${p.color}"></span>`:''}</h3>
+                    <p class="category">${catName}</p>
+                    ${sizes?`<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">${sizes}</span></div>`:''}
+                    <p class="price">${p.price.toLocaleString()} ₽</p>
+                    ${fd}
+                    <div class="card-actions">
+                        <a href="https://vk.com/gorillaomsk" target="_blank" class="btn-order btn-order-vk" onclick="event.stopPropagation();">📱 VK</a>
+                        <a href="https://t.me/gorilla_omsk_shop_bot" target="_blank" class="btn-order btn-order-tg" onclick="event.stopPropagation();">🤖 Бот</a>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+        dom.catalogGrid.querySelectorAll('.card').forEach(card=>{card.addEventListener('click',(e)=>{if(e.target.closest('.favorite-btn')||e.target.closest('.btn-order'))return;const pid=card.getAttribute('data-product-id');const product=products.find(p=>p.id===pid);if(product)openModal(product);});});
+        dom.catalogGrid.querySelectorAll('.favorite-btn').forEach(btn=>{btn.addEventListener('click',(e)=>{e.stopPropagation();const id=btn.getAttribute('data-id');toggleFavorite(id);});});
+    }
 
     function bindEvents(){
         dom.searchInput.addEventListener('input',searchCatalog);
