@@ -166,8 +166,10 @@
         .modal-overlay.active{opacity:1;visibility:visible}
         .modal{background:#111;max-width:500px;width:90%;border-radius:12px;padding:25px;position:relative;border:1px solid rgba(255,255,255,.1);max-height:90vh;overflow-y:auto;transform:scale(.9);transition:transform .3s}
         .modal-overlay.active .modal{transform:scale(1)}
-        .modal-close{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;z-index:5}
-        .modal-title{font-size:22px;color:#fff;margin-bottom:5px}
+        .modal-close{position:absolute;top:15px;right:15px;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:24px;cursor:pointer;z-index:999999;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;line-height:1;padding:0;backdrop-filter:blur(5px)}
+        .modal-close:hover{background:rgba(255,255,255,0.3);transform:scale(1.1)}
+        .modal-close:active{transform:scale(0.9)}
+        .modal-title{font-size:22px;color:#fff;margin-bottom:5px;padding-right:50px}
         .modal-price{font-size:18px;color:#ccc;margin-bottom:15px}
         .modal-color{font-size:14px;color:#aaa;margin-bottom:15px}
         .size-selector{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
@@ -393,7 +395,7 @@
     <div class="modal" id="modalBox">
         <button class="modal-close" id="modalClose">✕</button>
         <div id="modalGalleryContainer"></div>
-        <div class="modal-favorite" id="modalFavorite" style="position:absolute; top:20px; right:60px; font-size:24px; cursor:pointer; z-index:10; transition: transform 0.2s;">🤍</div>
+        <div class="modal-favorite" id="modalFavorite" style="position:absolute; top:20px; right:65px; font-size:24px; cursor:pointer; z-index:10; transition: transform 0.2s;">🤍</div>
         <h2 class="modal-title" id="modalTitle"></h2>
         <p class="modal-price" id="modalPrice"></p>
         <p class="modal-color" id="modalColor"></p>
@@ -562,8 +564,76 @@ function oL(src){D.lI.src=src;D.lB.classList.add('active');document.body.style.o
 function cL(){D.lB.classList.remove('active');document.body.style.overflow=''}
 
 // MODAL
-function oM(product){cP=product;sS2=(product.sizes&&product.sizes.length===1)?product.sizes[0]:null;cS=0;const pids=product.photo_id?product.photo_id.split(';').map(function(s){return s.trim()}):[];const photos=pids.map(function(id){return gPU(id)}).filter(function(url){return url});let g='';if(photos.length>1){g='<div class="modal-gallery"><div class="modal-gallery-slides">'+photos.map(function(url,i){return'<img src="'+url+'" class="modal-gallery-img'+(i===0?' active':'')+'" onerror="this.style.display=\'none\'" data-lightbox-src="'+url+'">'}).join('')+'</div><div class="modal-gallery-dots">'+photos.map(function(_,i){return'<span class="modal-dot'+(i===0?' active':'')+'" data-slide="'+i+'"></span>'}).join('')+'</div><button class="modal-gallery-prev">‹</button><button class="modal-gallery-next">›</button></div>'}else if(photos.length===1){g='<img class="modal-img" src="'+photos[0]+'" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="'+photos[0]+'">'}else{g='<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px">🦍</span>'}D.mGC.innerHTML=g;D.mT.textContent=product.name;D.mP.textContent=product.price.toLocaleString()+' ₽';D.mC.innerHTML=product.color?'Цвет: <span style="display:inline-block;width:16px;height:16px;background-color:'+product.color+';border-radius:50%;vertical-align:middle;margin-right:4px;"></span> '+product.color:'';D.mD.textContent=product.description||'';D.mSt.textContent=product.stock>0?'В наличии: '+product.stock+' шт':'Нет в наличии';uMF();D.mSz.innerHTML='';if(product.sizes&&product.sizes.length){product.sizes.forEach(function(size){const btn=document.createElement('button');btn.className='size-btn'+(size===sS2?' selected':'');btn.textContent=size;btn.addEventListener('click',function(){D.mSz.querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('selected')});btn.classList.add('selected');sS2=size});D.mSz.appendChild(btn)})}else D.mSz.innerHTML='<span style="color:#888;">Без размеров</span>';D.mO.classList.add('active');setTimeout(function(){const prevBtn=D.mB.querySelector('.modal-gallery-prev');const nextBtn=D.mB.querySelector('.modal-gallery-next');const dots=D.mB.querySelectorAll('.modal-dot');const images=D.mB.querySelectorAll('[data-lightbox-src]');if(prevBtn)prevBtn.onclick=pS;if(nextBtn)nextBtn.onclick=nS;dots.forEach(function(dot){const slide=parseInt(dot.getAttribute('data-slide'));dot.onclick=function(){gTS(slide)}});images.forEach(function(img){img.onclick=function(){oL(img.getAttribute('data-lightbox-src'))}})},0)}
-function cM(e){if(e&&e.target!==D.mO)return;D.mO.classList.remove('active');cP=null}
+function oM(product){
+    cP=product;sS2=(product.sizes&&product.sizes.length===1)?product.sizes[0]:null;cS=0;
+    const pids=product.photo_id?product.photo_id.split(';').map(function(s){return s.trim()}):[];
+    const photos=pids.map(function(id){return gPU(id)}).filter(function(url){return url});
+    let g='';
+    if(photos.length>1){
+        g='<div class="modal-gallery"><div class="modal-gallery-slides">'+photos.map(function(url,i){return'<img src="'+url+'" class="modal-gallery-img'+(i===0?' active':'')+'" onerror="this.style.display=\'none\'" data-lightbox-src="'+url+'">'}).join('')+'</div><div class="modal-gallery-dots">'+photos.map(function(_,i){return'<span class="modal-dot'+(i===0?' active':'')+'" data-slide="'+i+'"></span>'}).join('')+'</div><button class="modal-gallery-prev">‹</button><button class="modal-gallery-next">›</button></div>';
+    }else if(photos.length===1){
+        g='<img class="modal-img" src="'+photos[0]+'" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="'+photos[0]+'">';
+    }else{
+        g='<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px">🦍</span>';
+    }
+    D.mGC.innerHTML=g;
+    D.mT.textContent=product.name;
+    D.mP.textContent=product.price.toLocaleString()+' ₽';
+    D.mC.innerHTML=product.color?'Цвет: <span style="display:inline-block;width:16px;height:16px;background-color:'+product.color+';border-radius:50%;vertical-align:middle;margin-right:4px;"></span> '+product.color:'';
+    D.mD.textContent=product.description||'';
+    D.mSt.textContent=product.stock>0?'В наличии: '+product.stock+' шт':'Нет в наличии';
+    uMF();
+    D.mSz.innerHTML='';
+    if(product.sizes&&product.sizes.length){
+        product.sizes.forEach(function(size){
+            const btn=document.createElement('button');
+            btn.className='size-btn'+(size===sS2?' selected':'');
+            btn.textContent=size;
+            btn.addEventListener('click',function(){
+                D.mSz.querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('selected')});
+                btn.classList.add('selected');
+                sS2=size;
+            });
+            D.mSz.appendChild(btn);
+        });
+    } else {
+        D.mSz.innerHTML='<span style="color:#888;">Без размеров</span>';
+    }
+    D.mO.classList.add('active');
+    document.body.style.overflow='hidden';
+
+    setTimeout(function(){
+        const prevBtn=D.mB.querySelector('.modal-gallery-prev');
+        const nextBtn=D.mB.querySelector('.modal-gallery-next');
+        const dots=D.mB.querySelectorAll('.modal-dot');
+        const images=D.mB.querySelectorAll('[data-lightbox-src]');
+        if(prevBtn)prevBtn.onclick=pS;
+        if(nextBtn)nextBtn.onclick=nS;
+        dots.forEach(function(dot){
+            const slide=parseInt(dot.getAttribute('data-slide'));
+            dot.onclick=function(){gTS(slide)};
+        });
+        images.forEach(function(img){
+            img.onclick=function(){oL(img.getAttribute('data-lightbox-src'))};
+        });
+    },0);
+}
+
+function cM(e){
+    // Закрываем модалку только если кликнули именно по оверлею или по крестику
+    if(e && e.target === D.mO){
+        D.mO.classList.remove('active');
+        document.body.style.overflow='';
+        cP=null;
+        return;
+    }
+    if(!e){
+        // Вызвано напрямую без события (например, по Escape)
+        D.mO.classList.remove('active');
+        document.body.style.overflow='';
+        cP=null;
+    }
+}
 
 // RENDER CATALOG
 function rCat(){
@@ -589,13 +659,47 @@ function rCat(){
 
 // BIND
 function bE(){
-    D.sI.addEventListener('input',sCat2);D.cSB.addEventListener('click',cS2);D.sS.addEventListener('change',sCat);
-    D.sFR.addEventListener('click',cSF);D.mCl.addEventListener('click',cM);D.mO.addEventListener('click',cM);
-    D.mFv.addEventListener('click',tFFM);D.lB.addEventListener('click',cL);D.lCl.addEventListener('click',cL);
+    D.sI.addEventListener('input',sCat2);
+    D.cSB.addEventListener('click',cS2);
+    D.sS.addEventListener('change',sCat);
+    D.sFR.addEventListener('click',cSF);
+    
+    // Крестик закрытия модалки
+    D.mCl.addEventListener('click', function(e){
+        e.stopPropagation();
+        D.mO.classList.remove('active');
+        document.body.style.overflow='';
+        cP=null;
+    });
+    
+    // Клик по оверлею
+    D.mO.addEventListener('click', cM);
+    
+    // Кнопка Избранное в модалке
+    D.mFv.addEventListener('click', tFFM);
+    
+    // Лайтбокс
+    D.lB.addEventListener('click', cL);
+    D.lCl.addEventListener('click', cL);
     D.lI.addEventListener('click',function(e){e.stopPropagation()});
+    
+    // Скролл наверх
     D.sT.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});
+    
+    // Лого ошибка
     if(D.lI2)D.lI2.addEventListener('error',function(){this.style.display='none'});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){cL();if(D.mO.classList.contains('active'))cM()}});
+    
+    // Escape
+    document.addEventListener('keydown',function(e){
+        if(e.key==='Escape'){
+            cL();
+            if(D.mO.classList.contains('active')){
+                D.mO.classList.remove('active');
+                document.body.style.overflow='';
+                cP=null;
+            }
+        }
+    });
 }
 
 bE();lP();
