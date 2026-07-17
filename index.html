@@ -463,8 +463,10 @@ function gSI(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}c
 function sSI(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
 // ============ SERVICE WORKER ============
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}
-
+// Service Worker временно отключён
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister()})});
+}
 // ============ PRELOADER ============
 const preloader=document.getElementById('preloader');let pageLoaded=false,preloaderShown=false;
 setTimeout(function(){if(!pageLoaded){preloader.classList.add('visible');preloaderShown=true}},500);
