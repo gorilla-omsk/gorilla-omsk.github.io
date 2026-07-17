@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap" rel="stylesheet">
 
-    <!-- Yandex.Metrika - async in head -->
+    <!-- Yandex.Metrika -->
     <script async>
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=110754345','ym');ym(110754345,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});
     </script>
@@ -37,7 +37,7 @@
         html{scroll-behavior:smooth}
         body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#d0d0d0;overflow-x:hidden;line-height:1.5;-webkit-tap-highlight-color:transparent}
         
-        /* OPTIMIZED NOISE - Static tiled background */
+        /* OPTIMIZED NOISE */
         body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfM9q7AAAACHRSTlMA/wD/AP8A/4JxH5IAAAAcSURBVDjLY2AYBaNgFIyCUTAKRsEoGAWjYBSMglEAYMQGAAQwAAF/FW3dAAAAAElFTkSuQmCC');background-repeat:repeat;opacity:0.03;pointer-events:none;z-index:9998}
 
         /* PRELOADER */
@@ -135,7 +135,7 @@
         .search-bar input::placeholder{color:#666}
         .sort-bar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:15px;width:100%}
         .sort-bar select{background:#0c0c0c;color:#ccc;border:1px solid rgba(255,255,255,.15);padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer}
-        .catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;flex:1;content-visibility:auto;contain-intrinsic-size:420px}
+        .catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;flex:1}
 
         /* CARD */
         .card{background:#0c0c0c;transition:all .4s;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.04);border-radius:8px;cursor:pointer;opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s}
@@ -160,7 +160,7 @@
         .stock-badge.out{color:#f33}
         .free-delivery-tag{position:absolute;bottom:10px;left:12px;background:#4caf50;color:#fff;padding:4px 8px;font-size:7px;font-weight:700;letter-spacing:1px;text-transform:uppercase;z-index:2;border-radius:3px}
         
-        /* SMOKE EFFECT - Optimized */
+        /* SMOKE EFFECT */
         .card-smoke{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:4;opacity:0;transition:opacity .4s;background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.04) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(255,255,255,.05) 0%,transparent 50%)}
         .card:hover .card-smoke{opacity:1;animation:smoke-drift 3s infinite}
         @keyframes smoke-drift{0%,100%{background-position:0 0,0 0,0 0}50%{background-position:2% -3%,-3% 2%,1% 4%}}
@@ -294,7 +294,7 @@
 </head>
 <body>
 
-<!-- Schema.org Store markup -->
+<!-- Schema.org Store -->
 <meta itemprop="name" content="GORILLA STREETWEAR">
 <meta itemprop="description" content="Уличная одежда в Омске. Кроссовки, худи, футболки, куртки, штаны.">
 <meta itemprop="image" content="https://gorilla-omsk.github.io/GGVP.jpg">
@@ -456,17 +456,15 @@
 (function(){
 'use strict';
 
-// ============ UTILITY FUNCTIONS ============
+// ============ UTILITY ============
 function throttle(fn,delay){let last=0;return function(...args){const now=Date.now();if(now-last>=delay){fn.apply(this,args);last=now}}}
 function debounce(fn,delay){let timer;return function(...args){clearTimeout(timer);timer=setTimeout(()=>fn.apply(this,args),delay)}}
 function gSI(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sSI(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
-// ============ SERVICE WORKER ============
-// Service Worker временно отключён
-if('serviceWorker' in navigator){
-    navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister()})});
-}
+// ============ SERVICE WORKER (отключён) ============
+if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister()})})}
+
 // ============ PRELOADER ============
 const preloader=document.getElementById('preloader');let pageLoaded=false,preloaderShown=false;
 setTimeout(function(){if(!pageLoaded){preloader.classList.add('visible');preloaderShown=true}},500);
@@ -480,40 +478,40 @@ const LETTER_SIZES=['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
 const CAT_RU={shoes:'кроссовки',tshirts:'футболки',hoodies:'худи',jackets:'куртки',pants:'штаны',shorts:'шорты',suits:'костюмы',accessories:'аксессуары'};
 const CATS=[{id:'all',name:'Все товары',e:'🦍'},{id:'favorites',name:'Избранное',e:'⭐'},{id:'shorts',name:'Шорты',e:'🩳'},{id:'suits',name:'Спорт. костюмы',e:'🏃'},{id:'shoes',name:'Кроссовки',e:'👟'},{id:'accessories',name:'Аксессуары',e:'🧢'},{id:'tshirts',name:'Футболки / Рубашки',e:'👕'},{id:'jackets',name:'Куртки / Ветровки',e:'🧥'},{id:'hoodies',name:'Худи / Свитшоты',e:'🦍'},{id:'pants',name:'Штаны / Брюки / Джинсы',e:'👖'}];
 
-// ============ DOM CACHE ============
-const D={hBg:document.getElementById('hero-bg'),hCnt:document.getElementById('hero-content'),gT:document.getElementById('glitch-title'),mH:document.getElementById('main-header'),pC:document.getElementById('particles-canvas'),cG:document.getElementById('catalogGrid'),cM:document.getElementById('categoriesMenu'),cScr:document.getElementById('categoriesScroll'),sFC:document.getElementById('sizeFilterContent'),sFR:document.getElementById('sizeFilterReset'),sI:document.getElementById('searchInput'),cSB:document.getElementById('clearSearchBtn'),sS:document.getElementById('sortSelect'),mO:document.getElementById('modalOverlay'),mB:document.getElementById('modalBox'),mCl:document.getElementById('modalClose'),mGC:document.getElementById('modalGalleryContainer'),mFv:document.getElementById('modalFavorite'),mT:document.getElementById('modalTitle'),mP:document.getElementById('modalPrice'),mC:document.getElementById('modalColor'),mSz:document.getElementById('modalSizes'),mD:document.getElementById('modalDesc'),mSt:document.getElementById('modalStock'),mSh:document.getElementById('modalShareBtn'),lB:document.getElementById('lightbox'),lI:document.getElementById('lightboxImg'),lCl:document.getElementById('lightboxClose'),sT:document.getElementById('scrollTop'),t:document.getElementById('toast'),oT:document.getElementById('omskTime'),mTt:document.getElementById('mskTime'),lI2:document.getElementById('logoImg')};
+// ============ DOM ============
+const D={hBg:document.getElementById('hero-bg'),hCnt:document.getElementById('hero-content'),gT:document.getElementById('glitch-title'),mH:document.getElementById('main-header'),pC:document.getElementById('particles-canvas'),cG:document.getElementById('catalogGrid'),cM:document.getElementById('categoriesMenu'),cScr:document.getElementById('categoriesScroll'),sFC:document.getElementById('sizeFilterContent'),sFR:document.getElementById('sizeFilterReset'),sI:document.getElementById('searchInput'),cSB:document.getElementById('clearSearchBtn'),sS:document.getElementById('sortSelect'),mO:document.getElementById('modalOverlay'),mB:document.getElementById('modalBox'),mCl:document.getElementById('modalClose'),mGC:document.getElementById('modalGalleryContainer'),mFv:document.getElementById('modalFavorite'),mT:document.getElementById('modalTitle'),mP:document.getElementById('modalPrice'),mC:document.getElementById('modalColor'),mSz:document.getElementById('modalSizes'),mD:document.getElementById('modalDesc'),mSt:document.getElementById('modalStock'),lB:document.getElementById('lightbox'),lI:document.getElementById('lightboxImg'),lCl:document.getElementById('lightboxClose'),sT:document.getElementById('scrollTop'),t:document.getElementById('toast'),oT:document.getElementById('omskTime'),mTt:document.getElementById('mskTime'),lI2:document.getElementById('logoImg')};
 
 // ============ STATE ============
 let P=[],F=gSI('gorillaFavorites',[]),aC='all',aS=null,cP=null,sS2=null,cS=0,cSo='default',sQ='',cI,gI;
-let cardsRevealDebounced,catalogUpdateDebounced;
 let viewCounts=gSI('gorillaViews',{});
 
 // ============ VIEW COUNTER ============
-function incrementView(productId){if(!viewCounts[productId])viewCounts[productId]=Math.floor(Math.random()*50)+10;viewCounts[productId]++;sSI('gorillaViews',viewCounts)}
-function getViewCount(productId){if(!viewCounts[productId]){viewCounts[productId]=Math.floor(Math.random()*50)+10;sSI('gorillaViews',viewCounts)}return viewCounts[productId]}
+function incrementView(pid){if(!viewCounts[pid])viewCounts[pid]=Math.floor(Math.random()*50)+10;viewCounts[pid]++;sSI('gorillaViews',viewCounts)}
+function getViewCount(pid){if(!viewCounts[pid]){viewCounts[pid]=Math.floor(Math.random()*50)+10;sSI('gorillaViews',viewCounts)}return viewCounts[pid]}
 
 // ============ SHARE ============
 window.shareProduct=function(){if(!cP)return;const text='🦍 '+cP.name+' — '+cP.price.toLocaleString()+' ₽\n\nСмотри на GORILLA STREETWEAR:\nhttps://gorilla-omsk.github.io';if(navigator.share){navigator.share({title:cP.name,text:text,url:'https://gorilla-omsk.github.io'}).catch(function(){})}else{navigator.clipboard.writeText(text).then(function(){showToast('🔗 Ссылка скопирована!')}).catch(function(){showToast('📋 '+text)})}}
+window.shareProductCard=function(pid,event){event.stopPropagation();const p=P.find(function(x){return x.id===pid});if(!p)return;const text='🦍 '+p.name+' — '+p.price.toLocaleString()+' ₽\n\nСмотри на GORILLA STREETWEAR:\nhttps://gorilla-omsk.github.io';if(navigator.share){navigator.share({title:p.name,text:text,url:'https://gorilla-omsk.github.io'}).catch(function(){})}else{navigator.clipboard.writeText(text).then(function(){showToast('🔗 Ссылка скопирована!')}).catch(function(){showToast('📋 '+text)})}}
 
-window.shareProductCard=function(productId,event){event.stopPropagation();const p=P.find(function(x){return x.id===productId});if(!p)return;const text='🦍 '+p.name+' — '+p.price.toLocaleString()+' ₽\n\nСмотри на GORILLA STREETWEAR:\nhttps://gorilla-omsk.github.io';if(navigator.share){navigator.share({title:p.name,text:text,url:'https://gorilla-omsk.github.io'}).catch(function(){})}else{navigator.clipboard.writeText(text).then(function(){showToast('🔗 Ссылка скопирована!')}).catch(function(){showToast('📋 '+text)})}}
+// ============ SCHEMA.ORG ============
+function generateProductSchema(p){return{'@context':'https://schema.org','@type':'Product',name:p.name,description:p.description||'',image:p.photo_id?IMAGES_PATH+p.photo_id.split(';')[0].trim()+'.jpg':'',offers:{'@type':'Offer',price:p.price,priceCurrency:'RUB',availability:p.stock>0?'https://schema.org/InStock':'https://schema.org/OutOfStock'}}}
 
-// ============ SCHEMA.ORG PRODUCT MARKUP ============
-function generateProductSchema(product){
-    return{ '@context':'https://schema.org','@type':'Product',name:product.name,description:product.description||'',image:product.photo_id?IMAGES_PATH+product.photo_id.split(';')[0].trim()+'.jpg':'',offers:{'@type':'Offer',price:product.price,priceCurrency:'RUB',availability:product.stock>0?'https://schema.org/InStock':'https://schema.org/OutOfStock'}};
+// ============ IMAGES ============
+function gPU(pid){return pid?IMAGES_PATH+pid+'.jpg':null}
+function iE(img,pid){
+    const src=img.src;
+    if(src.endsWith('.jpg')){img.src=IMAGES_PATH+pid+'.png'}
+    else if(src.endsWith('.png')){img.src=IMAGES_PATH+pid+'.webp'}
+    else{img.style.display='none';const p=document.createElement('span');p.className='img-placeholder';p.textContent='🦍';img.parentNode.appendChild(p)}
 }
 
-// ============ WEBP/AVIF FALLBACK ============
-function gPU(pid){return pid?IMAGES_PATH+pid+'.jpg':null}
-function iE(img,pid){const src=img.src;if(src.endsWith('.jpg')){img.src=IMAGES_PATH+pid+'.webp'}else if(src.endsWith('.webp')){img.src=IMAGES_PATH+pid+'.avif'}else if(src.endsWith('.avif')){img.src=IMAGES_PATH+pid+'.png'}else if(src.endsWith('.png')){img.style.display='none';const p=document.createElement('span');p.className='img-placeholder';p.textContent='🦍';img.parentNode.appendChild(p)}}
-
-// ============ TOAST ============
 function showToast(msg){D.t.textContent=msg;D.t.classList.add('show');setTimeout(function(){D.t.classList.remove('show')},3000)}
 
 // ============ CLOCKS ============
 function uC(){const n=new Date();const m=new Date(n.getTime()+3*3600000);const o=new Date(n.getTime()+6*3600000);D.mTt.textContent=m.getUTCHours().toString().padStart(2,'0')+':'+m.getUTCMinutes().toString().padStart(2,'0');D.oT.textContent=o.getUTCHours().toString().padStart(2,'0')+':'+o.getUTCMinutes().toString().padStart(2,'0')}
 uC();cI=setInterval(uC,1000);
 
-// ============ HERO PARALLAX ============
+// ============ HERO 3D ============
 const hero=document.querySelector('.hero');
 if(hero&&D.gT){hero.addEventListener('mousemove',throttle(function(e){const rect=hero.getBoundingClientRect();const x=((e.clientX-rect.left)/rect.width)-0.5;const y=((e.clientY-rect.top)/rect.height)-0.5;D.gT.style.transform='translate('+(x*15)+'px,'+(y*15)+'px)';D.gT.style.textShadow=x*20+'px '+y*20+'px 0 rgba(255,0,0,.7),'+(-x*20)+'px '+(-y*20)+'px 0 rgba(0,255,255,.7)'},16));hero.addEventListener('mouseleave',function(){D.gT.style.transform='translate(0,0)';D.gT.style.textShadow='none'})}
 
@@ -530,13 +528,12 @@ window.addEventListener('scroll',throttle(function(){const s=window.pageYOffset|
 (function(){const c=D.pC;if(!c)return;const ctx=c.getContext('2d');let particles=[];const MAX=window.innerWidth<=768?30:60;function resize(){c.width=c.parentElement.offsetWidth;c.height=c.parentElement.offsetHeight}window.addEventListener('resize',debounce(resize,100));resize();class P{constructor(){this.reset()}reset(){this.x=Math.random()*c.width;this.y=Math.random()*c.height;this.size=Math.random()*2+0.5;this.speedY=Math.random()*0.5+0.2;this.opacity=Math.random()*0.5+0.2}update(){this.y-=this.speedY;if(this.y<-10){this.y=c.height+10;this.x=Math.random()*c.width}}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+this.opacity+')';ctx.fill()}}while(particles.length<MAX)particles.push(new P());let animFrame;function animate(){ctx.clearRect(0,0,c.width,c.height);for(let i=0;i<particles.length;i++){particles[i].update();particles[i].draw()}animFrame=requestAnimationFrame(animate)}const observer=new IntersectionObserver(function(e){if(e[0].isIntersecting){animate()}else if(animFrame){cancelAnimationFrame(animFrame)}},{threshold:0.1});observer.observe(c)})();
 
 // ============ CARD REVEAL ============
-cardsRevealDebounced=debounce(function(){const observer=new IntersectionObserver(function(entries){for(let i=0;i<entries.length;i++){if(entries[i].isIntersecting){entries[i].target.classList.add('revealed');observer.unobserve(entries[i].target)}}},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.card:not(.revealed)').forEach(function(card){observer.observe(card)})},100);
-function oC(){cardsRevealDebounced()}
+function oC(){debounce(function(){const observer=new IntersectionObserver(function(entries){for(let i=0;i<entries.length;i++){if(entries[i].isIntersecting){entries[i].target.classList.add('revealed');observer.unobserve(entries[i].target)}}},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.card:not(.revealed)').forEach(function(card){observer.observe(card)})},100)()}
 
 // ============ SKELETONS ============
 function rSkeletons(){const count=window.innerWidth<=768?4:6;let h='';for(let i=0;i<count;i++){h+='<div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>'}D.cG.innerHTML=h}
 
-// ============ CSV PARSER ============
+// ============ CSV ============
 function pL(line){const r=[];let c='',q=false;for(let ch of line){if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c=''}else c+=ch}r.push(c.trim());return r}
 function pCSV(csv){const lines=csv.trim().split('\n');if(lines.length<2)return[];const headers=pL(lines[0]).map(function(h){return h.toLowerCase()});const ci=headers.indexOf('colors')!==-1?headers.indexOf('colors'):headers.indexOf('color');if(ci!==-1)headers[ci]='color';return lines.slice(1).map(function(line){const values=pL(line);if(values.length<headers.length)return null;const item={};headers.forEach(function(h,idx){item[h]=values[idx]||''});item.price=parseInt(item.price)||0;item.stock=parseInt(item.stock)||0;item.sizes=item.sizes?item.sizes.split(';').map(function(s){return s.trim()}).filter(function(s){return s}):[];item.category=(item.category||'').toLowerCase();return(item.id&&item.name)?item:null}).filter(Boolean)}
 
@@ -545,8 +542,7 @@ async function lP(){rSkeletons();try{const r=await fetch(CSV_URL);if(!r.ok)throw
 
 // ============ FAVORITES ============
 function sF(){sSI('gorillaFavorites',F)}
-function tF(id){const idx=F.indexOf(id);if(idx!==-1)F.splice(idx,1);else F.push(id);sF();document.querySelectorAll('.favorite-btn[data-id="'+id+'"]').forEach(function(btn){const isFav=F.includes(id);btn.innerHTML=isFav?'❤️':'🤍';btn.classList.toggle('active',isFav)});if(cP&&cP.id===id)uMF();if(catalogUpdateDebounced)catalogUpdateDebounced()}
-catalogUpdateDebounced=debounce(function(){rC();rMobCats();rCat();setTimeout(oC,100);setTimeout(init3DCards,200)},100);
+function tF(id){const idx=F.indexOf(id);if(idx!==-1)F.splice(idx,1);else F.push(id);sF();document.querySelectorAll('.favorite-btn[data-id="'+id+'"]').forEach(function(btn){const isFav=F.includes(id);btn.innerHTML=isFav?'❤️':'🤍';btn.classList.toggle('active',isFav)});if(cP&&cP.id===id)uMF();rC();rMobCats();rCat();setTimeout(oC,100);setTimeout(init3DCards,200)}
 function tFFM(){if(cP)tF(cP.id)}
 function uMF(){if(!cP)return;const isFav=F.includes(cP.id);D.mFv.textContent=isFav?'❤️':'🤍';D.mFv.classList.toggle('active',isFav)}
 
@@ -577,14 +573,10 @@ function cL(){D.lB.classList.remove('active');document.body.style.overflow=''}
 
 // ============ MODAL ============
 function oM(product){
-    cP=product;sS2=(product.sizes&&product.sizes.length===1)?product.sizes[0]:null;cS=0;
-    incrementView(product.id);
+    cP=product;sS2=(product.sizes&&product.sizes.length===1)?product.sizes[0]:null;cS=0;incrementView(product.id);
     const pids=product.photo_id?product.photo_id.split(';').map(function(s){return s.trim()}):[];
     const photos=pids.map(function(id){return gPU(id)}).filter(function(url){return url});
-    let g='';
-    if(photos.length>1){g='<div class="modal-gallery"><div class="modal-gallery-slides">'+photos.map(function(url,i){return'<img src="'+url+'" class="modal-gallery-img'+(i===0?' active':'')+'" loading="lazy" onerror="this.style.display=\'none\'" data-lightbox-src="'+url+'">'}).join('')+'</div><div class="modal-gallery-dots">'+photos.map(function(_,i){return'<span class="modal-dot'+(i===0?' active':'')+'" data-slide="'+i+'"></span>'}).join('')+'</div><button class="modal-gallery-prev">‹</button><button class="modal-gallery-next">›</button></div>'}
-    else if(photos.length===1){g='<img class="modal-img" src="'+photos[0]+'" loading="lazy" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="'+photos[0]+'">'}
-    else{g='<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px">🦍</span>'}
+    let g='';if(photos.length>1){g='<div class="modal-gallery"><div class="modal-gallery-slides">'+photos.map(function(url,i){return'<img src="'+url+'" class="modal-gallery-img'+(i===0?' active':'')+'" loading="lazy" onerror="this.style.display=\'none\'" data-lightbox-src="'+url+'">'}).join('')+'</div><div class="modal-gallery-dots">'+photos.map(function(_,i){return'<span class="modal-dot'+(i===0?' active':'')+'" data-slide="'+i+'"></span>'}).join('')+'</div><button class="modal-gallery-prev">‹</button><button class="modal-gallery-next">›</button></div>'}else if(photos.length===1){g='<img class="modal-img" src="'+photos[0]+'" loading="lazy" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="'+photos[0]+'">'}else{g='<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px">🦍</span>'}
     D.mGC.innerHTML=g;D.mT.textContent=product.name;D.mP.textContent=product.price.toLocaleString()+' ₽';
     D.mC.innerHTML=product.color?'Цвет: <span style="display:inline-block;width:16px;height:16px;background-color:'+product.color+';border-radius:50%;vertical-align:middle;margin-right:4px;"></span> '+product.color:'';
     D.mD.textContent=product.description||'';D.mSt.textContent=product.stock>0?'В наличии: '+product.stock+' шт':'Нет в наличии';uMF();
@@ -599,18 +591,16 @@ function closeModal(){D.mO.classList.remove('active');document.body.style.overfl
 function rCat(){
     let f=aC==='favorites'?P.filter(function(p){return F.includes(p.id)}):aC==='all'?P:P.filter(function(p){return p.category===aC});
     if(aS)f=f.filter(function(p){return p.sizes&&p.sizes.includes(aS)});
-    if(sQ){f=f.filter(function(p){const nm=p.name.toLowerCase().includes(sQ);const cm=CAT_RU[p.category]?CAT_RU[p.category].includes(sQ):false;const cem=p.category.toLowerCase().includes(sQ);return nm||cm||cem})}
-    if(cSo==='price-asc')f.sort(function(a,b){return a.price-b.price});
-    else if(cSo==='price-desc')f.sort(function(a,b){return b.price-a.price});
-    else if(cSo==='newest')f.reverse();
+    if(sQ)f=f.filter(function(p){const nm=p.name.toLowerCase().includes(sQ);const cm=CAT_RU[p.category]?CAT_RU[p.category].includes(sQ):false;const cem=p.category.toLowerCase().includes(sQ);return nm||cm||cem});
+    if(cSo==='price-asc')f.sort(function(a,b){return a.price-b.price});else if(cSo==='price-desc')f.sort(function(a,b){return b.price-a.price});else if(cSo==='newest')f.reverse();
     if(!f.length){D.cG.innerHTML='<div class="no-products">Товаров пока нет</div>';return}
     D.cG.innerHTML=f.map(function(p){
         const so=p.stock===0,ls=p.stock>0&&p.stock<=3;const st=so?'SOLD OUT':ls?'Осталось: '+p.stock+' шт':'В наличии: '+p.stock+' шт';
         const catName=CATS.find(function(c){return c.id===p.category})?CATS.find(function(c){return c.id===p.category}).name:'';
         const sizes=p.sizes?p.sizes.join(', '):'';const pu=gPU(p.photo_id?p.photo_id.split(';')[0].trim():'');
         const isFav=F.includes(p.id);const hfd=p.price>=3000;const fd=hfd?'<span class="free-delivery-badge">🚚 Бесплатная доставка 5Post</span>':'';
-        const views=getViewCount(p.id);const loadingAttr=p.id<=6?'eager':'lazy';
-        return'<div class="card'+(so?' sold-out':'')+'" data-product-id="'+p.id+'"><div class="card-img">'+(pu?'<img src="'+pu+'" alt="'+p.name+'" loading="'+loadingAttr+'" onerror="iE(this,\''+(p.photo_id.split(';')[0].trim())+'\')">':'<span class="img-placeholder">🦍</span>')+'<div class="card-tag'+(so?' sold':'')+'">'+(so?'SOLD OUT':(p.tag||''))+'</div><button class="favorite-btn'+(isFav?' active':'')+'" data-id="'+p.id+'">'+(isFav?'❤️':'🤍')+'</button><button class="share-btn" data-share-id="'+p.id+'" title="Поделиться">🔗</button><span class="stock-badge'+(ls?' low':'')+(so?' out':'')+'">'+st+'</span>'+(hfd?'<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>':'')+'</div><div class="card-body"><h3>'+p.name+' <span class="view-counter">'+views+'</span>'+(p.color?'<span style="display:inline-block;width:12px;height:12px;background-color:'+p.color+';border-radius:50%;vertical-align:middle;margin-left:6px;" title="'+p.color+'"></span>':'')+'</h3><p class="category">'+catName+'</p>'+(sizes?'<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">'+sizes+'</span></div>':'')+'<p class="price">'+p.price.toLocaleString()+' ₽</p>'+fd+'<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-order btn-order-vk" onclick="event.stopPropagation();">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-order btn-order-tg" onclick="event.stopPropagation();">✈️ TG</a></div></div></div>'}).join('');
+        const views=getViewCount(p.id);
+        return'<div class="card'+(so?' sold-out':'')+'" data-product-id="'+p.id+'"><div class="card-img">'+(pu?'<img src="'+pu+'" alt="'+p.name+'" loading="lazy" onerror="iE(this,\''+(p.photo_id.split(';')[0].trim())+'\')">':'<span class="img-placeholder">🦍</span>')+'<div class="card-tag'+(so?' sold':'')+'">'+(so?'SOLD OUT':(p.tag||''))+'</div><button class="favorite-btn'+(isFav?' active':'')+'" data-id="'+p.id+'">'+(isFav?'❤️':'🤍')+'</button><button class="share-btn" data-share-id="'+p.id+'" title="Поделиться">🔗</button><span class="stock-badge'+(ls?' low':'')+(so?' out':'')+'">'+st+'</span>'+(hfd?'<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>':'')+'</div><div class="card-body"><h3>'+p.name+' <span class="view-counter">'+views+'</span>'+(p.color?'<span style="display:inline-block;width:12px;height:12px;background-color:'+p.color+';border-radius:50%;vertical-align:middle;margin-left:6px;" title="'+p.color+'"></span>':'')+'</h3><p class="category">'+catName+'</p>'+(sizes?'<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">'+sizes+'</span></div>':'')+'<p class="price">'+p.price.toLocaleString()+' ₽</p>'+fd+'<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-order btn-order-vk" onclick="event.stopPropagation();">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-order btn-order-tg" onclick="event.stopPropagation();">✈️ TG</a></div></div></div>'}).join('');
     D.cG.querySelectorAll('.card').forEach(function(card){card.addEventListener('click',function(e){if(e.target.closest('.favorite-btn')||e.target.closest('.btn-order')||e.target.closest('.share-btn'))return;const pid=card.getAttribute('data-product-id');const product=P.find(function(p){return p.id===pid});if(product)oM(product)})});
     D.cG.querySelectorAll('.favorite-btn').forEach(function(btn){btn.addEventListener('click',function(e){e.stopPropagation();const id=btn.getAttribute('data-id');tF(id)})});
     D.cG.querySelectorAll('.share-btn').forEach(function(btn){btn.addEventListener('click',function(e){const id=btn.getAttribute('data-share-id');shareProductCard(id,e)})});
