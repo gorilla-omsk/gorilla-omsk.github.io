@@ -264,11 +264,6 @@
         .scroll-top:hover{opacity:1;transform:translateY(-3px)}
         .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#fff;color:#0a0a0a;padding:12px 28px;border-radius:100px;font-size:13px;font-weight:600;z-index:3000;opacity:0;transition:opacity .3s;box-shadow:0 0 20px rgba(255,255,255,.3)}
         .toast.show{opacity:1;bottom:40px}
-
-        /* MOBILE STICKY ORDER */
-        .mobile-sticky-order{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9997;background:#07f;color:#fff;padding:12px 25px;border-radius:50px;font-family:'Russo One',sans-serif;font-weight:600;text-transform:uppercase;text-decoration:none;letter-spacing:1px;box-shadow:0 0 20px rgba(0,119,255,.5);display:none;animation:pulse-vk 2s infinite}
-        .mobile-sticky-order:active{transform:translateX(-50%) scale(.95)}
-        @keyframes pulse-vk{0%{box-shadow:0 0 0 0 rgba(0,119,255,.7)}70%{box-shadow:0 0 0 15px rgba(0,119,255,0)}100%{box-shadow:0 0 0 0 rgba(0,119,255,0)}}
         .categories-scroll{display:none;overflow-x:auto;white-space:nowrap;padding:15px 5px;gap:8px;-ms-overflow-style:none;scrollbar-width:none;margin-bottom:10px}
         .categories-scroll::-webkit-scrollbar{display:none}
         .categories-scroll .category-btn{display:inline-block;width:auto;border:1px solid rgba(255,255,255,.2);border-radius:50px;margin-right:8px;padding:8px 16px;font-size:12px}
@@ -288,7 +283,6 @@
             .card-body{padding:12px}
             .card-body h3{font-size:13px}
             .card-actions{flex-direction:column}
-            .mobile-sticky-order{display:block}
         }
     </style>
 </head>
@@ -424,7 +418,6 @@
 
 <footer><p>© 2026 GORILLA STREETWEAR • OMSK</p></footer>
 <a href="#" class="scroll-top" id="scrollTop">↑</a>
-<a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="mobile-sticky-order">📱 Заказать в VK</a>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
