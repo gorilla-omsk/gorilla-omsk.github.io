@@ -7,17 +7,6 @@ function debounce(fn, delay) { var timer; return function() { var ctx = this, ar
 function gSI(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e) { return d; } }
 function sSI(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 
-// ============ SERVICE WORKER (уже в HTML, но оставляем для совместимости) ============
-if ('serviceWorker' in navigator && !navigator.serviceWorker.controller) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(reg) {
-      console.log('SW registered:', reg.scope);
-    }).catch(function(err) {
-      console.log('SW failed:', err);
-    });
-  });
-}
-
 // ============ PRELOADER ============
 var preloader = document.getElementById('preloader');
 var pageLoaded = false;
@@ -126,10 +115,14 @@ function generateProductSchema(p) {
 // ============ IMAGES ============
 function gPU(pid, ext) {
   if (!pid || !pid.trim()) return null;
-  return IMAGES_PATH + pid.trim() + '.' + (ext || 'jpg') + '?v=' + CACHE_VERSION;
+  pid = pid.trim();
+  if (ext) {
+    return IMAGES_PATH + pid + '.' + ext + '?v=' + CACHE_VERSION;
+  }
+  return IMAGES_PATH + pid + '.jpg?v=' + CACHE_VERSION;
 }
 
-function iE(img, pid) {
+window.iE = function(img, pid) {
   if (!pid) {
     img.style.display = 'none';
     showPlaceholder(img);
@@ -139,7 +132,6 @@ function iE(img, pid) {
   var currentSrc = img.src.split('?v=')[0];
   var currentExt = '';
   
-  // Определяем текущее расширение
   for (var i = 0; i < IMAGE_FALLBACKS.length; i++) {
     if (currentSrc.endsWith('.' + IMAGE_FALLBACKS[i])) {
       currentExt = IMAGE_FALLBACKS[i];
@@ -147,19 +139,16 @@ function iE(img, pid) {
     }
   }
   
-  // Находим индекс текущего расширения
   var currentIdx = currentExt ? IMAGE_FALLBACKS.indexOf(currentExt) : -1;
-  
-  // Пробуем следующий формат
   var nextIdx = currentIdx + 1;
+  
   if (nextIdx < IMAGE_FALLBACKS.length) {
     img.src = IMAGES_PATH + pid + '.' + IMAGE_FALLBACKS[nextIdx] + '?v=' + CACHE_VERSION;
   } else {
-    // Все форматы не сработали — показываем заглушку
     img.style.display = 'none';
     showPlaceholder(img);
   }
-}
+};
 
 function showPlaceholder(img) {
   var parent = img.parentNode;
@@ -214,7 +203,7 @@ window.addEventListener('scroll', throttle(function() {
   if (D.mH) D.mH.classList.toggle('scrolled', window.scrollY > 50);
 }, 16));
 
-// ============ PARTICLES (disabled on mobile) ============
+// ============ PARTICLES ============
 if (!isMobile) {
   (function() {
     var c = D.pC; if (!c) return;
@@ -253,7 +242,7 @@ function oC() {
 // ============ SKELETONS ============
 function rSkeletons() { var count = isMobile ? 4 : 6; var h = ''; for (var i = 0; i < count; i++) { h += '<div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>'; } D.cG.innerHTML = h; }
 
-// ============ CSV PARSER WITH VALIDATION ============
+// ============ CSV PARSER ============
 function pL(line) { var r = [], c = '', q = false; for (var i = 0; i < line.length; i++) { var ch = line[i]; if (ch === '"') q = !q; else if (ch === ',' && !q) { r.push(c.trim()); c = ''; } else c += ch; } r.push(c.trim()); return r; }
 function pCSV(csv) {
   var lines = csv.trim().split('\n');
