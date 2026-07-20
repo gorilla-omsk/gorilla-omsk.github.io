@@ -2,26 +2,77 @@
     "id": "/",
     "name": "GORILLA STREETWEAR — Уличная одежда Омск",
     "short_name": "GORILLA",
-    "description": "Уличная одежда в Омске. Кроссовки, худи, футболки, куртки.",
+    "description": "Уличная одежда в Омске. Кроссовки, худи, футболки, куртки, штаны.",
     "lang": "ru-RU",
     "icons": [
         {
-            "src": "GGVP.jpg",
+            "src": "icon-192.png",
             "sizes": "192x192",
-            "type": "image/jpeg",
-            "purpose": "any maskable"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
-            "src": "GGVP.jpg",
+            "src": "icon-512.png",
             "sizes": "512x512",
-            "type": "image/jpeg",
-            "purpose": "any maskable"
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "maskable-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ],
-    "start_url": "/?utm_source=pwa",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "orientation": "portrait-primary",
     "background_color": "#0a0a0a",
     "theme_color": "#0a0a0a",
-    "categories": ["shopping", "lifestyle"]
+    "categories": ["shopping", "lifestyle"],
+    "shortcuts": [
+        {
+            "name": "Каталог",
+            "short_name": "Каталог",
+            "description": "Смотреть все товары",
+            "url": "/#catalog",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "Контакты",
+            "short_name": "Контакты",
+            "description": "Написать в VK или Telegram",
+            "url": "/#contacts",
+            "icons": [
+                {
+                    "src": "icon-192.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Главный экран GORILLA STREETWEAR"
+        },
+        {
+            "src": "screenshot-mobile.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Мобильная версия каталога"
+        }
+    ]
 }
