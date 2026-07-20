@@ -1,13 +1,27 @@
 {
-    "name": "GORILLA STREETWEAR",
+    "id": "/",
+    "name": "GORILLA STREETWEAR — Уличная одежда Омск",
     "short_name": "GORILLA",
-    "icons": [{
-        "src": "GGVP.jpg",
-        "sizes": "512x512",
-        "type": "image/jpeg"
-    }],
-    "start_url": "/",
+    "description": "Уличная одежда в Омске. Кроссовки, худи, футболки, куртки.",
+    "lang": "ru-RU",
+    "icons": [
+        {
+            "src": "GGVP.jpg",
+            "sizes": "192x192",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "GGVP.jpg",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "/?utm_source=pwa",
     "display": "standalone",
+    "orientation": "portrait-primary",
     "background_color": "#0a0a0a",
-    "theme_color": "#0a0a0a"
+    "theme_color": "#0a0a0a",
+    "categories": ["shopping", "lifestyle"]
 }
