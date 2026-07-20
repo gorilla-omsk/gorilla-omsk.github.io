@@ -17,7 +17,6 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Убираем задержку тапа без запрета зума */
 button, a, .card, .category-btn, .size-btn, .size-filter-btn, .modal-dot, .similar-item {
     touch-action: manipulation;
 }
