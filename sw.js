@@ -69,13 +69,13 @@ function trimImageCache() {
 self.addEventListener('fetch', function(e) {
   var url = e.request.url;
 
-  // 1. Google Sheets — всегда свежие данные
+  // Google Sheets — всегда свежие данные
   if (url.includes('google.com') && url.includes('spreadsheets')) {
     e.respondWith(fetch(e.request));
     return;
   }
 
-  // 2. Google Fonts — кэшируем надолго
+  // Google Fonts — кэшируем надолго
   if (url.includes('fonts.googleapis.com') || url.includes('fonts.gstatic.com')) {
     e.respondWith(
       caches.match(e.request).then(function(cached) {
@@ -94,12 +94,11 @@ self.addEventListener('fetch', function(e) {
     return;
   }
 
-  // 3. Изображения товаров — кэшируем при загрузке
+  // Изображения товаров — кэшируем при загрузке
   if (url.includes('/images/')) {
     e.respondWith(
       caches.match(e.request).then(function(cached) {
         if (cached) {
-          // Фоновое обновление
           fetch(e.request).then(function(response) {
             if (response.ok) {
               caches.open(CACHE_NAME).then(function(cache) {
@@ -125,7 +124,7 @@ self.addEventListener('fetch', function(e) {
     return;
   }
 
-  // 4. HTML-страницы — офлайн-заглушка
+  // HTML-страницы — офлайн-заглушка
   if (e.request.mode === 'navigate') {
     e.respondWith(
       fetch(e.request).catch(function() {
@@ -135,11 +134,10 @@ self.addEventListener('fetch', function(e) {
     return;
   }
 
-  // 5. Всё остальное — сначала кэш, потом сеть
+  // Всё остальное — сначала кэш, потом сеть
   e.respondWith(
     caches.match(e.request).then(function(cached) {
       if (cached) {
-        // Фоновое обновление
         fetch(e.request).then(function(response) {
           if (response.ok) {
             caches.open(CACHE_NAME).then(function(cache) {
@@ -157,14 +155,13 @@ self.addEventListener('fetch', function(e) {
         });
         return response;
       }).catch(function() {
-        // Если нет в кэше и сеть недоступна
         return new Response('Offline', { status: 503 });
       });
     })
   );
 });
 
-// ============ PUSH (заготовка для будущих уведомлений) ============
+// ============ PUSH ============
 self.addEventListener('push', function(e) {
   var data = e.data ? e.data.json() : {};
   var title = data.title || 'GORILLA STREETWEAR';
