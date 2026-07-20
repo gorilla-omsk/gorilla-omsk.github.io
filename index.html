@@ -6,6 +6,7 @@
     <title>GORILLA STREETWEAR — Уличная одежда Омск</title>
     <meta name="description" content="GORILLA STREETWEAR — уличная одежда в Омске. Кроссовки, худи, футболки, куртки, штаны. Доставка по России.">
     
+    <!-- Open Graph -->
     <meta property="og:title" content="GORILLA STREETWEAR — Уличная одежда Омск">
     <meta property="og:description" content="Уличная эстетика • Омск. Кроссовки, худи, футболки, куртки, штаны.">
     <meta property="og:image" content="https://gorilla-omsk.github.io/GGVP.jpg">
@@ -16,18 +17,25 @@
     <meta property="og:url" content="https://gorilla-omsk.github.io">
     <meta property="og:locale" content="ru_RU">
     
-    <link rel="apple-touch-icon" href="GGVP.jpg">
+    <!-- Favicon и PWA иконки -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦍%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <link rel="icon" type="image/jpeg" href="GGVP.jpg">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="manifest" href="/manifest.json?v=2">
+    
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0a0a">
     <meta name="color-scheme" content="dark">
 
+    <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap" rel="stylesheet">
+    
+    <!-- Стили -->
     <link rel="stylesheet" href="style.css?v=2">
 
     <!-- Yandex Metrika -->
@@ -38,17 +46,20 @@
 </head>
 <body>
 
+    <!-- Прелоадер -->
     <div id="preloader" role="status" aria-live="polite">
         <div class="preloader-logo">GOR<span>ILLA</span></div>
         <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
         <div class="preloader-tagline">Загрузка дропа...</div>
     </div>
 
+    <!-- Лайтбокс для фото -->
     <div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр фото" aria-hidden="true">
         <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть просмотр">✕</button>
         <img src="" alt="Фото товара" id="lightboxImg">
     </div>
 
+    <!-- Хедер -->
     <header id="main-header">
         <div class="logo-block">
             <img src="GGVP.jpg" alt="Логотип GORILLA" class="logo-img" id="logoImg" width="40" height="40" onerror="this.style.display='none'">
@@ -63,6 +74,7 @@
         </nav>
     </header>
 
+    <!-- Главный экран -->
     <section class="hero" id="hero" aria-label="Главный экран">
         <div class="hero-bg" id="hero-bg"></div>
         <canvas id="particles-canvas" aria-hidden="true"></canvas>
@@ -82,8 +94,10 @@
         </div>
     </section>
 
+    <!-- Бегущая строка -->
     <div class="marquee" aria-hidden="true"><span>GORILLA • OMSK • 🔥 ЗАКАЗ В ЛС VK / TELEGRAM • ДОСТАВКА 5POST БЕСПЛАТНО ОТ 3000₽ • НОВЫЙ ДРОП</span></div>
 
+    <!-- Каталог -->
     <section class="section" id="catalog" aria-label="Каталог товаров">
         <p class="section-label">Drop 001</p>
         <h2 class="section-title">Каталог</h2>
@@ -119,6 +133,7 @@
         </div>
     </section>
 
+    <!-- Доставка -->
     <section class="section" id="delivery" aria-label="Информация о доставке">
         <p class="section-label">Shipping</p>
         <h2 class="section-title">Доставка</h2>
@@ -130,6 +145,7 @@
         </div>
     </section>
 
+    <!-- Контакты -->
     <section class="section" id="contacts" aria-label="Контакты">
         <p class="section-label">Hit us up</p>
         <h2 class="section-title">Контакты</h2>
@@ -149,9 +165,13 @@
         </div>
     </section>
 
+    <!-- Футер -->
     <footer><p>© 2025 GORILLA STREETWEAR • OMSK</p></footer>
+    
+    <!-- Кнопка "Наверх" -->
     <a href="#" class="scroll-top" id="scrollTop" aria-label="Наверх">↑</a>
 
+    <!-- Модалка товара -->
     <div class="modal-overlay" id="modalOverlay" role="dialog" aria-label="Карточка товара" aria-hidden="true">
         <div class="modal" id="modalBox">
             <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
@@ -176,9 +196,10 @@
         </div>
     </div>
 
+    <!-- Тосты -->
     <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
 
-    <!-- Регистрация Service Worker -->
+    <!-- Service Worker -->
     <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
@@ -191,6 +212,7 @@
     }
     </script>
 
+    <!-- Основной скрипт -->
     <script src="script.js?v=2"></script>
 </body>
 </html>
