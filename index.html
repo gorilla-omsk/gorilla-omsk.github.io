@@ -175,7 +175,6 @@
         .skeleton-line.price{width:40%;height:22px;margin-top:auto}
         @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
-        /* SIMILAR PRODUCTS */
         .similar-section{margin-top:15px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)}
         .similar-section .similar-title{font-size:10px;color:#777;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
         .similar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
@@ -268,259 +267,160 @@
             .card-body h3{font-size:13px}
             .card-actions{flex-direction:column}
             .similar-grid{grid-template-columns:repeat(4,1fr)}
+            #particles-canvas{display:none}
+            .card-3d{perspective:none;transform-style:flat}
+            .card-smoke{display:none}
         }
     </style>
 </head>
 <body>
 
-<meta itemprop="name" content="GORILLA STREETWEAR">
-<meta itemprop="description" content="Уличная одежда в Омске.">
-<meta itemprop="image" content="https://gorilla-omsk.github.io/GGVP.jpg">
+<main>
+    <meta itemprop="name" content="GORILLA STREETWEAR">
+    <meta itemprop="description" content="Уличная одежда в Омске.">
+    <meta itemprop="image" content="https://gorilla-omsk.github.io/GGVP.jpg">
 
-<div id="preloader">
-    <div class="preloader-logo">GOR<span>ILLA</span></div>
-    <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
-    <div class="preloader-tagline">Загрузка дропа...</div>
-</div>
-
-<div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
-    <img src="" alt="zoom" id="lightboxImg">
-</div>
-
-<header id="main-header">
-    <div class="logo-block">
-        <img src="GGVP.jpg" alt="GORILLA" class="logo-img" id="logoImg" width="40" height="40">
-        <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
+    <div id="preloader" role="status" aria-live="polite">
+        <div class="preloader-logo">GOR<span>ILLA</span></div>
+        <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+        <div class="preloader-tagline">Загрузка дропа...</div>
     </div>
-    <nav>
-        <a href="#catalog">Каталог</a>
-        <a href="#delivery">Доставка</a>
-        <a href="#contacts">Контакты</a>
-        <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener">VK</a>
-        <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener">TG</a>
-    </nav>
-</header>
 
-<section class="hero" id="hero">
-    <div class="hero-bg" id="hero-bg"></div>
-    <canvas id="particles-canvas"></canvas>
-    <div class="hero-content" id="hero-content">
-        <h1 id="glitch-title">GOR<span class="outline">ILLA</span></h1>
-        <p class="subtitle">Уличная эстетика • Омск</p>
-        <div class="hero-clocks">
-            <div class="hero-clock-item"><span class="hero-clock-city">Омск</span><span class="hero-clock-time" id="omskTime">--:--</span></div>
-            <div class="hero-clock-divider"></div>
-            <div class="hero-clock-item"><span class="hero-clock-city">Москва</span><span class="hero-clock-time" id="mskTime">--:--</span></div>
-        </div>
-        <div class="btn-group">
-            <a href="#catalog" class="btn btn-white">Смотреть дроп</a>
-            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn btn-vk">📱 Написать в VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn btn-tg">✈️ Написать в TG</a>
-        </div>
+    <div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр фото">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть просмотр">✕</button>
+        <img src="" alt="Фото товара" id="lightboxImg">
     </div>
-</section>
 
-<div class="marquee"><span>GORILLA • OMSK • 🔥 ЗАКАЗ В ЛС VK / TELEGRAM • ДОСТАВКА 5POST БЕСПЛАТНО ОТ 3000₽ • НОВЫЙ ДРОП</span></div>
+    <header id="main-header">
+        <div class="logo-block">
+            <img src="GGVP.jpg" alt="Логотип GORILLA" class="logo-img" id="logoImg" width="40" height="40">
+            <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
+        </div>
+        <nav role="navigation" aria-label="Главное меню">
+            <a href="#catalog">Каталог</a>
+            <a href="#delivery">Доставка</a>
+            <a href="#contacts">Контакты</a>
+            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener">VK</a>
+            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener">TG</a>
+        </nav>
+    </header>
 
-<section class="section" id="catalog">
-    <p class="section-label">Drop 001</p>
-    <h2 class="section-title">Каталог</h2>
-    <p class="section-subtitle">Понравился товар? Напиши нам в VK или Telegram</p>
-    <div class="categories-scroll" id="categoriesScroll"></div>
-    <div class="catalog-wrapper">
-        <div class="sidebar" id="sidebar">
-            <div class="categories-menu" id="categoriesMenu"></div>
-            <div class="size-filter" id="sizeFilter">
-                <h4>📏 Размер</h4>
-                <div id="sizeFilterContent"><span style="color:#888;font-size:12px;">Выбери категорию</span></div>
-                <button class="size-filter-reset" id="sizeFilterReset">✕ Сбросить размер</button>
+    <section class="hero" id="hero" aria-label="Главный экран">
+        <div class="hero-bg" id="hero-bg"></div>
+        <canvas id="particles-canvas" aria-hidden="true"></canvas>
+        <div class="hero-content" id="hero-content">
+            <h1>GOR<span class="outline">ILLA</span></h1>
+            <p class="subtitle">Уличная эстетика • Омск</p>
+            <div class="hero-clocks" aria-label="Текущее время">
+                <div class="hero-clock-item"><span class="hero-clock-city">Омск</span><span class="hero-clock-time" id="omskTime">--:--</span></div>
+                <div class="hero-clock-divider"></div>
+                <div class="hero-clock-item"><span class="hero-clock-city">Москва</span><span class="hero-clock-time" id="mskTime">--:--</span></div>
+            </div>
+            <div class="btn-group">
+                <a href="#catalog" class="btn btn-white" aria-label="Перейти к каталогу">Смотреть дроп</a>
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn btn-vk">📱 Написать в VK</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn btn-tg">✈️ Написать в TG</a>
             </div>
         </div>
-        <div style="flex:1;">
-            <div class="search-bar">
-                <div style="display:flex;gap:10px;align-items:center;background:#0c0c0c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 16px;">
-                    <span style="color:#888;font-size:18px;">🔍</span>
-                    <input type="text" id="searchInput" placeholder="Поиск по товарам...">
-                    <button id="clearSearchBtn" style="display:none;background:none;border:none;color:#f33;cursor:pointer;font-size:18px;padding:0 5px;">✕</button>
+    </section>
+
+    <div class="marquee" aria-hidden="true"><span>GORILLA • OMSK • 🔥 ЗАКАЗ В ЛС VK / TELEGRAM • ДОСТАВКА 5POST БЕСПЛАТНО ОТ 3000₽ • НОВЫЙ ДРОП</span></div>
+
+    <section class="section" id="catalog" aria-label="Каталог товаров">
+        <p class="section-label">Drop 001</p>
+        <h2 class="section-title">Каталог</h2>
+        <p class="section-subtitle">Понравился товар? Напиши нам в VK или Telegram</p>
+        <div class="categories-scroll" id="categoriesScroll" role="tablist" aria-label="Категории"></div>
+        <div class="catalog-wrapper">
+            <div class="sidebar" id="sidebar">
+                <div class="categories-menu" id="categoriesMenu" role="navigation" aria-label="Категории товаров"></div>
+                <div class="size-filter" id="sizeFilter">
+                    <h4>📏 Размер</h4>
+                    <div id="sizeFilterContent"><span style="color:#888;font-size:12px;">Выбери категорию</span></div>
+                    <button class="size-filter-reset" id="sizeFilterReset" aria-label="Сбросить фильтр размеров">✕ Сбросить размер</button>
                 </div>
             </div>
-            <div class="sort-bar">
-                <select id="sortSelect">
-                    <option value="default">По умолчанию</option>
-                    <option value="price-asc">Сначала дешёвые</option>
-                    <option value="price-desc">Сначала дорогие</option>
-                    <option value="newest">Сначала новые</option>
-                </select>
+            <div style="flex:1;">
+                <div class="search-bar" role="search">
+                    <div style="display:flex;gap:10px;align-items:center;background:#0c0c0c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 16px;">
+                        <span style="color:#888;font-size:18px;" aria-hidden="true">🔍</span>
+                        <input type="text" id="searchInput" placeholder="Поиск по товарам..." aria-label="Поиск по товарам">
+                        <button id="clearSearchBtn" style="display:none;background:none;border:none;color:#f33;cursor:pointer;font-size:18px;padding:0 5px;" aria-label="Очистить поиск">✕</button>
+                    </div>
+                </div>
+                <div class="sort-bar">
+                    <select id="sortSelect" aria-label="Сортировка товаров">
+                        <option value="default">По умолчанию</option>
+                        <option value="price-asc">Сначала дешёвые</option>
+                        <option value="price-desc">Сначала дорогие</option>
+                        <option value="newest">Сначала новые</option>
+                    </select>
+                </div>
+                <div class="catalog-grid" id="catalogGrid" role="list" aria-label="Список товаров"></div>
             </div>
-            <div class="catalog-grid" id="catalogGrid"></div>
+        </div>
+    </section>
+
+    <section class="section" id="delivery" aria-label="Информация о доставке">
+        <p class="section-label">Shipping</p>
+        <h2 class="section-title">Доставка</h2>
+        <p class="section-subtitle">Выбери удобный способ</p>
+        <div class="delivery-grid">
+            <div class="delivery-card"><div class="icon" aria-hidden="true">🏪</div><h3>Самовывоз</h3><p>Омск, ул. Мира, 9Б, 4 этаж<br>Примерка на месте</p></div>
+            <div class="delivery-card"><div class="icon" aria-hidden="true">🛵</div><h3>По Омску</h3><p>Курьер — 300₽<br>В день заказа до 15:00</p></div>
+            <div class="delivery-card"><div class="icon" aria-hidden="true">📦</div><h3>По России</h3><p>5Post (Пятёрочка) — 250₽<br><strong style="color:#4caf50;">Бесплатно от 3000₽</strong></p></div>
+        </div>
+    </section>
+
+    <section class="section" id="contacts" aria-label="Контакты">
+        <p class="section-label">Hit us up</p>
+        <h2 class="section-title">Контакты</h2>
+        <p class="section-subtitle">Понравился товар? Напиши — оформим!</p>
+        <div class="contact-block">
+            <h3>GORILLA STREETWEAR</h3>
+            <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
+            <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
+            <p style="color:#ff9933;font-size:13px;margin:20px 0;padding:16px;background:rgba(255,153,51,.05);border:1px solid rgba(255,153,51,.15);border-radius:10px;">
+                💡 <strong>Как заказать?</strong><br><br>
+                Напиши нам в VK или Telegram —<br>скинем доп. фото, уточним размер и оформим доставку
+            </p>
+            <div class="social-btns">
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-social-vk">📱 Написать в VK</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-social-tg">✈️ Написать в TG</a>
+            </div>
+        </div>
+    </section>
+
+    <footer><p>© 2026 GORILLA STREETWEAR • OMSK</p></footer>
+    <a href="#" class="scroll-top" id="scrollTop" aria-label="Наверх">↑</a>
+
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-label="Карточка товара">
+        <div class="modal" id="modalBox">
+            <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+            <div id="modalGalleryContainer"></div>
+            <div class="modal-favorite" id="modalFavorite" role="button" aria-label="Добавить в избранное" style="position:absolute;top:20px;right:65px;font-size:24px;cursor:pointer;z-index:10;">🤍</div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <p class="modal-price" id="modalPrice"></p>
+            <p class="modal-color" id="modalColor"></p>
+            <p class="modal-stock" id="modalStock"></p>
+            <p style="color:#aaa;font-size:11px;margin-bottom:10px;">Выбери размер:</p>
+            <div class="size-selector" id="modalSizes" role="radiogroup" aria-label="Выбор размера"></div>
+            <p class="modal-description" id="modalDesc"></p>
+            <div id="modalSimilar"></div>
+            <div class="modal-order-btns">
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="modal-order-btn modal-order-vk">📱 Заказать в VK</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="modal-order-btn modal-order-tg">✈️ Заказать в TG</a>
+            </div>
+            <div style="text-align:center;margin-top:8px;">
+                <a href="#" class="modal-share-btn" id="modalShareBtn" role="button" aria-label="Поделиться товаром">🔗 Поделиться</a>
+            </div>
+            <p class="modal-order-hint">Напиши нам — уточним размер, скинем доп. фото и оформим заказ</p>
         </div>
     </div>
-</section>
 
-<section class="section" id="delivery">
-    <p class="section-label">Shipping</p>
-    <h2 class="section-title">Доставка</h2>
-    <p class="section-subtitle">Выбери удобный способ</p>
-    <div class="delivery-grid">
-        <div class="delivery-card"><div class="icon">🏪</div><h3>Самовывоз</h3><p>Омск, ул. Мира, 9Б, 4 этаж<br>Примерка на месте</p></div>
-        <div class="delivery-card"><div class="icon">🛵</div><h3>По Омску</h3><p>Курьер — 300₽<br>В день заказа до 15:00</p></div>
-        <div class="delivery-card"><div class="icon">📦</div><h3>По России</h3><p>5Post (Пятёрочка) — 250₽<br><strong style="color:#4caf50;">Бесплатно от 3000₽</strong></p></div>
-    </div>
-</section>
+    <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+</main>
 
-<section class="section" id="contacts">
-    <p class="section-label">Hit us up</p>
-    <h2 class="section-title">Контакты</h2>
-    <p class="section-subtitle">Понравился товар? Напиши — оформим!</p>
-    <div class="contact-block">
-        <h3>GORILLA STREETWEAR</h3>
-        <div class="contact-schedule">🕐 Ежедневно • 10:00 – 21:00</div>
-        <div class="contact-address">г. Омск<br>ул. Мира, 9Б<br>4 этаж</div>
-        <p style="color:#ff9933;font-size:13px;margin:20px 0;padding:16px;background:rgba(255,153,51,.05);border:1px solid rgba(255,153,51,.15);border-radius:10px;">
-            💡 <strong>Как заказать?</strong><br><br>
-            Напиши нам в VK или Telegram —<br>скинем доп. фото, уточним размер и оформим доставку
-        </p>
-        <div class="social-btns">
-            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-social-vk">📱 Написать в VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-social btn-social-tg">✈️ Написать в TG</a>
-        </div>
-    </div>
-</section>
-
-<footer><p>© 2026 GORILLA STREETWEAR • OMSK</p></footer>
-<a href="#" class="scroll-top" id="scrollTop">↑</a>
-
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modalBox">
-        <button class="modal-close" id="modalClose">✕</button>
-        <div id="modalGalleryContainer"></div>
-        <div class="modal-favorite" id="modalFavorite" style="position:absolute;top:20px;right:65px;font-size:24px;cursor:pointer;z-index:10;">🤍</div>
-        <h2 class="modal-title" id="modalTitle"></h2>
-        <p class="modal-price" id="modalPrice"></p>
-        <p class="modal-color" id="modalColor"></p>
-        <p class="modal-stock" id="modalStock"></p>
-        <p style="color:#aaa;font-size:11px;margin-bottom:10px;">Выбери размер:</p>
-        <div class="size-selector" id="modalSizes"></div>
-        <p class="modal-description" id="modalDesc"></p>
-        <div id="modalSimilar"></div>
-        <div class="modal-order-btns">
-            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="modal-order-btn modal-order-vk">📱 Заказать в VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="modal-order-btn modal-order-tg">✈️ Заказать в TG</a>
-        </div>
-        <div style="text-align:center;margin-top:8px;">
-            <a href="#" class="modal-share-btn" id="modalShareBtn" onclick="event.preventDefault();shareProduct()">🔗 Поделиться</a>
-        </div>
-        <p class="modal-order-hint">Напиши нам — уточним размер, скинем доп. фото и оформим заказ</p>
-    </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-(function(){
-'use strict';
-
-function throttle(fn,delay){let last=0;return function(...args){const now=Date.now();if(now-last>=delay){fn.apply(this,args);last=now}}}
-function debounce(fn,delay){let timer;return function(...args){clearTimeout(timer);timer=setTimeout(()=>fn.apply(this,args),delay)}}
-function gSI(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
-function sSI(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-
-if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister()})})}
-
-const preloader=document.getElementById('preloader');let pageLoaded=false,preloaderShown=false;
-setTimeout(function(){if(!pageLoaded){preloader.classList.add('visible');preloaderShown=true}},500);
-window.addEventListener('load',function(){pageLoaded=true;if(preloaderShown){setTimeout(function(){preloader.classList.add('hidden')},300)}});
-setTimeout(function(){if(preloaderShown)preloader.classList.add('hidden')},5000);
-
-const CACHE_VERSION='v1';
-const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v='+CACHE_VERSION;
-const IMAGES_PATH='images/';
-const LETTER_SIZES=['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
-const CAT_RU={shoes:'кроссовки',tshirts:'футболки',hoodies:'худи',jackets:'куртки',pants:'штаны',shorts:'шорты',suits:'костюмы',accessories:'аксессуары'};
-const CATS=[{id:'all',name:'Все товары',e:'🦍'},{id:'favorites',name:'Избранное',e:'⭐'},{id:'shorts',name:'Шорты',e:'🩳'},{id:'suits',name:'Спорт. костюмы',e:'🏃'},{id:'shoes',name:'Кроссовки',e:'👟'},{id:'accessories',name:'Аксессуары',e:'🧢'},{id:'tshirts',name:'Футболки / Рубашки',e:'👕'},{id:'jackets',name:'Куртки / Ветровки',e:'🧥'},{id:'hoodies',name:'Худи / Свитшоты',e:'🦍'},{id:'pants',name:'Штаны / Брюки / Джинсы',e:'👖'}];
-
-const D={hBg:document.getElementById('hero-bg'),hCnt:document.getElementById('hero-content'),gT:document.getElementById('glitch-title'),mH:document.getElementById('main-header'),pC:document.getElementById('particles-canvas'),cG:document.getElementById('catalogGrid'),cM:document.getElementById('categoriesMenu'),cScr:document.getElementById('categoriesScroll'),sFC:document.getElementById('sizeFilterContent'),sFR:document.getElementById('sizeFilterReset'),sI:document.getElementById('searchInput'),cSB:document.getElementById('clearSearchBtn'),sS:document.getElementById('sortSelect'),mO:document.getElementById('modalOverlay'),mB:document.getElementById('modalBox'),mCl:document.getElementById('modalClose'),mGC:document.getElementById('modalGalleryContainer'),mFv:document.getElementById('modalFavorite'),mT:document.getElementById('modalTitle'),mP:document.getElementById('modalPrice'),mC:document.getElementById('modalColor'),mSz:document.getElementById('modalSizes'),mD:document.getElementById('modalDesc'),mSt:document.getElementById('modalStock'),mSimilar:document.getElementById('modalSimilar'),lB:document.getElementById('lightbox'),lI:document.getElementById('lightboxImg'),lCl:document.getElementById('lightboxClose'),sT:document.getElementById('scrollTop'),t:document.getElementById('toast'),oT:document.getElementById('omskTime'),mTt:document.getElementById('mskTime'),lI2:document.getElementById('logoImg')};
-
-let P=[],F=gSI('gorillaFavorites',[]),aC='all',aS=null,cP=null,sS2=null,cS=0,cSo='default',sQ='',cI,gI;
-let viewCounts=gSI('gorillaViews',{});
-
-function incrementView(pid){if(!viewCounts[pid])viewCounts[pid]=Math.floor(Math.random()*50)+10;viewCounts[pid]++;sSI('gorillaViews',viewCounts)}
-function getViewCount(pid){if(!viewCounts[pid]){viewCounts[pid]=Math.floor(Math.random()*50)+10;sSI('gorillaViews',viewCounts)}return viewCounts[pid]}
-
-window.shareProduct=function(){if(!cP)return;const text='🦍 '+cP.name+' — '+cP.price.toLocaleString()+' ₽\n\nСмотри на GORILLA STREETWEAR:\nhttps://gorilla-omsk.github.io';if(navigator.share){navigator.share({title:cP.name,text:text,url:'https://gorilla-omsk.github.io'}).catch(function(){})}else{navigator.clipboard.writeText(text).then(function(){showToast('🔗 Ссылка скопирована!')}).catch(function(){showToast('📋 '+text)})}}
-window.shareProductCard=function(pid,event){event.stopPropagation();const p=P.find(function(x){return x.id===pid});if(!p)return;const text='🦍 '+p.name+' — '+p.price.toLocaleString()+' ₽\n\nСмотри на GORILLA STREETWEAR:\nhttps://gorilla-omsk.github.io';if(navigator.share){navigator.share({title:p.name,text:text,url:'https://gorilla-omsk.github.io'}).catch(function(){})}else{navigator.clipboard.writeText(text).then(function(){showToast('🔗 Ссылка скопирована!')}).catch(function(){showToast('📋 '+text)})}}
-
-function generateProductSchema(p){return{'@context':'https://schema.org','@type':'Product',name:p.name,description:p.description||'',image:p.photo_id?IMAGES_PATH+p.photo_id.split(';')[0].trim()+'.jpg':'',offers:{'@type':'Offer',price:p.price,priceCurrency:'RUB',availability:p.stock>0?'https://schema.org/InStock':'https://schema.org/OutOfStock'}}}
-
-function gPU(pid){return pid?IMAGES_PATH+pid+'.jpg?v='+CACHE_VERSION:null}
-function iE(img,pid){const src=img.src.split('?v=')[0];if(src.endsWith('.jpg')){img.src=IMAGES_PATH+pid+'.png?v='+CACHE_VERSION}else if(src.endsWith('.png')){img.src=IMAGES_PATH+pid+'.webp?v='+CACHE_VERSION}else{img.style.display='none';const p=document.createElement('span');p.className='img-placeholder';p.textContent='🦍';img.parentNode.appendChild(p)}}
-
-function showToast(msg){D.t.textContent=msg;D.t.classList.add('show');setTimeout(function(){D.t.classList.remove('show')},3000)}
-
-function uC(){const n=new Date();const m=new Date(n.getTime()+3*3600000);const o=new Date(n.getTime()+6*3600000);D.mTt.textContent=m.getUTCHours().toString().padStart(2,'0')+':'+m.getUTCMinutes().toString().padStart(2,'0');D.oT.textContent=o.getUTCHours().toString().padStart(2,'0')+':'+o.getUTCMinutes().toString().padStart(2,'0')}
-uC();cI=setInterval(uC,1000);
-
-const hero=document.querySelector('.hero');
-if(hero&&D.gT){hero.addEventListener('mousemove',throttle(function(e){const rect=hero.getBoundingClientRect();const x=((e.clientX-rect.left)/rect.width)-0.5;const y=((e.clientY-rect.top)/rect.height)-0.5;D.gT.style.transform='translate('+(x*15)+'px,'+(y*15)+'px)';D.gT.style.textShadow=x*20+'px '+y*20+'px 0 rgba(255,0,0,.7),'+(-x*20)+'px '+(-y*20)+'px 0 rgba(0,255,255,.7)'},16));hero.addEventListener('mouseleave',function(){D.gT.style.transform='translate(0,0)';D.gT.style.textShadow='none'})}
-
-function tG(){if(!D.gT)return;D.gT.classList.add('glitch-active');setTimeout(function(){D.gT.classList.remove('glitch-active')},300)}
-if(D.gT){gI=setInterval(tG,4000);D.gT.addEventListener('click',tG)}
-
-document.addEventListener('visibilitychange',function(){if(document.hidden){clearInterval(cI);clearInterval(gI)}else{uC();cI=setInterval(uC,1000);if(D.gT)gI=setInterval(tG,4000)}});
-window.addEventListener('scroll',throttle(function(){const s=window.pageYOffset||document.documentElement.scrollTop;if(D.hBg)D.hBg.style.transform='translateY('+(s*0.4)+'px)';if(D.hCnt)D.hCnt.style.transform='translateY('+(s*0.2)+'px)';if(D.mH)D.mH.classList.toggle('scrolled',window.scrollY>50)},16));
-
-(function(){const c=D.pC;if(!c)return;const ctx=c.getContext('2d');let particles=[];const MAX=window.innerWidth<=768?30:60;function resize(){c.width=c.parentElement.offsetWidth;c.height=c.parentElement.offsetHeight}window.addEventListener('resize',debounce(resize,100));resize();class P{constructor(){this.reset()}reset(){this.x=Math.random()*c.width;this.y=Math.random()*c.height;this.size=Math.random()*2+0.5;this.speedY=Math.random()*0.5+0.2;this.opacity=Math.random()*0.5+0.2}update(){this.y-=this.speedY;if(this.y<-10){this.y=c.height+10;this.x=Math.random()*c.width}}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,'+this.opacity+')';ctx.fill()}}while(particles.length<MAX)particles.push(new P());let animFrame;function animate(){ctx.clearRect(0,0,c.width,c.height);for(let i=0;i<particles.length;i++){particles[i].update();particles[i].draw()}animFrame=requestAnimationFrame(animate)}const observer=new IntersectionObserver(function(e){if(e[0].isIntersecting){animate()}else if(animFrame){cancelAnimationFrame(animFrame)}},{threshold:0.1});observer.observe(c)})();
-
-function oC(){debounce(function(){const observer=new IntersectionObserver(function(entries){for(let i=0;i<entries.length;i++){if(entries[i].isIntersecting){entries[i].target.classList.add('revealed');observer.unobserve(entries[i].target)}}},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});document.querySelectorAll('.card:not(.revealed)').forEach(function(card){observer.observe(card)})},100)()}
-
-function rSkeletons(){const count=window.innerWidth<=768?4:6;let h='';for(let i=0;i<count;i++){h+='<div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-line short"></div><div class="skeleton-line price"></div></div></div>'}D.cG.innerHTML=h}
-
-function pL(line){const r=[];let c='',q=false;for(let ch of line){if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c=''}else c+=ch}r.push(c.trim());return r}
-function pCSV(csv){const lines=csv.trim().split('\n');if(lines.length<2)return[];const headers=pL(lines[0]).map(function(h){return h.toLowerCase()});const ci=headers.indexOf('colors')!==-1?headers.indexOf('colors'):headers.indexOf('color');if(ci!==-1)headers[ci]='color';return lines.slice(1).map(function(line){const values=pL(line);if(values.length<headers.length)return null;const item={};headers.forEach(function(h,idx){item[h]=values[idx]||''});item.price=parseInt(item.price)||0;item.stock=parseInt(item.stock)||0;item.sizes=item.sizes?item.sizes.split(';').map(function(s){return s.trim()}).filter(function(s){return s}):[];item.category=(item.category||'').toLowerCase();return(item.id&&item.name)?item:null}).filter(Boolean)}
-
-function getSimilarProducts(product,max){max=max||4;return P.filter(function(p){return p.id!==product.id&&p.category===product.category&&p.stock>0}).sort(function(){return Math.random()-0.5}).slice(0,max)}
-function renderSimilarProducts(product){if(!D.mSimilar)return;const similar=getSimilarProducts(product);if(!similar.length){D.mSimilar.innerHTML='';return}let h='<div class="similar-section"><div class="similar-title">🔥 Похожие товары</div><div class="similar-grid">';similar.forEach(function(p){const pu=gPU(p.photo_id?p.photo_id.split(';')[0].trim():'');h+='<div class="similar-item" onclick="event.stopPropagation();document.getElementById(\'modalOverlay\').classList.remove(\'active\');document.body.style.overflow=\'\';setTimeout(function(){openModalById(\''+p.id+'\')},100)"><img src="'+(pu||'')+'" alt="'+p.name+'" onerror="this.style.display=\'none\'"><div class="similar-name">'+p.name+'</div><div class="similar-price">'+p.price.toLocaleString()+' ₽</div></div>'});h+='</div></div>';D.mSimilar.innerHTML=h}
-window.openModalById=function(id){const product=P.find(function(p){return p.id===id});if(product)oM(product)}
-
-async function lP(){rSkeletons();try{const r=await fetch(CSV_URL);if(!r.ok)throw new Error('HTTP '+r.status);P=await pCSV(await r.text());requestAnimationFrame(function(){rC();rSF();rCat();rMobCats();setTimeout(oC,100);setTimeout(init3DCards,300)})}catch(e){D.cG.innerHTML='<div class="no-products">⚠️ Не удалось загрузить товары</div>'}}
-
-function sF(){sSI('gorillaFavorites',F)}
-function tF(id){const idx=F.indexOf(id);if(idx!==-1)F.splice(idx,1);else F.push(id);sF();document.querySelectorAll('.favorite-btn[data-id="'+id+'"]').forEach(function(btn){const isFav=F.includes(id);btn.innerHTML=isFav?'❤️':'🤍';btn.classList.toggle('active',isFav)});if(cP&&cP.id===id)uMF();rC();rMobCats();rCat();setTimeout(oC,100);setTimeout(init3DCards,200)}
-function tFFM(){if(cP)tF(cP.id)}
-function uMF(){if(!cP)return;const isFav=F.includes(cP.id);D.mFv.textContent=isFav?'❤️':'🤍';D.mFv.classList.toggle('active',isFav)}
-
-function gSFC(catId){const f=catId==='all'?P:P.filter(function(p){return p.category===catId});const s=new Set();f.forEach(function(p){if(p.sizes)p.sizes.forEach(function(x){s.add(x.trim())})});return Array.from(s)}
-function cSizes(sizes){const g={shoe:[],waist:[],letter:[],other:[]};const isS=aC==='shoes',isP=aC==='pants',isC=['tshirts','hoodies','jackets','shorts','suits'].includes(aC);sizes.forEach(function(size){const u=size.toUpperCase();if(LETTER_SIZES.includes(u)||/^[A-Z]+$/.test(u))g.letter.push(size);else if(/^\d+$/.test(size)){const n=parseInt(size);if(isS&&n>=35&&n<=52)g.shoe.push(size);else if(isP&&n>=26&&n<=38)g.waist.push(size);else if(isC)g.letter.push(size);else if(n>=35&&n<=52)g.shoe.push(size);else if(n>=26&&n<=38)g.waist.push(size);else g.other.push(size)}else g.other.push(size)});g.shoe.sort(function(a,b){return parseInt(a)-parseInt(b)});g.waist.sort(function(a,b){return parseInt(a)-parseInt(b)});g.letter.sort(function(a,b){const aN=/^\d+$/.test(a),bN=/^\d+$/.test(b);if(aN&&bN)return parseInt(a)-parseInt(b);if(aN)return 1;if(bN)return-1;const ia=LETTER_SIZES.indexOf(a.toUpperCase()),ib=LETTER_SIZES.indexOf(b.toUpperCase());if(ia!==-1&&ib!==-1)return ia-ib;if(ia!==-1)return-1;if(ib!==-1)return 1;return a.localeCompare(b)});g.other.sort();return g}
-function rSF(){if(aC==='all'||aC==='favorites'){D.sFC.innerHTML='<span style="color:#888;font-size:12px;">Выберите категорию</span>';return}const sizes=gSFC(aC);if(!sizes.length){D.sFC.innerHTML='<span style="color:#888;font-size:12px;">Нет размеров</span>';return}const g=cSizes(sizes);let h='';if(g.shoe.length){h+='<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">';g.shoe.forEach(function(s){h+='<button class="size-filter-btn'+(aS===s?' active':'')+'" data-size="'+s+'">'+s+'</button>'});h+='</div></div>'}if(g.waist.length){h+='<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">';g.waist.forEach(function(s){h+='<button class="size-filter-btn'+(aS===s?' active':'')+'" data-size="'+s+'">'+s+'</button>'});h+='</div></div>'}if(g.letter.length){h+='<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">';g.letter.forEach(function(s){h+='<button class="size-filter-btn'+(aS===s?' active':'')+'" data-size="'+s+'">'+s+'</button>'});h+='</div></div>'}if(g.other.length){h+='<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">';g.other.forEach(function(s){h+='<button class="size-filter-btn'+(aS===s?' active':'')+'" data-size="'+s+'">'+s+'</button>'});h+='</div></div>'}D.sFC.innerHTML=h;D.sFC.querySelectorAll('.size-filter-btn').forEach(function(btn){btn.addEventListener('click',function(){sSF(btn.getAttribute('data-size'))})})}
-function sSF(size){aS=aS===size?null:size;rSF();rCat();setTimeout(oC,100);setTimeout(init3DCards,200)}
-function cSF(){aS=null;rSF();rCat();setTimeout(oC,100);setTimeout(init3DCards,200)}
-
-function rC(){let h='<h4>Категории</h4>';CATS.forEach(function(cat){const count=cat.id==='all'?P.length:cat.id==='favorites'?F.length:P.filter(function(p){return p.category===cat.id}).length;h+='<button class="category-btn'+(aC===cat.id?' active':'')+'" data-category="'+cat.id+'">'+cat.e+' '+cat.name+' <span class="count">'+count+'</span></button>'});D.cM.innerHTML=h;D.cM.querySelectorAll('.category-btn').forEach(function(btn){btn.addEventListener('click',function(){sC(btn.getAttribute('data-category'))})})}
-function rMobCats(){if(!D.cScr)return;let h='';CATS.forEach(function(cat){const count=cat.id==='all'?P.length:cat.id==='favorites'?F.length:P.filter(function(p){return p.category===cat.id}).length;h+='<button class="category-btn'+(aC===cat.id?' active':'')+'" data-category="'+cat.id+'">'+cat.e+' '+cat.name+' ('+count+')</button>'});D.cScr.innerHTML=h;D.cScr.querySelectorAll('.category-btn').forEach(function(btn){btn.addEventListener('click',function(){sC(btn.getAttribute('data-category'))})})}
-function sC(catId){aC=catId;rC();rMobCats();rSF();rCat();if(window.innerWidth<=768){document.getElementById('catalog').scrollIntoView({behavior:'smooth'})}setTimeout(oC,100);setTimeout(init3DCards,200)}
-
-function sCat(){cSo=D.sS.value;rCat();setTimeout(oC,100);setTimeout(init3DCards,200)}
-function sCat2(){sQ=D.sI.value.toLowerCase().trim();D.cSB.style.display=sQ?'block':'none';rCat();setTimeout(oC,100);setTimeout(init3DCards,200)}
-function cS2(){D.sI.value='';sQ='';D.cSB.style.display='none';rCat();setTimeout(oC,100);setTimeout(init3DCards,200)}
-
-function nS(){const s=document.querySelectorAll('#modalBox .modal-gallery-img');if(!s.length)return;cS=(cS+1)%s.length;uG()}
-function pS(){const s=document.querySelectorAll('#modalBox .modal-gallery-img');if(!s.length)return;cS=(cS-1+s.length)%s.length;uG()}
-function gTS(i){cS=i;uG()}
-function uG(){document.querySelectorAll('#modalBox .modal-gallery-img').forEach(function(img,i){img.classList.toggle('active',i===cS)});document.querySelectorAll('#modalBox .modal-dot').forEach(function(dot,i){dot.classList.toggle('active',i===cS)})}
-function oL(src){D.lI.src=src;D.lB.classList.add('active');document.body.style.overflow='hidden'}
-function cL(){D.lB.classList.remove('active');document.body.style.overflow=''}
-
-function oM(product){cP=product;sS2=(product.sizes&&product.sizes.length===1)?product.sizes[0]:null;cS=0;incrementView(product.id);const pids=product.photo_id?product.photo_id.split(';').map(function(s){return s.trim()}):[];const photos=pids.map(function(id){return gPU(id)}).filter(function(url){return url});let g='';if(photos.length>1){g='<div class="modal-gallery"><div class="modal-gallery-slides">'+photos.map(function(url,i){return'<img src="'+url+'" class="modal-gallery-img'+(i===0?' active':'')+'" loading="lazy" onerror="this.style.display=\'none\'" data-lightbox-src="'+url+'">'}).join('')+'</div><div class="modal-gallery-dots">'+photos.map(function(_,i){return'<span class="modal-dot'+(i===0?' active':'')+'" data-slide="'+i+'"></span>'}).join('')+'</div><button class="modal-gallery-prev">‹</button><button class="modal-gallery-next">›</button></div>'}else if(photos.length===1){g='<img class="modal-img" src="'+photos[0]+'" loading="lazy" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="'+photos[0]+'">'}else{g='<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px">🦍</span>'}D.mGC.innerHTML=g;D.mT.textContent=product.name;D.mP.textContent=product.price.toLocaleString()+' ₽';D.mC.innerHTML=product.color?'Цвет: <span style="display:inline-block;width:16px;height:16px;background-color:'+product.color+';border-radius:50%;vertical-align:middle;margin-right:4px;"></span> '+product.color:'';D.mD.textContent=product.description||'';D.mSt.textContent=product.stock>0?'В наличии: '+product.stock+' шт':'Нет в наличии';uMF();D.mSz.innerHTML='';if(product.sizes&&product.sizes.length){product.sizes.forEach(function(size){const btn=document.createElement('button');btn.className='size-btn'+(size===sS2?' selected':'');btn.textContent=size;btn.addEventListener('click',function(){D.mSz.querySelectorAll('.size-btn').forEach(function(b){b.classList.remove('selected')});btn.classList.add('selected');sS2=size});D.mSz.appendChild(btn)})}else{D.mSz.innerHTML='<span style="color:#888;">Без размеров</span>'}renderSimilarProducts(product);D.mO.classList.add('active');document.body.style.overflow='hidden';const schema=generateProductSchema(product);const scriptEl=document.getElementById('productSchema');if(scriptEl)scriptEl.remove();const newScript=document.createElement('script');newScript.type='application/ld+json';newScript.id='productSchema';newScript.textContent=JSON.stringify(schema);document.head.appendChild(newScript);setTimeout(function(){const prevBtn=D.mB.querySelector('.modal-gallery-prev');const nextBtn=D.mB.querySelector('.modal-gallery-next');const dots=D.mB.querySelectorAll('.modal-dot');const images=D.mB.querySelectorAll('[data-lightbox-src]');if(prevBtn)prevBtn.onclick=pS;if(nextBtn)nextBtn.onclick=nS;dots.forEach(function(dot){const slide=parseInt(dot.getAttribute('data-slide'));dot.onclick=function(){gTS(slide)}});images.forEach(function(img){img.onclick=function(){oL(img.getAttribute('data-lightbox-src'))}})},0)}
-function closeModal(){D.mO.classList.remove('active');document.body.style.overflow='';cP=null}
-
-function rCat(){let f=aC==='favorites'?P.filter(function(p){return F.includes(p.id)}):aC==='all'?P:P.filter(function(p){return p.category===aC});if(aS)f=f.filter(function(p){return p.sizes&&p.sizes.includes(aS)});if(sQ)f=f.filter(function(p){const nm=p.name.toLowerCase().includes(sQ);const cm=CAT_RU[p.category]?CAT_RU[p.category].includes(sQ):false;const cem=p.category.toLowerCase().includes(sQ);return nm||cm||cem});if(cSo==='price-asc')f.sort(function(a,b){return a.price-b.price});else if(cSo==='price-desc')f.sort(function(a,b){return b.price-a.price});else if(cSo==='newest')f.reverse();if(!f.length){D.cG.innerHTML='<div class="no-products">Товаров пока нет</div>';return}D.cG.innerHTML=f.map(function(p){const so=p.stock===0,ls=p.stock>0&&p.stock<=3;const st=so?'SOLD OUT':ls?'Осталось: '+p.stock+' шт':'В наличии: '+p.stock+' шт';const catName=CATS.find(function(c){return c.id===p.category})?CATS.find(function(c){return c.id===p.category}).name:'';const sizes=p.sizes?p.sizes.join(', '):'';const pu=gPU(p.photo_id?p.photo_id.split(';')[0].trim():'');const isFav=F.includes(p.id);const hfd=p.price>=3000;const fd=hfd?'<span class="free-delivery-badge">🚚 Бесплатная доставка 5Post</span>':'';const views=getViewCount(p.id);return'<div class="card'+(so?' sold-out':'')+'" data-product-id="'+p.id+'"><div class="card-img">'+(pu?'<img src="'+pu+'" alt="'+p.name+'" loading="lazy" onerror="iE(this,\''+(p.photo_id.split(';')[0].trim())+'\')">':'<span class="img-placeholder">🦍</span>')+'<div class="card-tag'+(so?' sold':'')+'">'+(so?'SOLD OUT':(p.tag||''))+'</div><button class="favorite-btn'+(isFav?' active':'')+'" data-id="'+p.id+'">'+(isFav?'❤️':'🤍')+'</button><button class="share-btn" data-share-id="'+p.id+'" title="Поделиться">🔗</button><span class="stock-badge'+(ls?' low':'')+(so?' out':'')+'">'+st+'</span>'+(hfd?'<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>':'')+'</div><div class="card-body"><h3>'+p.name+' <span class="view-counter">'+views+'</span>'+(p.color?'<span style="display:inline-block;width:12px;height:12px;background-color:'+p.color+';border-radius:50%;vertical-align:middle;margin-left:6px;" title="'+p.color+'"></span>':'')+'</h3><p class="category">'+catName+'</p>'+(sizes?'<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">'+sizes+'</span></div>':'')+'<p class="price">'+p.price.toLocaleString()+' ₽</p>'+fd+'<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener" class="btn-order btn-order-vk" onclick="event.stopPropagation();">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener" class="btn-order btn-order-tg" onclick="event.stopPropagation();">✈️ TG</a></div></div></div>'}).join('');D.cG.querySelectorAll('.card').forEach(function(card){card.addEventListener('click',function(e){if(e.target.closest('.favorite-btn')||e.target.closest('.btn-order')||e.target.closest('.share-btn'))return;const pid=card.getAttribute('data-product-id');const product=P.find(function(p){return p.id===pid});if(product)oM(product)})});D.cG.querySelectorAll('.favorite-btn').forEach(function(btn){btn.addEventListener('click',function(e){e.stopPropagation();const id=btn.getAttribute('data-id');tF(id)})});D.cG.querySelectorAll('.share-btn').forEach(function(btn){btn.addEventListener('click',function(e){const id=btn.getAttribute('data-share-id');shareProductCard(id,e)})});setTimeout(init3DCards,200)}
-
-function init3DCards(){document.querySelectorAll('.card:not(.card-3d)').forEach(function(card){const smoke=document.createElement('div');smoke.className='card-smoke';card.appendChild(smoke);card.classList.add('card-3d');card.addEventListener('mousemove',throttle(function(e){const rect=card.getBoundingClientRect();const x=((e.clientX-rect.left)/rect.width)-0.5;const y=((e.clientY-rect.top)/rect.height)-0.5;const rx=y*-8;const ry=x*8;const img=card.querySelector('.card-img');const body=card.querySelector('.card-body');if(img)img.style.transform='scale(1.05) rotateX('+rx+'deg) rotateY('+ry+'deg)';if(body)body.style.transform='rotateX('+(rx*0.5)+'deg) rotateY('+(ry*0.3)+'deg)'},16));card.addEventListener('mouseleave',function(){const img=card.querySelector('.card-img');const body=card.querySelector('.card-body');if(img)img.style.transform='scale(1) rotateX(0deg) rotateY(0deg)';if(body)body.style.transform='rotateX(0deg) rotateY(0deg)'})})}
-
-function bE(){D.sI.addEventListener('input',debounce(sCat2,150));D.cSB.addEventListener('click',cS2);D.sS.addEventListener('change',sCat);D.sFR.addEventListener('click',cSF);D.mCl.addEventListener('click',closeModal);D.mO.addEventListener('click',function(e){if(e.target===D.mO)closeModal()});D.mFv.addEventListener('click',tFFM);D.lB.addEventListener('click',cL);D.lCl.addEventListener('click',cL);D.lI.addEventListener('click',function(e){e.stopPropagation()});D.sT.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})});if(D.lI2)D.lI2.addEventListener('error',function(){this.style.display='none'});document.addEventListener('keydown',function(e){if(e.key==='Escape'){cL();if(D.mO.classList.contains('active'))closeModal()}})}
-bE();lP();
-})();
-</script>
+<script src="script.js?v=1"></script>
 </body>
 </html>
