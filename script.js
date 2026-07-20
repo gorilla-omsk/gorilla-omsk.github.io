@@ -7,8 +7,8 @@ function debounce(fn, delay) { var timer; return function() { var ctx = this, ar
 function gSI(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e) { return d; } }
 function sSI(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 
-// ============ SERVICE WORKER ============
-if ('serviceWorker' in navigator) {
+// ============ SERVICE WORKER (уже в HTML, но оставляем для совместимости) ============
+if ('serviceWorker' in navigator && !navigator.serviceWorker.controller) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/sw.js').then(function(reg) {
       console.log('SW registered:', reg.scope);
@@ -21,18 +21,20 @@ if ('serviceWorker' in navigator) {
 // ============ PRELOADER ============
 var preloader = document.getElementById('preloader');
 var pageLoaded = false;
-setTimeout(function() { if (!pageLoaded) { preloader.style.display = 'flex'; } }, 500);
 window.addEventListener('load', function() {
   pageLoaded = true;
   setTimeout(function() { preloader.classList.add('hidden'); }, 300);
 });
-setTimeout(function() { preloader.classList.add('hidden'); }, 5000);
+setTimeout(function() {
+  if (!pageLoaded) { preloader.classList.add('hidden'); }
+}, 5000);
 
 // ============ CONFIG ============
 var CACHE_VERSION = 'v2';
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 var IMAGES_PATH = 'images/';
 var LETTER_SIZES = ['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
+var IMAGE_FALLBACKS = ['jpg', 'jfif', 'png', 'webp'];
 var CAT_RU = { shoes:'кроссовки', tshirts:'футболки', hoodies:'худи', jackets:'куртки', pants:'штаны', shorts:'шорты', suits:'костюмы', accessories:'аксессуары' };
 var CATS = [
   { id:'all', name:'Все товары', e:'🦍' },
@@ -81,7 +83,8 @@ var D = {
   t: document.getElementById('toast'),
   oT: document.getElementById('omskTime'),
   mTt: document.getElementById('mskTime'),
-  lI2: document.getElementById('logoImg')
+  lI2: document.getElementById('logoImg'),
+  mSB: document.getElementById('modalShareBtn')
 };
 
 // ============ STATE ============
@@ -121,20 +124,53 @@ function generateProductSchema(p) {
 }
 
 // ============ IMAGES ============
-function gPU(pid) { return (pid && pid.trim()) ? IMAGES_PATH + pid.trim() + '.jpg?v=' + CACHE_VERSION : null; }
+function gPU(pid, ext) {
+  if (!pid || !pid.trim()) return null;
+  return IMAGES_PATH + pid.trim() + '.' + (ext || 'jpg') + '?v=' + CACHE_VERSION;
+}
+
 function iE(img, pid) {
-  var src = img.src.split('?v=')[0];
-  if (src.endsWith('.jpg')) { img.src = IMAGES_PATH + pid + '.png?v=' + CACHE_VERSION; }
-  else if (src.endsWith('.png')) { img.src = IMAGES_PATH + pid + '.webp?v=' + CACHE_VERSION; }
-  else {
+  if (!pid) {
     img.style.display = 'none';
-    var placeholder = img.parentNode.querySelector('.img-placeholder');
-    if (!placeholder) {
-      var p = document.createElement('span');
-      p.className = 'img-placeholder';
-      p.textContent = '🦍';
-      img.parentNode.appendChild(p);
+    showPlaceholder(img);
+    return;
+  }
+  
+  var currentSrc = img.src.split('?v=')[0];
+  var currentExt = '';
+  
+  // Определяем текущее расширение
+  for (var i = 0; i < IMAGE_FALLBACKS.length; i++) {
+    if (currentSrc.endsWith('.' + IMAGE_FALLBACKS[i])) {
+      currentExt = IMAGE_FALLBACKS[i];
+      break;
     }
+  }
+  
+  // Находим индекс текущего расширения
+  var currentIdx = currentExt ? IMAGE_FALLBACKS.indexOf(currentExt) : -1;
+  
+  // Пробуем следующий формат
+  var nextIdx = currentIdx + 1;
+  if (nextIdx < IMAGE_FALLBACKS.length) {
+    img.src = IMAGES_PATH + pid + '.' + IMAGE_FALLBACKS[nextIdx] + '?v=' + CACHE_VERSION;
+  } else {
+    // Все форматы не сработали — показываем заглушку
+    img.style.display = 'none';
+    showPlaceholder(img);
+  }
+}
+
+function showPlaceholder(img) {
+  var parent = img.parentNode;
+  if (!parent) return;
+  var existing = parent.querySelector('.img-placeholder');
+  if (!existing) {
+    var p = document.createElement('span');
+    p.className = 'img-placeholder';
+    p.textContent = '🦍';
+    p.setAttribute('aria-hidden', 'true');
+    parent.appendChild(p);
   }
 }
 
@@ -188,13 +224,13 @@ if (!isMobile) {
     function resize() { c.width = c.parentElement.offsetWidth; c.height = c.parentElement.offsetHeight; }
     window.addEventListener('resize', debounce(resize, 100));
     resize();
-    function P() {
+    function Particle() {
       this.reset = function() { this.x = Math.random() * c.width; this.y = Math.random() * c.height; this.size = Math.random() * 2 + 0.5; this.speedY = Math.random() * 0.5 + 0.2; this.opacity = Math.random() * 0.5 + 0.2; };
       this.update = function() { this.y -= this.speedY; if (this.y < -10) { this.y = c.height + 10; this.x = Math.random() * c.width; } };
       this.draw = function() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,' + this.opacity + ')'; ctx.fill(); };
       this.reset();
     }
-    while (particles.length < MAX) particles.push(new P());
+    while (particles.length < MAX) particles.push(new Particle());
     var animFrame;
     function animate() { ctx.clearRect(0, 0, c.width, c.height); for (var i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); } animFrame = requestAnimationFrame(animate); }
     var observer = new IntersectionObserver(function(e) { if (e[0].isIntersecting) { animate(); } else if (animFrame) { cancelAnimationFrame(animFrame); } }, { threshold: 0.1 });
@@ -204,14 +240,14 @@ if (!isMobile) {
 
 // ============ OBSERVER ============
 function oC() {
-  debounce(function() {
+  requestAnimationFrame(function() {
     var observer = new IntersectionObserver(function(entries) {
       for (var i = 0; i < entries.length; i++) {
         if (entries[i].isIntersecting) { entries[i].target.classList.add('revealed'); observer.unobserve(entries[i].target); }
       }
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     document.querySelectorAll('.card:not(.revealed)').forEach(function(card) { observer.observe(card); });
-  }, 100)();
+  });
 }
 
 // ============ SKELETONS ============
@@ -248,8 +284,8 @@ function renderSimilarProducts(product) {
   if (!similar.length) { D.mSimilar.innerHTML = ''; return; }
   var h = '<div class="similar-section"><div class="similar-title">🔥 Похожие товары</div><div class="similar-grid">';
   similar.forEach(function(p) {
-    var pu = gPU(p.photo_id ? p.photo_id.split(';')[0].trim() : '');
-    h += '<div class="similar-item" role="button" tabindex="0" aria-label="' + p.name + '" onclick="event.stopPropagation();document.getElementById(\'modalOverlay\').classList.remove(\'active\');document.body.style.overflow=\'\';setTimeout(function(){openModalById(\'' + p.id + '\')},100)"><img src="' + (pu || '') + '" alt="' + p.name + '" loading="lazy" onerror="this.style.display=\'none\'"><div class="similar-name">' + p.name + '</div><div class="similar-price">' + p.price.toLocaleString() + ' ₽</div></div>';
+    var pu = gPU(p.photo_id ? p.photo_id.split(';')[0].trim() : '', 'jpg');
+    h += '<div class="similar-item" role="button" tabindex="0" aria-label="' + p.name + '" onclick="event.stopPropagation();document.getElementById(\'modalOverlay\').classList.remove(\'active\');document.body.style.overflow=\'\';setTimeout(function(){openModalById(\'' + p.id + '\')},100)"><img src="' + (pu || '') + '" alt="' + p.name + '" loading="lazy" onerror="iE(this,\'' + (p.photo_id ? p.photo_id.split(';')[0].trim() : '') + '\')"><div class="similar-name">' + p.name + '</div><div class="similar-price">' + p.price.toLocaleString() + ' ₽</div></div>';
   });
   h += '</div></div>';
   D.mSimilar.innerHTML = h;
@@ -263,7 +299,7 @@ async function lP() {
     var r = await fetch(CSV_URL);
     if (!r.ok) throw new Error('HTTP ' + r.status);
     P = await pCSV(await r.text());
-    requestAnimationFrame(function() { rC(); rSF(); rCat(); rMobCats(); setTimeout(oC, 100); setTimeout(init3DCards, 300); });
+    rC(); rSF(); rCat(); rMobCats(); setTimeout(oC, 100); setTimeout(init3DCards, 300);
   } catch(e) { D.cG.innerHTML = '<div class="no-products">⚠️ Не удалось загрузить товары</div>'; }
 }
 
@@ -313,9 +349,9 @@ function cSizes(sizes) {
   return g;
 }
 function rSF() {
-  if (aC === 'all' || aC === 'favorites') { D.sFC.innerHTML = '<span style="color:#888;font-size:12px;">Выберите категорию</span>'; return; }
+  if (aC === 'all' || aC === 'favorites') { D.sFC.innerHTML = '<span style="color:#aaa;font-size:12px;">Выберите категорию</span>'; return; }
   var sizes = gSFC(aC);
-  if (!sizes.length) { D.sFC.innerHTML = '<span style="color:#888;font-size:12px;">Нет размеров</span>'; return; }
+  if (!sizes.length) { D.sFC.innerHTML = '<span style="color:#aaa;font-size:12px;">Нет размеров</span>'; return; }
   var g = cSizes(sizes);
   var h = '';
   if (g.shoe.length) { h += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">'; g.shoe.forEach(function(s) { h += '<button class="size-filter-btn' + (aS === s ? ' active' : '') + '" data-size="' + s + '" aria-label="Размер ' + s + '">' + s + '</button>'; }); h += '</div></div>'; }
@@ -354,21 +390,25 @@ function nS() { var s = document.querySelectorAll('#modalBox .modal-gallery-img'
 function pS() { var s = document.querySelectorAll('#modalBox .modal-gallery-img'); if (!s.length) return; cS = (cS - 1 + s.length) % s.length; uG(); }
 function gTS(i) { cS = i; uG(); }
 function uG() { document.querySelectorAll('#modalBox .modal-gallery-img').forEach(function(img, i) { img.classList.toggle('active', i === cS); }); document.querySelectorAll('#modalBox .modal-dot').forEach(function(dot, i) { dot.classList.toggle('active', i === cS); }); }
-function oL(src) { D.lI.src = src; D.lB.classList.add('active'); document.body.style.overflow = 'hidden'; }
-function cL() { D.lB.classList.remove('active'); document.body.style.overflow = ''; }
+function oL(src) { D.lI.src = src; D.lB.classList.add('active'); D.lB.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+function cL() { D.lB.classList.remove('active'); D.lB.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
 
 // ============ MODAL ============
 function oM(product) {
   cP = product; sS2 = (product.sizes && product.sizes.length === 1) ? product.sizes[0] : null; cS = 0; incrementView(product.id);
   var pids = product.photo_id ? product.photo_id.split(';').map(function(s) { return s.trim(); }) : [];
-  var photos = pids.map(function(id) { return gPU(id); }).filter(function(url) { return url; });
+  var photos = [];
+  pids.forEach(function(id) {
+    var url = gPU(id, 'jpg');
+    if (url) photos.push({ url: url, pid: id });
+  });
   var g = '';
   if (photos.length > 1) {
-    g = '<div class="modal-gallery"><div class="modal-gallery-slides">' + photos.map(function(url, i) { return '<img src="' + url + '" class="modal-gallery-img' + (i === 0 ? ' active' : '') + '" loading="lazy" alt="' + product.name + '" onerror="this.style.display=\'none\'" data-lightbox-src="' + url + '">'; }).join('') + '</div><div class="modal-gallery-dots">' + photos.map(function(_, i) { return '<span class="modal-dot' + (i === 0 ? ' active' : '') + '" data-slide="' + i + '"></span>'; }).join('') + '</div><button class="modal-gallery-prev" aria-label="Предыдущее фото">‹</button><button class="modal-gallery-next" aria-label="Следующее фото">›</button></div>';
+    g = '<div class="modal-gallery"><div class="modal-gallery-slides">' + photos.map(function(photo, i) { return '<img src="' + photo.url + '" class="modal-gallery-img' + (i === 0 ? ' active' : '') + '" loading="lazy" alt="' + product.name + '" onerror="iE(this,\'' + photo.pid + '\')" data-lightbox-src="' + photo.url + '">'; }).join('') + '</div><div class="modal-gallery-dots">' + photos.map(function(_, i) { return '<span class="modal-dot' + (i === 0 ? ' active' : '') + '" data-slide="' + i + '"></span>'; }).join('') + '</div><button class="modal-gallery-prev" aria-label="Предыдущее фото">‹</button><button class="modal-gallery-next" aria-label="Следующее фото">›</button></div>';
   } else if (photos.length === 1) {
-    g = '<img class="modal-img" src="' + photos[0] + '" loading="lazy" alt="' + product.name + '" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="' + photos[0] + '">';
+    g = '<img class="modal-img" src="' + photos[0].url + '" loading="lazy" alt="' + product.name + '" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="' + photos[0].url + '" onerror="iE(this,\'' + photos[0].pid + '\')">';
   } else {
-    g = '<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px">🦍</span>';
+    g = '<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px" aria-hidden="true">🦍</span>';
   }
   D.mGC.innerHTML = g;
   D.mT.textContent = product.name;
@@ -384,12 +424,20 @@ function oM(product) {
       btn.className = 'size-btn' + (size === sS2 ? ' selected' : '');
       btn.textContent = size;
       btn.setAttribute('aria-label', 'Размер ' + size);
-      btn.addEventListener('click', function() { D.mSz.querySelectorAll('.size-btn').forEach(function(b) { b.classList.remove('selected'); }); btn.classList.add('selected'); sS2 = size; });
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-checked', size === sS2 ? 'true' : 'false');
+      btn.addEventListener('click', function() {
+        D.mSz.querySelectorAll('.size-btn').forEach(function(b) { b.classList.remove('selected'); b.setAttribute('aria-checked', 'false'); });
+        btn.classList.add('selected');
+        btn.setAttribute('aria-checked', 'true');
+        sS2 = size;
+      });
       D.mSz.appendChild(btn);
     });
-  } else { D.mSz.innerHTML = '<span style="color:#888;">Без размеров</span>'; }
+  } else { D.mSz.innerHTML = '<span style="color:#aaa;">Без размеров</span>'; }
   renderSimilarProducts(product);
   D.mO.classList.add('active');
+  D.mO.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   var schema = generateProductSchema(product);
   var scriptEl = document.getElementById('productSchema');
@@ -410,7 +458,7 @@ function oM(product) {
     images.forEach(function(img) { img.onclick = function() { oL(img.getAttribute('data-lightbox-src')); }; });
   }, 0);
 }
-function closeModal() { D.mO.classList.remove('active'); document.body.style.overflow = ''; cP = null; }
+function closeModal() { D.mO.classList.remove('active'); D.mO.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; cP = null; }
 
 // ============ CATALOG RENDER ============
 function rCat() {
@@ -426,12 +474,13 @@ function rCat() {
     var st = so ? 'SOLD OUT' : ls ? 'Осталось: ' + p.stock + ' шт' : 'В наличии: ' + p.stock + ' шт';
     var catName = CATS.find(function(c) { return c.id === p.category; }) ? CATS.find(function(c) { return c.id === p.category; }).name : '';
     var sizes = p.sizes ? p.sizes.join(', ') : '';
-    var pu = gPU(p.photo_id ? p.photo_id.split(';')[0].trim() : '');
+    var pid = p.photo_id ? p.photo_id.split(';')[0].trim() : '';
+    var pu = gPU(pid, 'jpg');
     var isFav = F.includes(p.id);
     var hfd = p.price >= 3000;
     var fd = hfd ? '<span class="free-delivery-badge">🚚 Бесплатная доставка 5Post</span>' : '';
     var views = getViewCount(p.id);
-    return '<div class="card' + (so ? ' sold-out' : '') + '" data-product-id="' + p.id + '" role="listitem"><div class="card-img">' + (pu ? '<img src="' + pu + '" alt="' + p.name + '" loading="lazy" onerror="iE(this,\'' + (p.photo_id.split(';')[0].trim()) + '\')">' : '<span class="img-placeholder" aria-hidden="true">🦍</span>') + '<div class="card-tag' + (so ? ' sold' : '') + '">' + (so ? 'SOLD OUT' : (p.tag || '')) + '</div><button class="favorite-btn' + (isFav ? ' active' : '') + '" data-id="' + p.id + '" aria-label="' + (isFav ? 'Убрать из избранного' : 'Добавить в избранное') + '">' + (isFav ? '❤️' : '🤍') + '</button><button class="share-btn" data-share-id="' + p.id + '" title="Поделиться" aria-label="Поделиться товаром">🔗</button><span class="stock-badge' + (ls ? ' low' : '') + (so ? ' out' : '') + '">' + st + '</span>' + (hfd ? '<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>' : '') + '</div><div class="card-body"><h3>' + p.name + ' <span class="view-counter">' + views + '</span>' + (p.color ? '<span style="display:inline-block;width:12px;height:12px;background-color:' + p.color + ';border-radius:50%;vertical-align:middle;margin-left:6px;" title="' + p.color + '"></span>' : '') + '</h3><p class="category">' + catName + '</p>' + (sizes ? '<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">' + sizes + '</span></div>' : '') + '<p class="price">' + p.price.toLocaleString() + ' ₽</p>' + fd + '<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-vk" onclick="event.stopPropagation();">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-tg" onclick="event.stopPropagation();">✈️ TG</a></div></div></div>';
+    return '<div class="card' + (so ? ' sold-out' : '') + '" data-product-id="' + p.id + '" role="listitem"><div class="card-img">' + (pu ? '<img src="' + pu + '" alt="' + p.name + '" loading="lazy" onerror="iE(this,\'' + pid + '\')">' : '<span class="img-placeholder" aria-hidden="true">🦍</span>') + '<div class="card-tag' + (so ? ' sold' : '') + '">' + (so ? 'SOLD OUT' : (p.tag || '')) + '</div><button class="favorite-btn' + (isFav ? ' active' : '') + '" data-id="' + p.id + '" aria-label="' + (isFav ? 'Убрать из избранного' : 'Добавить в избранное') + '">' + (isFav ? '❤️' : '🤍') + '</button><button class="share-btn" data-share-id="' + p.id + '" title="Поделиться" aria-label="Поделиться товаром">🔗</button><span class="stock-badge' + (ls ? ' low' : '') + (so ? ' out' : '') + '">' + st + '</span>' + (hfd ? '<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>' : '') + '</div><div class="card-body"><h3>' + p.name + ' <span class="view-counter">' + views + '</span>' + (p.color ? '<span style="display:inline-block;width:12px;height:12px;background-color:' + p.color + ';border-radius:50%;vertical-align:middle;margin-left:6px;" title="' + p.color + '" aria-hidden="true"></span>' : '') + '</h3><p class="category">' + catName + '</p>' + (sizes ? '<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">' + sizes + '</span></div>' : '') + '<p class="price">' + p.price.toLocaleString() + ' ₽</p>' + fd + '<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-vk" onclick="event.stopPropagation();" aria-label="Заказать в VK (откроется в новом окне)">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-tg" onclick="event.stopPropagation();" aria-label="Заказать в Telegram (откроется в новом окне)">✈️ TG</a></div></div></div>';
   }).join('');
   D.cG.querySelectorAll('.card').forEach(function(card) { card.addEventListener('click', function(e) { if (e.target.closest('.favorite-btn') || e.target.closest('.btn-order') || e.target.closest('.share-btn')) return; var pid = card.getAttribute('data-product-id'); var product = P.find(function(p) { return p.id === pid; }); if (product) oM(product); }); });
   D.cG.querySelectorAll('.favorite-btn').forEach(function(btn) { btn.addEventListener('click', function(e) { e.stopPropagation(); var id = btn.getAttribute('data-id'); tF(id); }); });
@@ -442,7 +491,7 @@ function rCat() {
 // ============ 3D CARDS ============
 function init3DCards() {
   document.querySelectorAll('.card:not(.card-3d)').forEach(function(card) {
-    if (!isMobile) { var smoke = document.createElement('div'); smoke.className = 'card-smoke'; card.appendChild(smoke); }
+    if (!isMobile) { var smoke = document.createElement('div'); smoke.className = 'card-smoke'; smoke.setAttribute('aria-hidden', 'true'); card.appendChild(smoke); }
     card.classList.add('card-3d');
     if (!isMobile) {
       card.addEventListener('mousemove', throttle(function(e) { var rect = card.getBoundingClientRect(); var x = ((e.clientX - rect.left) / rect.width) - 0.5; var y = ((e.clientY - rect.top) / rect.height) - 0.5; var rx = y * -8; var ry = x * 8; var img = card.querySelector('.card-img'); var body = card.querySelector('.card-body'); if (img) img.style.transform = 'scale(1.05) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)'; if (body) body.style.transform = 'rotateX(' + (rx * 0.5) + 'deg) rotateY(' + (ry * 0.3) + 'deg)'; }, 16));
@@ -459,14 +508,14 @@ function bE() {
   D.sFR.addEventListener('click', cSF);
   D.mCl.addEventListener('click', closeModal);
   D.mO.addEventListener('click', function(e) { if (e.target === D.mO) closeModal(); });
-  D.mFv.addEventListener('click', tFFM);
+  if (D.mFv) D.mFv.addEventListener('click', tFFM);
   D.lB.addEventListener('click', cL);
   D.lCl.addEventListener('click', cL);
   D.lI.addEventListener('click', function(e) { e.stopPropagation(); });
   D.sT.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
   if (D.lI2) D.lI2.addEventListener('error', function() { this.style.display = 'none'; });
+  if (D.mSB) D.mSB.addEventListener('click', shareProduct);
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { cL(); if (D.mO.classList.contains('active')) closeModal(); } });
-  document.getElementById('modalShareBtn').addEventListener('click', function(e) { e.preventDefault(); shareProduct(); });
 }
 bE();
 lP();
