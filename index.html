@@ -454,6 +454,7 @@ function debounce(fn,delay){let timer;return function(...args){clearTimeout(time
 function gSI(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sSI(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
+// Service Worker disabled
 if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister()})})}
 
 const preloader=document.getElementById('preloader');let pageLoaded=false,preloaderShown=false;
@@ -461,7 +462,9 @@ setTimeout(function(){if(!pageLoaded){preloader.classList.add('visible');preload
 window.addEventListener('load',function(){pageLoaded=true;if(preloaderShown){setTimeout(function(){preloader.classList.add('hidden')},300)}});
 setTimeout(function(){if(preloaderShown)preloader.classList.add('hidden')},5000);
 
-const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv';
+// Version key for cache busting - change when updating photos
+const CACHE_VERSION = 'v1';
+const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 const IMAGES_PATH='images/';
 const LETTER_SIZES=['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
 const CAT_RU={shoes:'кроссовки',tshirts:'футболки',hoodies:'худи',jackets:'куртки',pants:'штаны',shorts:'шорты',suits:'костюмы',accessories:'аксессуары'};
@@ -480,8 +483,17 @@ window.shareProductCard=function(pid,event){event.stopPropagation();const p=P.fi
 
 function generateProductSchema(p){return{'@context':'https://schema.org','@type':'Product',name:p.name,description:p.description||'',image:p.photo_id?IMAGES_PATH+p.photo_id.split(';')[0].trim()+'.jpg':'',offers:{'@type':'Offer',price:p.price,priceCurrency:'RUB',availability:p.stock>0?'https://schema.org/InStock':'https://schema.org/OutOfStock'}}}
 
-function gPU(pid){return pid?IMAGES_PATH+pid+'.jpg':null}
-function iE(img,pid){const src=img.src;if(src.endsWith('.jpg')){img.src=IMAGES_PATH+pid+'.png'}else if(src.endsWith('.png')){img.src=IMAGES_PATH+pid+'.webp'}else{img.style.display='none';const p=document.createElement('span');p.className='img-placeholder';p.textContent='🦍';img.parentNode.appendChild(p)}}
+// Image functions with cache busting
+function gPU(pid){
+    if(!pid) return null;
+    return IMAGES_PATH + pid + '.jpg?v=' + CACHE_VERSION;
+}
+function iE(img,pid){
+    const src=img.src.split('?v=')[0]; // Remove old version param
+    if(src.endsWith('.jpg')){img.src=IMAGES_PATH+pid+'.png?v='+CACHE_VERSION}
+    else if(src.endsWith('.png')){img.src=IMAGES_PATH+pid+'.webp?v='+CACHE_VERSION}
+    else{img.style.display='none';const p=document.createElement('span');p.className='img-placeholder';p.textContent='🦍';img.parentNode.appendChild(p)}
+}
 
 function showToast(msg){D.t.textContent=msg;D.t.classList.add('show');setTimeout(function(){D.t.classList.remove('show')},3000)}
 
