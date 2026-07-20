@@ -17,6 +17,11 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* Убираем задержку тапа без запрета зума */
+button, a, .card, .category-btn, .size-btn, .size-filter-btn, .modal-dot, .similar-item {
+    touch-action: manipulation;
+}
+
 body::before {
     content: '';
     position: fixed;
@@ -64,7 +69,7 @@ body::before {
 
 .preloader-logo span {
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1px #666;
+    -webkit-text-stroke: 1px #999;
 }
 
 @keyframes pulse {
@@ -89,13 +94,13 @@ body::before {
 }
 
 @keyframes loading {
-    0% { width: 0; margin-left: 0; }
-    50% { width: 60%; margin-left: 20%; }
-    100% { width: 0; margin-left: 100%; }
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0%); }
+    100% { transform: translateX(100%); }
 }
 
 .preloader-tagline {
-    color: #666;
+    color: #999;
     font-size: 10px;
     letter-spacing: 4px;
     text-transform: uppercase;
@@ -180,7 +185,7 @@ header.scrolled {
 }
 
 .logo-text span {
-    color: #999;
+    color: #aaa;
     font-weight: 400;
     font-size: 10px;
     display: block;
@@ -225,7 +230,7 @@ nav a:hover {
 
 .hero-clock-city {
     display: block;
-    color: #999;
+    color: #aaa;
     font-size: 11px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -293,13 +298,13 @@ nav a:hover {
 
 .hero h1 .outline {
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1px #666;
+    -webkit-text-stroke: 1px #999;
 }
 
 .hero .subtitle {
     font-size: 14px;
     letter-spacing: 8px;
-    color: #888;
+    color: #aaa;
     margin-bottom: 10px;
     text-transform: uppercase;
 }
@@ -390,7 +395,7 @@ nav a:hover {
     animation: marquee 35s linear infinite;
     font-size: 11px;
     letter-spacing: 5px;
-    color: #999;
+    color: #aaa;
     text-transform: uppercase;
     font-weight: 700;
 }
@@ -411,7 +416,7 @@ nav a:hover {
     font-weight: 600;
     letter-spacing: 5px;
     text-transform: uppercase;
-    color: #777;
+    color: #999;
     margin-bottom: 15px;
 }
 
@@ -427,7 +432,7 @@ nav a:hover {
 
 .section-subtitle {
     text-align: center;
-    color: #888;
+    color: #aaa;
     font-size: 13px;
     letter-spacing: 3px;
     margin-bottom: 50px;
@@ -585,7 +590,7 @@ nav a:hover {
 }
 
 .search-bar input::placeholder {
-    color: #666;
+    color: #999;
 }
 
 .sort-bar {
@@ -736,7 +741,6 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     transition: all .2s;
-    touch-action: manipulation;
 }
 
 .favorite-btn:active {
@@ -751,7 +755,7 @@ nav a:hover {
     position: absolute;
     bottom: 10px;
     right: 12px;
-    color: #999;
+    color: #aaa;
     font-size: 10px;
     letter-spacing: 1px;
     z-index: 2;
@@ -820,7 +824,7 @@ nav a:hover {
 }
 
 .card-body .category {
-    color: #888;
+    color: #aaa;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -836,7 +840,7 @@ nav a:hover {
 }
 
 .sizes-label {
-    color: #777;
+    color: #999;
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -915,7 +919,7 @@ nav a:hover {
 .no-products {
     text-align: center;
     padding: 60px;
-    color: #888;
+    color: #aaa;
     font-size: 14px;
     letter-spacing: 2px;
     width: 100%;
@@ -924,7 +928,7 @@ nav a:hover {
 .view-counter {
     display: inline-block;
     font-size: 10px;
-    color: #666;
+    color: #999;
     margin-left: 8px;
     opacity: 0.8;
 }
@@ -950,7 +954,6 @@ nav a:hover {
     align-items: center;
     justify-content: center;
     transition: all .2s;
-    touch-action: manipulation;
 }
 
 .share-btn:hover {
@@ -1059,7 +1062,7 @@ nav a:hover {
     color: #fff;
     font-size: 24px;
     cursor: pointer;
-    z-index: 999999;
+    z-index: 30;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -1081,11 +1084,40 @@ nav a:hover {
     transform: scale(.9);
 }
 
+.modal-favorite {
+    position: absolute;
+    top: 15px;
+    right: 65px;
+    background: rgba(0,0,0,.5);
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 30;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    padding: 0;
+}
+
+.modal-favorite:hover {
+    background: rgba(255,255,255,.2);
+    transform: scale(1.1);
+}
+
+.modal-favorite.active {
+    color: #f33;
+}
+
 .modal-title {
     font-size: 22px;
     color: #fff;
     margin-bottom: 5px;
-    padding-right: 50px;
+    padding-right: 100px;
 }
 
 .modal-price {
@@ -1134,7 +1166,7 @@ nav a:hover {
 
 .modal-stock {
     font-size: 12px;
-    color: #888;
+    color: #aaa;
     margin-bottom: 15px;
 }
 
@@ -1184,7 +1216,7 @@ nav a:hover {
 
 .modal-order-hint {
     text-align: center;
-    color: #888;
+    color: #aaa;
     font-size: 11px;
     margin-top: 8px;
 }
@@ -1195,11 +1227,12 @@ nav a:hover {
     padding: 8px 16px;
     background: rgba(255,255,255,.08);
     color: #ccc;
+    border: 1px solid rgba(255,255,255,.1);
     border-radius: 100px;
     font-size: 11px;
     cursor: pointer;
-    text-decoration: none;
     transition: all .3s;
+    font-family: 'Inter', sans-serif;
 }
 
 .modal-share-btn:hover {
@@ -1344,7 +1377,7 @@ nav a:hover {
 
 .similar-section .similar-title {
     font-size: 10px;
-    color: #777;
+    color: #999;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 10px;
@@ -1433,7 +1466,7 @@ nav a:hover {
 }
 
 .delivery-card p {
-    color: #999;
+    color: #aaa;
     font-size: 12px;
     line-height: 1.8;
 }
@@ -1525,7 +1558,7 @@ footer {
 }
 
 footer p {
-    color: #666;
+    color: #999;
     font-size: 10px;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -1600,6 +1633,22 @@ footer p {
     margin-right: 8px;
     padding: 8px 16px;
     font-size: 12px;
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .marquee span {
+        animation: none;
+    }
+    #preloader.hidden {
+        transition: none;
+    }
 }
 
 /* ============ MOBILE ============ */
