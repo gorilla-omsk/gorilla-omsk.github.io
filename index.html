@@ -2,28 +2,35 @@
 <html lang="ru" itemscope itemtype="https://schema.org/Store">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GORILLA STREETWEAR — Уличная одежда Омск</title>
     <meta name="description" content="GORILLA STREETWEAR — уличная одежда в Омске. Кроссовки, худи, футболки, куртки, штаны. Доставка по России.">
     
     <meta property="og:title" content="GORILLA STREETWEAR — Уличная одежда Омск">
     <meta property="og:description" content="Уличная эстетика • Омск. Кроссовки, худи, футболки, куртки, штаны.">
     <meta property="og:image" content="https://gorilla-omsk.github.io/GGVP.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gorilla-omsk.github.io">
+    <meta property="og:locale" content="ru_RU">
     
     <link rel="apple-touch-icon" href="GGVP.jpg">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦍%3C/text%3E%3C/svg%3E">
     <link rel="icon" type="image/jpeg" href="GGVP.jpg">
     <link rel="manifest" href="/manifest.json?v=2">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#0a0a0a">
+    <meta name="color-scheme" content="dark">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=2">
 
+    <!-- Yandex Metrika -->
     <script>
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=110754345','ym');ym(110754345,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});
     </script>
@@ -37,22 +44,22 @@
         <div class="preloader-tagline">Загрузка дропа...</div>
     </div>
 
-    <div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр фото">
+    <div class="lightbox" id="lightbox" role="dialog" aria-label="Просмотр фото" aria-hidden="true">
         <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть просмотр">✕</button>
         <img src="" alt="Фото товара" id="lightboxImg">
     </div>
 
     <header id="main-header">
         <div class="logo-block">
-            <img src="GGVP.jpg" alt="Логотип GORILLA" class="logo-img" id="logoImg" width="40" height="40">
+            <img src="GGVP.jpg" alt="Логотип GORILLA" class="logo-img" id="logoImg" width="40" height="40" onerror="this.style.display='none'">
             <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
         </div>
         <nav role="navigation" aria-label="Главное меню">
             <a href="#catalog">Каталог</a>
             <a href="#delivery">Доставка</a>
             <a href="#contacts">Контакты</a>
-            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer">VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer">TG</a>
+            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" aria-label="VK (откроется в новом окне)">VK</a>
+            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" aria-label="Telegram (откроется в новом окне)">TG</a>
         </nav>
     </header>
 
@@ -64,13 +71,13 @@
             <p class="subtitle">Уличная эстетика • Омск</p>
             <div class="hero-clocks" aria-label="Текущее время">
                 <div class="hero-clock-item"><span class="hero-clock-city">Омск</span><span class="hero-clock-time" id="omskTime">--:--</span></div>
-                <div class="hero-clock-divider"></div>
+                <div class="hero-clock-divider" aria-hidden="true"></div>
                 <div class="hero-clock-item"><span class="hero-clock-city">Москва</span><span class="hero-clock-time" id="mskTime">--:--</span></div>
             </div>
             <div class="btn-group">
                 <a href="#catalog" class="btn btn-white" aria-label="Перейти к каталогу">Смотреть дроп</a>
-                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn btn-vk">📱 Написать в VK</a>
-                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn btn-tg">✈️ Написать в TG</a>
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn btn-vk" aria-label="Написать в VK (откроется в новом окне)">📱 Написать в VK</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn btn-tg" aria-label="Написать в Telegram (откроется в новом окне)">✈️ Написать в TG</a>
             </div>
         </div>
     </section>
@@ -87,14 +94,14 @@
                 <div class="categories-menu" id="categoriesMenu" role="navigation" aria-label="Категории товаров"></div>
                 <div class="size-filter" id="sizeFilter">
                     <h4>📏 Размер</h4>
-                    <div id="sizeFilterContent"><span style="color:#888;font-size:12px;">Выбери категорию</span></div>
+                    <div id="sizeFilterContent"><span style="color:#aaa;font-size:12px;">Выбери категорию</span></div>
                     <button class="size-filter-reset" id="sizeFilterReset" aria-label="Сбросить фильтр размеров">✕ Сбросить размер</button>
                 </div>
             </div>
             <div style="flex:1;">
                 <div class="search-bar" role="search">
                     <div style="display:flex;gap:10px;align-items:center;background:#0c0c0c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 16px;">
-                        <span style="color:#888;font-size:18px;" aria-hidden="true">🔍</span>
+                        <span style="color:#aaa;font-size:18px;" aria-hidden="true">🔍</span>
                         <input type="text" id="searchInput" placeholder="Поиск по товарам..." aria-label="Поиск по товарам">
                         <button id="clearSearchBtn" style="display:none;background:none;border:none;color:#f33;cursor:pointer;font-size:18px;padding:0 5px;" aria-label="Очистить поиск">✕</button>
                     </div>
@@ -136,20 +143,20 @@
                 Напиши нам в VK или Telegram —<br>скинем доп. фото, уточним размер и оформим доставку
             </p>
             <div class="social-btns">
-                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-social btn-social-vk">📱 Написать в VK</a>
-                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-social btn-social-tg">✈️ Написать в TG</a>
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-social btn-social-vk" aria-label="Написать в VK (откроется в новом окне)">📱 Написать в VK</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-social btn-social-tg" aria-label="Написать в Telegram (откроется в новом окне)">✈️ Написать в TG</a>
             </div>
         </div>
     </section>
 
-    <footer><p>© 2026 GORILLA STREETWEAR • OMSK</p></footer>
+    <footer><p>© 2025 GORILLA STREETWEAR • OMSK</p></footer>
     <a href="#" class="scroll-top" id="scrollTop" aria-label="Наверх">↑</a>
 
-    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-label="Карточка товара">
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-label="Карточка товара" aria-hidden="true">
         <div class="modal" id="modalBox">
             <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
             <div id="modalGalleryContainer"></div>
-            <div class="modal-favorite" id="modalFavorite" role="button" aria-label="Добавить в избранное" style="position:absolute;top:20px;right:65px;font-size:24px;cursor:pointer;z-index:10;">🤍</div>
+            <button class="modal-favorite" id="modalFavorite" aria-label="Добавить в избранное">🤍</button>
             <h2 class="modal-title" id="modalTitle"></h2>
             <p class="modal-price" id="modalPrice"></p>
             <p class="modal-color" id="modalColor"></p>
@@ -159,11 +166,11 @@
             <p class="modal-description" id="modalDesc"></p>
             <div id="modalSimilar"></div>
             <div class="modal-order-btns">
-                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="modal-order-btn modal-order-vk">📱 Заказать в VK</a>
-                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="modal-order-btn modal-order-tg">✈️ Заказать в TG</a>
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="modal-order-btn modal-order-vk" aria-label="Заказать в VK (откроется в новом окне)">📱 Заказать в VK</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="modal-order-btn modal-order-tg" aria-label="Заказать в Telegram (откроется в новом окне)">✈️ Заказать в TG</a>
             </div>
             <div style="text-align:center;margin-top:8px;">
-                <a href="#" class="modal-share-btn" id="modalShareBtn" role="button" aria-label="Поделиться товаром">🔗 Поделиться</a>
+                <button class="modal-share-btn" id="modalShareBtn" aria-label="Поделиться товаром">🔗 Поделиться</button>
             </div>
             <p class="modal-order-hint">Напиши нам — уточним размер, скинем доп. фото и оформим заказ</p>
         </div>
@@ -171,6 +178,19 @@
 
     <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
 
-<script src="script.js?v=2"></script>
+    <!-- Регистрация Service Worker -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                console.log('SW registered:', reg.scope);
+            }).catch(function(err) {
+                console.log('SW failed:', err);
+            });
+        });
+    }
+    </script>
+
+    <script src="script.js?v=2"></script>
 </body>
 </html>
