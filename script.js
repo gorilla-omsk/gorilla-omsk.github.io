@@ -141,6 +141,7 @@ window.iE = function(img, pid) {
   
   if (!currentExt) {
     img.src = IMAGES_PATH + pid + '.' + IMAGE_FALLBACKS[0] + '?v=' + CACHE_VERSION;
+    img.setAttribute('data-lightbox-src', img.src);
     return;
   }
   
@@ -149,6 +150,7 @@ window.iE = function(img, pid) {
   
   if (nextIdx < IMAGE_FALLBACKS.length) {
     img.src = IMAGES_PATH + pid + '.' + IMAGE_FALLBACKS[nextIdx] + '?v=' + CACHE_VERSION;
+    img.setAttribute('data-lightbox-src', img.src);
   } else {
     img.style.display = 'none';
     showPlaceholder(img);
@@ -445,11 +447,20 @@ function oM(product) {
     var prevBtn = D.mB.querySelector('.modal-gallery-prev');
     var nextBtn = D.mB.querySelector('.modal-gallery-next');
     var dots = D.mB.querySelectorAll('.modal-dot');
-    var images = D.mB.querySelectorAll('[data-lightbox-src]');
     if (prevBtn) prevBtn.onclick = pS;
     if (nextBtn) nextBtn.onclick = nS;
     dots.forEach(function(dot) { var slide = parseInt(dot.getAttribute('data-slide')); dot.onclick = function() { gTS(slide); }; });
-    images.forEach(function(img) { img.onclick = function() { oL(img.getAttribute('data-lightbox-src')); }; });
+    
+    // Делегирование кликов — работает для любых форматов
+    var galleryContainer = D.mB.querySelector('.modal-gallery, .modal-img');
+    if (galleryContainer) {
+      galleryContainer.addEventListener('click', function(e) {
+        var target = e.target;
+        if (target.tagName === 'IMG' && target.src && !target.src.includes('placeholder')) {
+          oL(target.src.split('?v=')[0]);
+        }
+      });
+    }
   }, 0);
 }
 function closeModal() { D.mO.classList.remove('active'); D.mO.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; cP = null; }
