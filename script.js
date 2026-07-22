@@ -139,7 +139,12 @@ window.iE = function(img, pid) {
     }
   }
   
-  var currentIdx = currentExt ? IMAGE_FALLBACKS.indexOf(currentExt) : -1;
+  if (!currentExt) {
+    img.src = IMAGES_PATH + pid + '.' + IMAGE_FALLBACKS[0] + '?v=' + CACHE_VERSION;
+    return;
+  }
+  
+  var currentIdx = IMAGE_FALLBACKS.indexOf(currentExt);
   var nextIdx = currentIdx + 1;
   
   if (nextIdx < IMAGE_FALLBACKS.length) {
@@ -273,7 +278,7 @@ function renderSimilarProducts(product) {
   if (!similar.length) { D.mSimilar.innerHTML = ''; return; }
   var h = '<div class="similar-section"><div class="similar-title">🔥 Похожие товары</div><div class="similar-grid">';
   similar.forEach(function(p) {
-    var pu = gPU(p.photo_id ? p.photo_id.split(';')[0].trim() : '', 'jpg');
+    var pu = gPU(p.photo_id ? p.photo_id.split(';')[0].trim() : '', IMAGE_FALLBACKS[0]);
     h += '<div class="similar-item" role="button" tabindex="0" aria-label="' + p.name + '" onclick="event.stopPropagation();document.getElementById(\'modalOverlay\').classList.remove(\'active\');document.body.style.overflow=\'\';setTimeout(function(){openModalById(\'' + p.id + '\')},100)"><img src="' + (pu || '') + '" alt="' + p.name + '" loading="lazy" onerror="iE(this,\'' + (p.photo_id ? p.photo_id.split(';')[0].trim() : '') + '\')"><div class="similar-name">' + p.name + '</div><div class="similar-price">' + p.price.toLocaleString() + ' ₽</div></div>';
   });
   h += '</div></div>';
@@ -388,7 +393,7 @@ function oM(product) {
   var pids = product.photo_id ? product.photo_id.split(';').map(function(s) { return s.trim(); }) : [];
   var photos = [];
   pids.forEach(function(id) {
-    var url = gPU(id, 'jpg');
+    var url = gPU(id, IMAGE_FALLBACKS[0]);
     if (url) photos.push({ url: url, pid: id });
   });
   var g = '';
@@ -464,7 +469,7 @@ function rCat() {
     var catName = CATS.find(function(c) { return c.id === p.category; }) ? CATS.find(function(c) { return c.id === p.category; }).name : '';
     var sizes = p.sizes ? p.sizes.join(', ') : '';
     var pid = p.photo_id ? p.photo_id.split(';')[0].trim() : '';
-    var pu = gPU(pid, 'jpg');
+    var pu = gPU(pid, IMAGE_FALLBACKS[0]);
     var isFav = F.includes(p.id);
     var hfd = p.price >= 3000;
     var fd = hfd ? '<span class="free-delivery-badge">🚚 Бесплатная доставка 5Post</span>' : '';
