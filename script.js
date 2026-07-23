@@ -38,6 +38,18 @@ var CATS = [
   { id:'pants', name:'Штаны / Брюки / Джинсы', e:'👖' }
 ];
 
+// ============ MATCH RULES ============
+var MATCH_RULES = {
+  tshirts:   ['shoes', 'shorts', 'pants'],
+  hoodies:   ['shoes', 'pants'],
+  shoes:     ['tshirts', 'hoodies', 'pants', 'shorts'],
+  jackets:   ['hoodies', 'tshirts', 'pants', 'shoes'],
+  pants:     ['tshirts', 'hoodies', 'shoes'],
+  shorts:    ['tshirts', 'shoes'],
+  suits:     ['shoes'],
+  accessories: ['tshirts', 'hoodies']
+};
+
 // ============ DOM ============
 var D = {
   hBg: document.getElementById('hero-bg'),
@@ -272,13 +284,28 @@ function pCSV(csv) {
   }).filter(Boolean);
 }
 
-// ============ SIMILAR PRODUCTS ============
-function getSimilarProducts(product, max) { max = max || 4; return P.filter(function(p) { return p.id !== product.id && p.category === product.category && p.stock > 0; }).sort(function() { return Math.random() - 0.5; }).slice(0, max); }
+// ============ COMPLETE THE LOOK ============
+function getSimilarProducts(product, max) {
+  max = max || 4;
+  var targetCategories = MATCH_RULES[product.category] || [];
+  
+  var matches = [];
+  targetCategories.forEach(function(cat) {
+    var catProducts = P.filter(function(p) {
+      return p.id !== product.id && p.category === cat && p.stock > 0;
+    });
+    matches = matches.concat(catProducts);
+  });
+  
+  matches.sort(function() { return Math.random() - 0.5; });
+  return matches.slice(0, max);
+}
+
 function renderSimilarProducts(product) {
   if (!D.mSimilar) return;
   var similar = getSimilarProducts(product);
   if (!similar.length) { D.mSimilar.innerHTML = ''; return; }
-  var h = '<div class="similar-section"><div class="similar-title">🔥 Похожие товары</div><div class="similar-grid">';
+  var h = '<div class="similar-section"><div class="similar-title">👕 С чем носить</div><div class="similar-grid">';
   similar.forEach(function(p) {
     var pu = gPU(p.photo_id ? p.photo_id.split(';')[0].trim() : '', IMAGE_FALLBACKS[0]);
     h += '<div class="similar-item" role="button" tabindex="0" aria-label="' + p.name + '" onclick="event.stopPropagation();document.getElementById(\'modalOverlay\').classList.remove(\'active\');document.body.style.overflow=\'\';setTimeout(function(){openModalById(\'' + p.id + '\')},100)"><img src="' + (pu || '') + '" alt="' + p.name + '" loading="lazy" onerror="iE(this,\'' + (p.photo_id ? p.photo_id.split(';')[0].trim() : '') + '\')"><div class="similar-name">' + p.name + '</div><div class="similar-price">' + p.price.toLocaleString() + ' ₽</div></div>';
