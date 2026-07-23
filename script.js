@@ -19,7 +19,7 @@ setTimeout(function() {
 }, 5000);
 
 // ============ CONFIG ============
-var CACHE_VERSION = 'v2';
+var CACHE_VERSION = 'v3';
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 var IMAGES_PATH = 'images/';
 var LETTER_SIZES = ['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
@@ -316,20 +316,35 @@ function uMF() { if (!cP) return; var isFav = F.includes(cP.id); D.mFv.textConte
 function gSFC(catId) { var f = catId === 'all' ? P : P.filter(function(p) { return p.category === catId; }); var s = new Set(); f.forEach(function(p) { if (p.sizes) p.sizes.forEach(function(x) { s.add(x.trim()); }); }); return Array.from(s); }
 function cSizes(sizes) {
   var g = { shoe:[], waist:[], letter:[], other:[] };
-  var isS = aC === 'shoes', isP = aC === 'pants', isC = ['tshirts','hoodies','jackets','shorts','suits'].includes(aC);
+  var isShoes = aC === 'shoes';
+  var isClothing = ['tshirts','hoodies','jackets','shorts','suits','pants'].includes(aC);
+  
   sizes.forEach(function(size) {
     var u = size.toUpperCase();
-    if (LETTER_SIZES.includes(u) || /^[A-Z]+$/.test(u)) g.letter.push(size);
+    
+    // Буквенные размеры — всегда в одежду
+    if (LETTER_SIZES.includes(u) || /^[A-Z]+$/.test(u)) {
+      g.letter.push(size);
+    }
+    // Числовые размеры
     else if (/^\d+$/.test(size)) {
       var n = parseInt(size);
-      if (isS && n >= 35 && n <= 52) g.shoe.push(size);
-      else if (isP && n >= 26 && n <= 38) g.waist.push(size);
-      else if (isC) g.letter.push(size);
-      else if (n >= 35 && n <= 52) g.shoe.push(size);
-      else if (n >= 26 && n <= 38) g.waist.push(size);
-      else g.other.push(size);
-    } else g.other.push(size);
+      if (isShoes && n >= 35 && n <= 52) {
+        g.shoe.push(size);
+      } else if (isClothing) {
+        g.other.push(size);
+      } else if (n >= 35 && n <= 52) {
+        g.shoe.push(size);
+      } else if (n >= 26 && n <= 38) {
+        g.waist.push(size);
+      } else {
+        g.other.push(size);
+      }
+    } else {
+      g.other.push(size);
+    }
   });
+  
   g.shoe.sort(function(a,b) { return parseInt(a) - parseInt(b); });
   g.waist.sort(function(a,b) { return parseInt(a) - parseInt(b); });
   g.letter.sort(function(a,b) {
@@ -402,9 +417,9 @@ function oM(product) {
   if (photos.length > 1) {
     g = '<div class="modal-gallery"><div class="modal-gallery-slides">' + photos.map(function(photo, i) { return '<img src="' + photo.url + '" class="modal-gallery-img' + (i === 0 ? ' active' : '') + '" loading="lazy" alt="' + product.name + '" onerror="iE(this,\'' + photo.pid + '\')" data-lightbox-src="' + photo.url + '">'; }).join('') + '</div><div class="modal-gallery-dots">' + photos.map(function(_, i) { return '<span class="modal-dot' + (i === 0 ? ' active' : '') + '" data-slide="' + i + '"></span>'; }).join('') + '</div><button class="modal-gallery-prev" aria-label="Предыдущее фото">‹</button><button class="modal-gallery-next" aria-label="Следующее фото">›</button></div>';
   } else if (photos.length === 1) {
-    g = '<img class="modal-img" src="' + photos[0].url + '" loading="lazy" alt="' + product.name + '" style="width:100%;height:300px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="' + photos[0].url + '" onerror="iE(this,\'' + photos[0].pid + '\')">';
+    g = '<img class="modal-img" src="' + photos[0].url + '" loading="lazy" alt="' + product.name + '" style="width:100%;height:450px;object-fit:contain;object-position:center;border-radius:8px;margin-bottom:15px;background:#080808;cursor:zoom-in" data-lightbox-src="' + photos[0].url + '" onerror="iE(this,\'' + photos[0].pid + '\')">';
   } else {
-    g = '<span style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:60px" aria-hidden="true">🦍</span>';
+    g = '<span style="width:100%;height:450px;display:flex;align-items:center;justify-content:center;font-size:60px" aria-hidden="true">🦍</span>';
   }
   D.mGC.innerHTML = g;
   D.mT.textContent = product.name;
@@ -451,7 +466,6 @@ function oM(product) {
     if (nextBtn) nextBtn.onclick = nS;
     dots.forEach(function(dot) { var slide = parseInt(dot.getAttribute('data-slide')); dot.onclick = function() { gTS(slide); }; });
     
-    // Делегирование кликов — работает для любых форматов
     var galleryContainer = D.mB.querySelector('.modal-gallery, .modal-img');
     if (galleryContainer) {
       galleryContainer.addEventListener('click', function(e) {
