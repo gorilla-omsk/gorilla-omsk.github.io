@@ -19,7 +19,7 @@ setTimeout(function() {
 }, 5000);
 
 // ============ CONFIG ============
-var CACHE_VERSION = 'v3';
+var CACHE_VERSION = 'v4';
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 var IMAGES_PATH = 'images/';
 var LETTER_SIZES = ['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
@@ -322,11 +322,9 @@ function cSizes(sizes) {
   sizes.forEach(function(size) {
     var u = size.toUpperCase();
     
-    // Буквенные размеры — всегда в одежду
     if (LETTER_SIZES.includes(u) || /^[A-Z]+$/.test(u)) {
       g.letter.push(size);
     }
-    // Числовые размеры
     else if (/^\d+$/.test(size)) {
       var n = parseInt(size);
       if (isShoes && n >= 35 && n <= 52) {
