@@ -19,7 +19,7 @@ setTimeout(function() {
 }, 5000);
 
 // ============ CONFIG ============
-var CACHE_VERSION = 'v7';
+var CACHE_VERSION = 'v8';
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 var IMAGES_PATH = 'images/';
 var LETTER_SIZES = ['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
@@ -453,6 +453,29 @@ function rMobCats() {
   CATS.forEach(function(cat) { var count = cat.id === 'all' ? P.length : cat.id === 'favorites' ? F.length : P.filter(function(p) { return p.category === cat.id; }).length; h += '<button class="category-btn' + (aC === cat.id ? ' active' : '') + '" data-category="' + cat.id + '" aria-label="' + cat.name + '">' + cat.e + ' ' + cat.name + ' (' + count + ')</button>'; });
   D.cScr.innerHTML = h;
   D.cScr.querySelectorAll('.category-btn').forEach(function(btn) { btn.addEventListener('click', function() { sC(btn.getAttribute('data-category')); }); });
+  
+  var mobileMenu = document.getElementById('mobileCategoriesMenu');
+  if (mobileMenu) {
+    var mh = '';
+    CATS.forEach(function(cat) {
+      if (cat.id === 'all' || cat.id === 'favorites') return;
+      var count = P.filter(function(p) { return p.category === cat.id; }).length;
+      mh += '<button class="mobile-category-btn' + (aC === cat.id ? ' active' : '') + '" data-category="' + cat.id + '">' + cat.e + ' ' + cat.name + ' <span class="count">' + count + '</span></button>';
+    });
+    mobileMenu.innerHTML = mh;
+    mobileMenu.querySelectorAll('.mobile-category-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var catId = btn.getAttribute('data-category');
+        closeMenu();
+        sC(catId);
+        if (isMobile) {
+          setTimeout(function() {
+            document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        }
+      });
+    });
+  }
 }
 function sC(catId) { aC = catId; rC(); rMobCats(); rSF(); rCat(); if (isMobile) { document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' }); } setTimeout(oC, 100); setTimeout(init3DCards, 200); }
 
