@@ -1819,7 +1819,7 @@ footer p {
     }
 
     nav {
-        display: none;
+        display: flex;
         position: fixed;
         top: 0;
         left: 0;
@@ -1837,12 +1837,15 @@ footer p {
         overflow-y: auto;
         box-shadow: 15px 0 40px rgba(0,0,0,.5);
         transform: translateX(-100%);
-        transition: transform .3s ease;
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform .3s ease, visibility .3s;
     }
 
     nav.active {
-        display: flex;
         transform: translateX(0);
+        visibility: visible;
+        pointer-events: auto;
     }
 
     nav a {
