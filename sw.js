@@ -1,4 +1,4 @@
-var CACHE_NAME = 'gorilla-v4';
+var CACHE_NAME = 'gorilla-v5';
 var IMAGE_CACHE_LIMIT = 100;
 
 var ASSETS_TO_CACHE = [
@@ -11,7 +11,7 @@ var ASSETS_TO_CACHE = [
   '/icon-512.png',
   '/maskable-icon.png',
   '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Russo+One&display=swap'
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Russo+One&display=swap'
 ];
 
 // ============ УСТАНОВКА ============
