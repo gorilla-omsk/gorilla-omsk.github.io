@@ -245,6 +245,17 @@ nav a:hover {
     color: #fff;
 }
 
+/* Скрываем мобильные категории на десктопе */
+.nav-mobile-categories {
+    display: none;
+}
+
+.nav-mobile-links {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
 /* ============ HERO ============ */
 .hero-clocks {
     display: flex;
@@ -1873,5 +1884,55 @@ footer p {
         visibility: visible;
         pointer-events: auto;
         opacity: 1;
+    }
+
+    .nav-mobile-categories {
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .nav-mobile-title {
+        font-family: 'Russo One', sans-serif;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #ff9933;
+        margin-bottom: 12px;
+    }
+
+    .mobile-category-btn {
+        display: block;
+        width: 100%;
+        padding: 12px 0;
+        text-align: left;
+        background: none;
+        border: none;
+        color: #ccc;
+        font-size: 14px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(255,255,255,.05);
+        text-transform: uppercase;
+        font-family: 'Inter', sans-serif;
+        transition: color .2s;
+    }
+
+    .mobile-category-btn:hover,
+    .mobile-category-btn.active {
+        color: #fff;
+    }
+
+    .mobile-category-btn .count {
+        color: #999;
+        font-size: 12px;
+        float: right;
+    }
+
+    .nav-mobile-links {
+        border-top: 1px solid rgba(255,255,255,.08);
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
     }
 }
