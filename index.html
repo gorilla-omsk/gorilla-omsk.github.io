@@ -22,7 +22,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="manifest" href="/manifest.json?v=5">
+    <link rel="manifest" href="/manifest.json?v=6">
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Russo+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <script type="application/ld+json">
     {
@@ -77,11 +77,16 @@
             <div class="logo-text">GORILLA<span>Streetwear • Omsk</span></div>
         </div>
         <nav role="navigation" aria-label="Главное меню">
-            <a href="#catalog">Каталог</a>
-            <a href="#delivery">Доставка</a>
-            <a href="#contacts">Контакты</a>
-            <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" aria-label="VK (откроется в новом окне)">VK</a>
-            <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" aria-label="Telegram (откроется в новом окне)">TG</a>
+            <div class="nav-mobile-categories">
+                <div class="nav-mobile-title">Каталог</div>
+                <div id="mobileCategoriesMenu"></div>
+            </div>
+            <div class="nav-mobile-links">
+                <a href="#delivery">Доставка</a>
+                <a href="#contacts">Контакты</a>
+                <a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" aria-label="VK (откроется в новом окне)">VK</a>
+                <a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" aria-label="Telegram (откроется в новом окне)">TG</a>
+            </div>
         </nav>
     </header>
     <div id="menuOverlay"></div>
@@ -218,6 +223,6 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/110754345" style="position:absolute;left:-9999px" alt=""></div></noscript>
 
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=6"></script>
 </body>
 </html>
