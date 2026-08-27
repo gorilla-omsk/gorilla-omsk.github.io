@@ -22,7 +22,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="manifest" href="/manifest.json?v=6">
+    <link rel="manifest" href="/manifest.json?v=9">
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Russo+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=9">
 
     <script type="application/ld+json">
     {
@@ -116,16 +116,31 @@
         <p class="section-label">Drop 001</p>
         <h2 class="section-title">Каталог</h2>
         <p class="section-subtitle">Понравился товар? Напиши нам в VK или Telegram</p>
+        
+        <div class="breadcrumbs">
+            <span>ГЛАВНАЯ</span> / <span id="breadcrumbCategory">ВСЕ ТОВАРЫ</span>
+        </div>
+
         <div class="categories-scroll" id="categoriesScroll" role="tablist" aria-label="Категории"></div>
+        
         <div class="catalog-wrapper">
             <div class="sidebar" id="sidebar">
                 <div class="categories-menu" id="categoriesMenu" role="navigation" aria-label="Категории товаров"></div>
+                
+                <div class="brand-filter" id="brandFilter">
+                    <h4>🏷️ Бренды</h4>
+                    <div id="brandFilterContent"></div>
+                </div>
+
                 <div class="size-filter" id="sizeFilter">
                     <h4>📏 Размер</h4>
                     <div id="sizeFilterContent"><span style="color:#aaa;font-size:12px;">Выбери категорию</span></div>
                     <button class="size-filter-reset" id="sizeFilterReset" aria-label="Сбросить фильтр размеров">✕ Сбросить размер</button>
                 </div>
+
+                <button class="clear-all-filters" id="clearAllFilters">✕ Сбросить все фильтры</button>
             </div>
+            
             <div style="flex:1;">
                 <div class="search-bar" role="search">
                     <div style="display:flex;gap:10px;align-items:center;background:#0c0c0c;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 16px;">
@@ -134,11 +149,20 @@
                         <button id="clearSearchBtn" style="display:none;background:none;border:none;color:#f33;cursor:pointer;font-size:18px;padding:0 5px;" aria-label="Очистить поиск">✕</button>
                     </div>
                 </div>
+
+                <button id="mobileFiltersToggle" class="mobile-filters-toggle">⚙️ Фильтры</button>
+                <div id="mobileFiltersPanel" class="mobile-filters-panel">
+                    <div id="mobileBrandFilterContent"></div>
+                    <div id="mobileSizeFilterContent"></div>
+                    <button class="clear-all-filters" id="mobileClearAllFilters">✕ Сбросить все фильтры</button>
+                </div>
+
                 <div class="sort-bar">
                     <select id="sortSelect" aria-label="Сортировка товаров">
                         <option value="default">По умолчанию</option>
                         <option value="price-asc">Сначала дешёвые</option>
                         <option value="price-desc">Сначала дорогие</option>
+                        <option value="popular">По популярности</option>
                         <option value="newest">Сначала новые</option>
                     </select>
                 </div>
@@ -223,6 +247,6 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/110754345" style="position:absolute;left:-9999px" alt=""></div></noscript>
 
-    <script src="script.js?v=6"></script>
+    <script src="script.js?v=9"></script>
 </body>
 </html>
