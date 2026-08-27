@@ -19,7 +19,7 @@ setTimeout(function() {
 }, 5000);
 
 // ============ CONFIG ============
-var CACHE_VERSION = 'v9';
+var CACHE_VERSION = 'v10';
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 var IMAGES_PATH = 'images/';
 var LETTER_SIZES = ['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
@@ -206,6 +206,15 @@ if (nav) {
     link.addEventListener('click', function() {
       if (isMobile) closeMenu();
     });
+  });
+}
+
+// ============ BRAND FILTER TOGGLE ============
+var brandFilterHeader = document.getElementById('brandFilterHeader');
+var brandFilterEl = document.getElementById('brandFilter');
+if (brandFilterHeader && brandFilterEl) {
+  brandFilterHeader.addEventListener('click', function() {
+    brandFilterEl.classList.toggle('open');
   });
 }
 
@@ -555,11 +564,29 @@ function rBrandFilter() {
   
   var mobile = document.getElementById('mobileBrandFilterContent');
   if (mobile) {
-    var mh = '<div class="filter-group-title">🏷️ Бренды</div>';
+    var mh = '<div class="filter-group-title mobile-brand-toggle">🏷️ Бренды <span class="brand-filter-arrow">▼</span></div>';
+    mh += '<div class="mobile-brand-list">';
     keys.forEach(function(b) {
       mh += '<label class="brand-check"><input type="checkbox" value="' + b + '" ' + (aB === b ? 'checked' : '') + '> ' + b + ' <span class="count">' + brands[b] + '</span></label>';
     });
+    mh += '</div>';
     mobile.innerHTML = mh;
+    
+    var mobileBrandToggle = mobile.querySelector('.mobile-brand-toggle');
+    var mobileBrandList = mobile.querySelector('.mobile-brand-list');
+    if (mobileBrandToggle && mobileBrandList) {
+      mobileBrandList.style.maxHeight = '180px';
+      mobileBrandList.style.overflowY = 'auto';
+      mobileBrandToggle.addEventListener('click', function() {
+        mobileBrandList.classList.toggle('collapsed');
+        if (mobileBrandList.classList.contains('collapsed')) {
+          mobileBrandList.style.maxHeight = '0';
+        } else {
+          mobileBrandList.style.maxHeight = '180px';
+        }
+      });
+    }
+    
     mobile.querySelectorAll('input').forEach(function(input) {
       input.addEventListener('change', function() {
         aB = input.checked ? input.value : null;
