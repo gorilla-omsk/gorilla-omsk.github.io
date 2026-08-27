@@ -245,7 +245,6 @@ nav a:hover {
     color: #fff;
 }
 
-/* Скрываем мобильные категории на десктопе */
 .nav-mobile-categories {
     display: none;
 }
@@ -387,18 +386,6 @@ nav a:hover {
     box-shadow: 0 0 20px rgba(255,255,255,.5);
 }
 
-.btn-outline {
-    background: transparent;
-    color: #fff;
-    border: 1px solid rgba(255,255,255,.3);
-}
-
-.btn-outline:hover {
-    border-color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(255,255,255,.3);
-}
-
 .btn-vk {
     background: #07f;
     color: #fff;
@@ -476,7 +463,21 @@ nav a:hover {
     color: #aaa;
     font-size: 13px;
     letter-spacing: 3px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+}
+
+/* ============ BREADCRUMBS ============ */
+.breadcrumbs {
+    max-width: 1400px;
+    margin: 0 auto 20px;
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.breadcrumbs span {
+    color: #ff9933;
 }
 
 /* ============ CATALOG ============ */
@@ -489,7 +490,7 @@ nav a:hover {
 }
 
 .sidebar {
-    min-width: 220px;
+    min-width: 240px;
     max-width: 260px;
     position: sticky;
     top: 100px;
@@ -549,6 +550,45 @@ nav a:hover {
     float: right;
     margin-top: 1px;
     font-weight: 400;
+}
+
+/* ============ BRAND FILTER ============ */
+.brand-filter {
+    background: #0c0c0c;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.brand-filter h4 {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.brand-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #ccc;
+    padding: 6px 0;
+    cursor: pointer;
+}
+
+.brand-check input {
+    width: 16px;
+    height: 16px;
+    accent-color: #ff9933;
+}
+
+.brand-check .count {
+    color: #999;
+    font-size: 11px;
+    margin-left: auto;
 }
 
 /* ============ SIZE FILTER ============ */
@@ -614,6 +654,23 @@ nav a:hover {
     cursor: pointer;
     font-size: 11px;
     transition: all .3s;
+}
+
+.clear-all-filters {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255,51,51,.1);
+    color: #f33;
+    border: 1px solid rgba(255,51,51,.3);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    margin-top: 10px;
+    transition: all .3s;
+}
+
+.clear-all-filters:hover {
+    background: rgba(255,51,51,.2);
 }
 
 /* ============ SEARCH & SORT ============ */
@@ -1678,6 +1735,46 @@ footer p {
     font-size: 12px;
 }
 
+/* ============ MOBILE FILTERS ============ */
+.mobile-filters-toggle {
+    display: none;
+    width: 100%;
+    padding: 12px;
+    background: #0c0c0c;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.mobile-filters-panel {
+    display: none;
+    background: #0c0c0c;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.mobile-filters-panel.active {
+    display: block;
+}
+
+.filter-group-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ff9933;
+    margin-bottom: 12px;
+    margin-top: 15px;
+}
+
 /* ============ REDUCED MOTION ============ */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -1783,6 +1880,10 @@ footer p {
     
     .card-smoke {
         display: none;
+    }
+
+    .mobile-filters-toggle {
+        display: block;
     }
 }
 
