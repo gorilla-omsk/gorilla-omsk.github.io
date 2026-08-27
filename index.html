@@ -22,7 +22,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="manifest" href="/manifest.json?v=9">
+    <link rel="manifest" href="/manifest.json?v=10">
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Russo+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=10">
 
     <script type="application/ld+json">
     {
@@ -128,8 +128,11 @@
                 <div class="categories-menu" id="categoriesMenu" role="navigation" aria-label="Категории товаров"></div>
                 
                 <div class="brand-filter" id="brandFilter">
-                    <h4>🏷️ Бренды</h4>
-                    <div id="brandFilterContent"></div>
+                    <div class="brand-filter-header" id="brandFilterHeader">
+                        <h4>🏷️ Бренды</h4>
+                        <span class="brand-filter-arrow">▼</span>
+                    </div>
+                    <div class="brand-filter-content" id="brandFilterContent"></div>
                 </div>
 
                 <div class="size-filter" id="sizeFilter">
@@ -247,6 +250,6 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/110754345" style="position:absolute;left:-9999px" alt=""></div></noscript>
 
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=10"></script>
 </body>
 </html>
