@@ -1,4 +1,4 @@
-var CACHE_NAME = 'gorilla-v7';
+var CACHE_NAME = 'gorilla-v8';
 var IMAGE_CACHE_LIMIT = 100;
 
 var ASSETS_TO_CACHE = [
