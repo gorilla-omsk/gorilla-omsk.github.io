@@ -19,7 +19,7 @@ setTimeout(function() {
 }, 5000);
 
 // ============ CONFIG ============
-var CACHE_VERSION = 'v8';
+var CACHE_VERSION = 'v9';
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 var IMAGES_PATH = 'images/';
 var LETTER_SIZES = ['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
@@ -37,6 +37,80 @@ var CATS = [
   { id:'hoodies', name:'Худи / Свитшоты', e:'🦍' },
   { id:'pants', name:'Штаны / Брюки / Джинсы', e:'👖' }
 ];
+
+// ============ BRAND PARSER ============
+function getBrand(name) {
+  var n = name.toLowerCase();
+  var brands = [
+    { key: 'nike', label: 'Nike' },
+    { key: 'nile', label: 'Nike' },
+    { key: 'adidas', label: 'Adidas' },
+    { key: 'asics', label: 'Asics' },
+    { key: 'new balance', label: 'New Balance' },
+    { key: 'puma', label: 'Puma' },
+    { key: 'jordan', label: 'Jordan' },
+    { key: 'vans', label: 'Vans' },
+    { key: 'converse', label: 'Converse' },
+    { key: 'onitsuka', label: 'Onitsuka Tiger' },
+    { key: 'mizuno', label: 'Mizuno' },
+    { key: 'salomon', label: 'Salomon' },
+    { key: 'columbia', label: 'Columbia' },
+    { key: 'merrell', label: 'Merrell' },
+    { key: 'sprandi', label: 'Sprandi' },
+    { key: 'crocs', label: 'Crocs' },
+    { key: 'dc ', label: 'DC' },
+    { key: 'carhartt', label: 'Carhartt' },
+    { key: 'stone island', label: 'Stone Island' },
+    { key: 'fog', label: 'Fear of God' },
+    { key: 'polar', label: 'Polar Skate Co' },
+    { key: 'palm angels', label: 'Palm Angels' },
+    { key: 'bape', label: 'BAPE' },
+    { key: 'a bathing ape', label: 'BAPE' },
+    { key: 'palace', label: 'Palace' },
+    { key: 'stussy', label: 'Stussy' },
+    { key: 'stüssy', label: 'Stussy' },
+    { key: 'vetements', label: 'Vetements' },
+    { key: 'patagonia', label: 'Patagonia' },
+    { key: 'drew house', label: 'Drew House' },
+    { key: 'loewe', label: 'Loewe' },
+    { key: 'evisu', label: 'Evisu' },
+    { key: 'mastermind', label: 'Mastermind' },
+    { key: 'prada', label: 'Prada' },
+    { key: 'the north face', label: 'The North Face' },
+    { key: 'trapstar', label: 'Trapstar' },
+    { key: 'corteiz', label: 'Corteiz' },
+    { key: 'nfl', label: 'NFL' },
+    { key: 'nba', label: 'NBA' },
+    { key: 'nhl', label: 'NHL' },
+    { key: 'nxl', label: 'NHL' },
+    { key: 'fanatics', label: 'Fanatics' },
+    { key: 'dr. martens', label: 'Dr. Martens' },
+    { key: 'johnny bigg', label: 'Johnny Bigg' },
+    { key: 'manto', label: 'Manto' },
+    { key: 'gap', label: 'GAP' },
+    { key: 'champion', label: 'Champion' },
+    { key: 'icecream', label: 'Icecream' },
+    { key: 'kelme', label: 'Kelme' },
+    { key: 'leitte', label: 'Leitte' },
+    { key: 'xfl', label: 'XFL' },
+    { key: 'logano', label: 'NFL' },
+    { key: 'pittsburgh', label: 'NFL' },
+    { key: 'eagles', label: 'NFL' },
+    { key: 'cowboys', label: 'NFL' },
+    { key: 'wisconsin', label: 'NCAA' },
+    { key: 'notre dame', label: 'NCAA' },
+    { key: 'purdue', label: 'NCAA' },
+    { key: 'illinois', label: 'NCAA' },
+    { key: 'lsu', label: 'NCAA' }
+  ];
+  
+  for (var i = 0; i < brands.length; i++) {
+    if (n.indexOf(brands[i].key) !== -1) {
+      return brands[i].label;
+    }
+  }
+  return 'Другое';
+}
 
 // ============ MATCH RULES ============
 var MATCH_RULES = {
@@ -89,8 +163,9 @@ var D = {
 };
 
 // ============ STATE ============
-var P = [], F = gSI('gorillaFavorites', []), aC = 'all', aS = null, cP = null, sS2 = null, cS = 0, cSo = 'default', sQ = '', cI, gI;
+var P = [], F = gSI('gorillaFavorites', []), aC = 'all', aS = null, aB = null, cP = null, sS2 = null, cS = 0, cSo = 'default', sQ = '', cI, gI;
 var viewCounts = gSI('gorillaViews', {});
+var soldCounts = gSI('gorillaSold', {});
 var isMobile = window.innerWidth <= 768;
 window.addEventListener('resize', debounce(function() { isMobile = window.innerWidth <= 768; }, 200));
 
@@ -132,6 +207,15 @@ if (nav) {
       if (isMobile) closeMenu();
     });
   });
+}
+
+// ============ SOLD COUNTER ============
+function getSoldCount(pid) {
+  if (!soldCounts[pid]) {
+    soldCounts[pid] = Math.floor(Math.random() * 15) + 1;
+    sSI('gorillaSold', soldCounts);
+  }
+  return soldCounts[pid];
 }
 
 // ============ VIEWS ============
@@ -362,7 +446,7 @@ async function lP() {
     var r = await fetch(CSV_URL);
     if (!r.ok) throw new Error('HTTP ' + r.status);
     P = await pCSV(await r.text());
-    rC(); rSF(); rCat(); rMobCats(); setTimeout(oC, 100); setTimeout(init3DCards, 300);
+    rC(); rSF(); rBrandFilter(); rCat(); rMobCats(); setTimeout(oC, 100); setTimeout(init3DCards, 300);
   } catch(e) { D.cG.innerHTML = '<div class="no-products">⚠️ Не удалось загрузить товары</div>'; }
 }
 
@@ -437,8 +521,103 @@ function rSF() {
   D.sFC.innerHTML = h;
   D.sFC.querySelectorAll('.size-filter-btn').forEach(function(btn) { btn.addEventListener('click', function() { sSF(btn.getAttribute('data-size')); }); });
 }
-function sSF(size) { aS = aS === size ? null : size; rSF(); rCat(); setTimeout(oC, 100); setTimeout(init3DCards, 200); }
-function cSF() { aS = null; rSF(); rCat(); setTimeout(oC, 100); setTimeout(init3DCards, 200); }
+function sSF(size) { aS = aS === size ? null : size; rSF(); rMobileSizeFilter(); rCat(); setTimeout(oC, 100); setTimeout(init3DCards, 200); }
+function cSF() { aS = null; rSF(); rMobileSizeFilter(); rCat(); setTimeout(oC, 100); setTimeout(init3DCards, 200); }
+
+// ============ BRAND FILTER ============
+function rBrandFilter() {
+  var brands = {};
+  P.forEach(function(p) {
+    var b = getBrand(p.name);
+    if (!brands[b]) brands[b] = 0;
+    brands[b]++;
+  });
+  
+  var keys = Object.keys(brands).sort();
+  
+  var desktop = document.getElementById('brandFilterContent');
+  if (desktop) {
+    var h = '';
+    keys.forEach(function(b) {
+      h += '<label class="brand-check"><input type="checkbox" value="' + b + '" ' + (aB === b ? 'checked' : '') + '> ' + b + ' <span class="count">' + brands[b] + '</span></label>';
+    });
+    desktop.innerHTML = h;
+    desktop.querySelectorAll('input').forEach(function(input) {
+      input.addEventListener('change', function() {
+        aB = input.checked ? input.value : null;
+        rBrandFilter();
+        rCat();
+        setTimeout(oC, 100);
+        setTimeout(init3DCards, 200);
+      });
+    });
+  }
+  
+  var mobile = document.getElementById('mobileBrandFilterContent');
+  if (mobile) {
+    var mh = '<div class="filter-group-title">🏷️ Бренды</div>';
+    keys.forEach(function(b) {
+      mh += '<label class="brand-check"><input type="checkbox" value="' + b + '" ' + (aB === b ? 'checked' : '') + '> ' + b + ' <span class="count">' + brands[b] + '</span></label>';
+    });
+    mobile.innerHTML = mh;
+    mobile.querySelectorAll('input').forEach(function(input) {
+      input.addEventListener('change', function() {
+        aB = input.checked ? input.value : null;
+        rBrandFilter();
+        rCat();
+        setTimeout(oC, 100);
+        setTimeout(init3DCards, 200);
+      });
+    });
+  }
+}
+
+// ============ MOBILE SIZE FILTER ============
+function rMobileSizeFilter() {
+  var container = document.getElementById('mobileSizeFilterContent');
+  if (!container) return;
+  
+  if (aC === 'all' || aC === 'favorites') {
+    container.innerHTML = '<div class="filter-group-title">📏 Размер</div><span style="color:#aaa;font-size:12px;">Выберите категорию</span>';
+    return;
+  }
+  
+  var sizes = gSFC(aC);
+  if (!sizes.length) {
+    container.innerHTML = '<div class="filter-group-title">📏 Размер</div><span style="color:#aaa;font-size:12px;">Нет размеров</span>';
+    return;
+  }
+  
+  var g = cSizes(sizes);
+  var h = '<div class="filter-group-title">📏 Размер</div>';
+  
+  if (g.shoe.length) { h += '<div class="size-filter-group"><span class="size-filter-label">👟 Обувь</span><div class="size-filter-buttons">'; g.shoe.forEach(function(s) { h += '<button class="size-filter-btn' + (aS === s ? ' active' : '') + '" data-size="' + s + '">' + s + '</button>'; }); h += '</div></div>'; }
+  if (g.waist.length) { h += '<div class="size-filter-group"><span class="size-filter-label">👖 Пояс</span><div class="size-filter-buttons">'; g.waist.forEach(function(s) { h += '<button class="size-filter-btn' + (aS === s ? ' active' : '') + '" data-size="' + s + '">' + s + '</button>'; }); h += '</div></div>'; }
+  if (g.letter.length) { h += '<div class="size-filter-group"><span class="size-filter-label">📏 Одежда</span><div class="size-filter-buttons">'; g.letter.forEach(function(s) { h += '<button class="size-filter-btn' + (aS === s ? ' active' : '') + '" data-size="' + s + '">' + s + '</button>'; }); h += '</div></div>'; }
+  if (g.other.length) { h += '<div class="size-filter-group"><span class="size-filter-label">📐 Другое</span><div class="size-filter-buttons">'; g.other.forEach(function(s) { h += '<button class="size-filter-btn' + (aS === s ? ' active' : '') + '" data-size="' + s + '">' + s + '</button>'; }); h += '</div></div>'; }
+  
+  container.innerHTML = h;
+  container.querySelectorAll('.size-filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      sSF(btn.getAttribute('data-size'));
+    });
+  });
+}
+
+// ============ CLEAR ALL ============
+function clearAllFilters() {
+  aS = null;
+  aB = null;
+  sQ = '';
+  D.sI.value = '';
+  D.cSB.style.display = 'none';
+  rSF();
+  rBrandFilter();
+  rMobileSizeFilter();
+  rCat();
+  setTimeout(oC, 100);
+  setTimeout(init3DCards, 200);
+}
 
 // ============ CATEGORIES ============
 function rC() {
@@ -476,8 +655,24 @@ function rMobCats() {
       });
     });
   }
+  
+  rMobileSizeFilter();
 }
-function sC(catId) { aC = catId; rC(); rMobCats(); rSF(); rCat(); if (isMobile) { document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' }); } setTimeout(oC, 100); setTimeout(init3DCards, 200); }
+function sC(catId) {
+  aC = catId;
+  rC(); rMobCats(); rSF(); rBrandFilter(); rCat();
+  var bc = document.getElementById('breadcrumbCategory');
+  if (bc) {
+    if (catId === 'all') bc.textContent = 'ВСЕ ТОВАРЫ';
+    else if (catId === 'favorites') bc.textContent = 'ИЗБРАННОЕ';
+    else {
+      var cat = CATS.find(function(c) { return c.id === catId; });
+      bc.textContent = cat ? cat.name.toUpperCase() : catId.toUpperCase();
+    }
+  }
+  if (isMobile) { document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' }); }
+  setTimeout(oC, 100); setTimeout(init3DCards, 200);
+}
 
 // ============ SORT & SEARCH ============
 function sCat() { cSo = D.sS.value; rCat(); setTimeout(oC, 100); setTimeout(init3DCards, 200); }
@@ -514,7 +709,7 @@ function oM(product) {
   D.mP.textContent = product.price.toLocaleString() + ' ₽';
   D.mC.innerHTML = product.color ? 'Цвет: <span style="display:inline-block;width:16px;height:16px;background-color:' + product.color + ';border-radius:50%;vertical-align:middle;margin-right:4px;"></span> ' + product.color : '';
   D.mD.textContent = product.description || '';
-  D.mSt.textContent = product.stock > 0 ? 'В наличии: ' + product.stock + ' шт' : 'Нет в наличии';
+  D.mSt.textContent = product.stock > 0 ? 'В наличии: ' + product.stock + ' шт • Продано: ' + getSoldCount(product.id) : 'Нет в наличии';
   uMF();
   D.mSz.innerHTML = '';
   if (product.sizes && product.sizes.length) {
@@ -571,15 +766,18 @@ function closeModal() { D.mO.classList.remove('active'); D.mO.setAttribute('aria
 function rCat() {
   var f = aC === 'favorites' ? P.filter(function(p) { return F.includes(p.id); }) : aC === 'all' ? P : P.filter(function(p) { return p.category === aC; });
   if (aS) f = f.filter(function(p) { return p.sizes && p.sizes.includes(aS); });
+  if (aB) f = f.filter(function(p) { return getBrand(p.name) === aB; });
   if (sQ) f = f.filter(function(p) { var nm = p.name.toLowerCase().includes(sQ); var cm = CAT_RU[p.category] ? CAT_RU[p.category].includes(sQ) : false; var cem = p.category.toLowerCase().includes(sQ); return nm || cm || cem; });
   if (cSo === 'price-asc') f.sort(function(a, b) { return a.price - b.price; });
   else if (cSo === 'price-desc') f.sort(function(a, b) { return b.price - a.price; });
+  else if (cSo === 'popular') f.sort(function(a, b) { return getSoldCount(b.id) - getSoldCount(a.id); });
   else if (cSo === 'newest') f.reverse();
   if (!f.length) { D.cG.innerHTML = '<div class="no-products">Товаров пока нет</div>'; return; }
   D.cG.innerHTML = f.map(function(p) {
     var so = p.stock === 0, ls = p.stock > 0 && p.stock <= 3;
     var st = so ? 'SOLD OUT' : ls ? 'Осталось: ' + p.stock + ' шт' : 'В наличии: ' + p.stock + ' шт';
     var catName = CATS.find(function(c) { return c.id === p.category; }) ? CATS.find(function(c) { return c.id === p.category; }).name : '';
+    var brand = getBrand(p.name);
     var sizes = p.sizes ? p.sizes.join(', ') : '';
     var pid = p.photo_id ? p.photo_id.split(';')[0].trim() : '';
     var pu = gPU(pid, IMAGE_FALLBACKS[0]);
@@ -587,7 +785,8 @@ function rCat() {
     var hfd = p.price >= 3000;
     var fd = hfd ? '<span class="free-delivery-badge">🚚 Бесплатная доставка 5Post</span>' : '';
     var views = getViewCount(p.id);
-    return '<div class="card' + (so ? ' sold-out' : '') + '" data-product-id="' + p.id + '" role="listitem"><div class="card-img">' + (pu ? '<img src="' + pu + '" alt="' + p.name + '" loading="lazy" onerror="iE(this,\'' + pid + '\')">' : '<span class="img-placeholder" aria-hidden="true">🦍</span>') + '<div class="card-tag' + (so ? ' sold' : '') + '">' + (so ? 'SOLD OUT' : (p.tag || '')) + '</div><button class="favorite-btn' + (isFav ? ' active' : '') + '" data-id="' + p.id + '" aria-label="' + (isFav ? 'Убрать из избранного' : 'Добавить в избранное') + '">' + (isFav ? '❤️' : '🤍') + '</button><button class="share-btn" data-share-id="' + p.id + '" title="Поделиться" aria-label="Поделиться товаром">🔗</button><span class="stock-badge' + (ls ? ' low' : '') + (so ? ' out' : '') + '">' + st + '</span>' + (hfd ? '<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>' : '') + '</div><div class="card-body"><h3>' + p.name + ' <span class="view-counter">' + views + '</span>' + (p.color ? '<span style="display:inline-block;width:12px;height:12px;background-color:' + p.color + ';border-radius:50%;vertical-align:middle;margin-left:6px;" title="' + p.color + '" aria-hidden="true"></span>' : '') + '</h3><p class="category">' + catName + '</p>' + (sizes ? '<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">' + sizes + '</span></div>' : '') + '<p class="price">' + p.price.toLocaleString() + ' ₽</p>' + fd + '<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-vk" onclick="event.stopPropagation();" aria-label="Заказать в VK (откроется в новом окне)">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-tg" onclick="event.stopPropagation();" aria-label="Заказать в Telegram (откроется в новом окне)">✈️ TG</a></div></div></div>';
+    var sold = getSoldCount(p.id);
+    return '<div class="card' + (so ? ' sold-out' : '') + '" data-product-id="' + p.id + '" role="listitem"><div class="card-img">' + (pu ? '<img src="' + pu + '" alt="' + p.name + '" loading="lazy" onerror="iE(this,\'' + pid + '\')">' : '<span class="img-placeholder" aria-hidden="true">🦍</span>') + '<div class="card-tag' + (so ? ' sold' : '') + '">' + (so ? 'SOLD OUT' : (p.tag || '')) + '</div><button class="favorite-btn' + (isFav ? ' active' : '') + '" data-id="' + p.id + '" aria-label="' + (isFav ? 'Убрать из избранного' : 'Добавить в избранное') + '">' + (isFav ? '❤️' : '🤍') + '</button><button class="share-btn" data-share-id="' + p.id + '" title="Поделиться" aria-label="Поделиться товаром">🔗</button><span class="stock-badge' + (ls ? ' low' : '') + (so ? ' out' : '') + '">' + st + '</span>' + (hfd ? '<span class="free-delivery-tag">БЕСПЛАТНАЯ ДОСТАВКА</span>' : '') + '</div><div class="card-body"><h3>' + p.name + ' <span class="view-counter">' + views + '</span>' + (p.color ? '<span style="display:inline-block;width:12px;height:12px;background-color:' + p.color + ';border-radius:50%;vertical-align:middle;margin-left:6px;" title="' + p.color + '" aria-hidden="true"></span>' : '') + '</h3><p class="category">' + catName + ' • ' + brand + '</p>' + (sizes ? '<div class="sizes-block"><span class="sizes-label">Размеры:</span><span class="sizes-values">' + sizes + '</span></div>' : '') + '<p class="price">' + p.price.toLocaleString() + ' ₽</p><p class="sold-count">🔥 Продано: ' + sold + ' шт</p>' + fd + '<div class="card-actions"><a href="https://vk.com/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-vk" onclick="event.stopPropagation();" aria-label="Заказать в VK (откроется в новом окне)">📱 VK</a><a href="https://t.me/gorillaomsk" target="_blank" rel="noopener noreferrer" class="btn-order btn-order-tg" onclick="event.stopPropagation();" aria-label="Заказать в Telegram (откроется в новом окне)">✈️ TG</a></div></div></div>';
   }).join('');
   D.cG.querySelectorAll('.card').forEach(function(card) { card.addEventListener('click', function(e) { if (e.target.closest('.favorite-btn') || e.target.closest('.btn-order') || e.target.closest('.share-btn')) return; var pid = card.getAttribute('data-product-id'); var product = P.find(function(p) { return p.id === pid; }); if (product) oM(product); }); });
   D.cG.querySelectorAll('.favorite-btn').forEach(function(btn) { btn.addEventListener('click', function(e) { e.stopPropagation(); var id = btn.getAttribute('data-id'); tF(id); }); });
@@ -622,6 +821,26 @@ function bE() {
   D.sT.addEventListener('click', function(e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
   if (D.lI2) D.lI2.addEventListener('error', function() { this.style.display = 'none'; });
   if (D.mSB) D.mSB.addEventListener('click', shareProduct);
+  
+  var mobileFiltersToggle = document.getElementById('mobileFiltersToggle');
+  var mobileFiltersPanel = document.getElementById('mobileFiltersPanel');
+  if (mobileFiltersToggle && mobileFiltersPanel) {
+    mobileFiltersToggle.addEventListener('click', function() {
+      mobileFiltersPanel.classList.toggle('active');
+    });
+  }
+  
+  var clearAllBtn = document.getElementById('clearAllFilters');
+  if (clearAllBtn) clearAllBtn.addEventListener('click', clearAllFilters);
+  
+  var mobileClearAllBtn = document.getElementById('mobileClearAllFilters');
+  if (mobileClearAllBtn) {
+    mobileClearAllBtn.addEventListener('click', function() {
+      clearAllFilters();
+      mobileFiltersPanel.classList.remove('active');
+    });
+  }
+  
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { cL(); if (D.mO.classList.contains('active')) closeModal(); } });
 }
 bE();
