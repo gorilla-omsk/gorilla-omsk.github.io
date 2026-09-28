@@ -19,7 +19,7 @@ setTimeout(function() {
 }, 5000);
 
 // ============ CONFIG ============
-var CACHE_VERSION = 'v11';
+var CACHE_VERSION = 'v12';
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_qE54KuCx8nQlZnFJNZwacHgp1ohgFl-dAj5kcDrjWwO7npYtuUAIRdTFgUSqEDLbVps2qgOEOO29/pub?output=csv&v=' + CACHE_VERSION;
 var IMAGES_PATH = 'images/';
 var LETTER_SIZES = ['XXS','XS','S','M','L','XL','XXL','2XL','3XL','4XL','5XL'];
@@ -796,17 +796,24 @@ function rCat() {
   if (aB) f = f.filter(function(p) { return getBrand(p.name) === aB; });
   if (sQ) f = f.filter(function(p) { var nm = p.name.toLowerCase().includes(sQ); var cm = CAT_RU[p.category] ? CAT_RU[p.category].includes(sQ) : false; var cem = p.category.toLowerCase().includes(sQ); return nm || cm || cem; });
   
-  // Сначала товары в наличии, потом проданные
-  f.sort(function(a, b) {
-    var aSold = a.stock === 0 ? 1 : 0;
-    var bSold = b.stock === 0 ? 1 : 0;
-    return aSold - bSold;
-  });
+  // Разделяем на "в наличии" и "проданные"
+  var inStock = f.filter(function(p) { return p.stock > 0; });
+  var soldOut = f.filter(function(p) { return p.stock === 0; });
   
-  if (cSo === 'price-asc') f.sort(function(a, b) { return a.price - b.price; });
-  else if (cSo === 'price-desc') f.sort(function(a, b) { return b.price - a.price; });
-  else if (cSo === 'popular') f.sort(function(a, b) { return getSoldCount(b.id) - getSoldCount(a.id); });
-  else if (cSo === 'newest') f.reverse();
+  // Сортируем каждую группу отдельно
+  function applySort(arr) {
+    if (cSo === 'price-asc') arr.sort(function(a, b) { return a.price - b.price; });
+    else if (cSo === 'price-desc') arr.sort(function(a, b) { return b.price - a.price; });
+    else if (cSo === 'popular') arr.sort(function(a, b) { return getSoldCount(b.id) - getSoldCount(a.id); });
+    else if (cSo === 'newest') arr.reverse();
+    return arr;
+  }
+  
+  applySort(inStock);
+  applySort(soldOut);
+  
+  // Склеиваем: сначала в наличии, потом проданные
+  f = inStock.concat(soldOut);
   
   if (!f.length) { D.cG.innerHTML = '<div class="no-products">Товаров пока нет</div>'; return; }
   D.cG.innerHTML = f.map(function(p) {
